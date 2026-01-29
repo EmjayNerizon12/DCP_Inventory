@@ -2,23 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\School;
 use App\Models\SchoolEmployee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class SchoolEmployeeController extends Controller
 {
     public function index()
     {
-        $employee = SchoolEmployee::where('school_id', Auth::guard('school')->user()->pk_school_id)->get();
+        $employee = SchoolEmployee::where('school_id', Auth::guard('school')->user()->pk_school_id)
+            ->with(['position', 'positionTitle', 'sdoOffice', 'roOffice', 'causeOfSeparation'])
+            ->get();
 
         return view('SchoolSide.Employee.index', compact('employee'));
     }
 
     public function showSchoolEmployees()
     {
-        $employee = SchoolEmployee::where('school_id', Auth::guard('school')->user()->pk_school_id)->get();
+        $employee = SchoolEmployee::where('school_id', Auth::guard('school')->user()->pk_school_id)
+            ->with(['position', 'positionTitle', 'sdoOffice', 'roOffice', 'causeOfSeparation'])
+            ->get();
         return response()->json(['success' => true, 'data' => $employee]);
+    }
+    public function searchEmployee($searchTerm = null)
+    {
+        if (empty($searchTerm)) {
+            return $this->showSchoolEmployees();
+        } else {
+            $employee = SchoolEmployee::where('school_id', Auth::guard('school')->user()->pk_school_id)
+                ->where(function ($query) use ($searchTerm) {
+                    $query->where('fname', 'LIKE', "%{$searchTerm}%")
+                        ->orWhere('mname', 'LIKE', "%{$searchTerm}%")
+                        ->orWhere('lname', 'LIKE', "%{$searchTerm}%")
+                        ->orWhere('employee_number', 'LIKE', "%{$searchTerm}%");
+                })
+                ->with(['position', 'positionTitle', 'sdoOffice', 'roOffice', 'causeOfSeparation'])
+                ->get();
+            return response()->json(['success' => true, 'data' => $employee]);
+        }
     }
     public function store(Request $request)
     {
@@ -58,7 +82,20 @@ class SchoolEmployeeController extends Controller
             'detailed_transfer_from' => 'nullable|string|max:255',
             'detailed_transfer_to' => 'nullable|string|max:255',
         ]);
-
+        if ($request->hasFile('image_path')) {
+            $image = $request->file('image_path');
+            $imageName = uniqid('employee_') . '.' . $image->getClientOriginalExtension();
+            $school = School::findOrFail($validated['school_id']);
+            $schoolName = Str::slug($school->SchoolName, '_');
+            $path = public_path('school-employee/' . $validated['school_id'] . '-' . $schoolName);
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true); // recursive = true
+            }
+            $image->move($path, $imageName);
+            $validated['image_path'] = $imageName;
+        } else {
+            $validated['image_path'] = null;
+        }
         // Assign school_id from authenticated user
         $validated['school_id'] = Auth::guard('school')->user()->pk_school_id;
 
@@ -110,8 +147,41 @@ class SchoolEmployeeController extends Controller
             'detailed_transfer_to' => 'nullable|string|max:255',
         ]);
 
-        $employee = SchoolEmployee::find($validated['primary_key']);
+        $employee = SchoolEmployee::findOrFail($validated['primary_key']);
+        $school_id = Auth::guard('school')->user()->school->pk_school_id;
+        $school = School::findOrFail($school_id);
+        $schoolName = Str::slug($school->SchoolName, '_');
 
+        if ($request->hasFile('image_path')) {
+
+            // 🔴 DELETE OLD IMAGE (if exists)
+            if ($employee->image_path) {
+
+                $oldPath = public_path(
+                    'school-employee/' . $validated['school_id'] . '-' . $schoolName . '/' . $employee->image_path
+                );
+
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
+            }
+
+            // ✅ UPLOAD NEW IMAGE
+            $image = $request->file('image_path');
+            $imageName = uniqid('employee_') . '.' . $image->getClientOriginalExtension();
+
+            $path = public_path(
+                'school-employee/' . $school_id . '-' . $schoolName
+            );
+
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+
+            $image->move($path, $imageName);
+
+            $validated['image_path'] = $imageName;
+        }
         if ($employee) {
             // Remove primary_key before updating
             unset($validated['primary_key']);
