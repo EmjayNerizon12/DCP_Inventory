@@ -35,17 +35,22 @@ return [
     |
     */
 
-   'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
-    ],
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
 
-    'school' => [ // ✅ Add this
-        'driver' => 'session',
-        'provider' => 'school_users',
+        'school' => [ // ✅ Add this
+            'driver' => 'session',
+            'provider' => 'school_users',
+        ],
+        'api' => [
+            'driver' => 'jwt', // for API login
+            'provider' => 'school_users',
+            'hash' => false,
+        ],
     ],
-],
 
 
     /*
@@ -65,24 +70,24 @@ return [
     |
     */
 
- 'providers' => [
-    'users' => [
-        'driver' => 'eloquent',
-        'model' => env('AUTH_MODEL', App\Models\User::class),
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'school_users' => [ // ✅ Add this
+            'driver' => 'eloquent',
+            'model' => App\Models\SchoolUser::class,
+        ],
     ],
 
-    'school_users' => [ // ✅ Add this
-        'driver' => 'eloquent',
-        'model' => App\Models\SchoolUser::class,
-    ],
-],
 
+    // 'users' => [
+    //     'driver' => 'database',
+    //     'table' => 'users',
+    // ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
-   
 
     /*
     |--------------------------------------------------------------------------
@@ -112,11 +117,11 @@ return [
         ],
     ],
 
-    
-'defaults' => [
-    'guard' => 'school', // ✅ change from 'web'
-    'passwords' => 'school_users', // optional if using password reset
-],
+
+    'defaults' => [
+        'guard' => 'school', // ✅ change from 'web'
+        'passwords' => 'school_users', // optional if using password reset
+    ],
 
     /*
     |--------------------------------------------------------------------------

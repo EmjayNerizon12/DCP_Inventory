@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import "./admin.css";
 /* Example custom classes */
 .btn-primary {
     @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600;
@@ -15,7 +15,7 @@
                items-start md:items-center bg-black/40;
     }
     .modal-content {
-        @apply bg-white  rounded-lg shadow-lg w-full p-6 overflow-y-auto md:mx-0 mx-5 max-h-[90vh];
+        @apply bg-white  rounded-lg shadow-lg w-full mb-5 overflow-y-auto md:mx-0 mx-5 max-h-[90vh];
     }
     .large-modal {
         @apply max-w-full md:max-w-2xl lg:max-w-3xl ;
@@ -29,20 +29,45 @@
     .super-large-modal {
         @apply max-w-full md:max-w-4xl lg:max-w-5xl ;
     }
+    .extra-large-modal {
+        @apply max-w-full md:max-w-5xl lg:max-w-6xl ;
+    }
+    button {
+          border: 1px solid rgba(255,255,255,0.12);
+          
+    @apply whitespace-nowrap md:text-base text-sm;
+  /* THIS creates the reflection look */
+        box-shadow:
+            inset 0 2px 0 rgba(255,255,255,0.45),   /* bright top shine */
+            inset 0 -2px 3px rgba(0,0,0,0.25),      /* curved bottom */
+        0 4px 6px rgba(0,0,0,0.22);           /* soft spread */
+
+    }
     .btn-submit {
         @apply bg-blue-600 text-white hover:bg-blue-700 font-medium tracking-wider;
     }
     .btn-update{
-        @apply bg-amber-400 text-white hover:bg-amber-500 font-medium tracking-wider;
+        @apply  bg-amber-400 text-white hover:bg-amber-500 font-medium tracking-wider;
     }
     .btn-delete{
+       
+    transition: all .15s ease;
         @apply bg-red-600 text-white hover:bg-red-700 font-medium tracking-wider;
     }
     .btn-green{
         @apply bg-green-600 text-white hover:bg-green-700 font-medium tracking-wider;
     }
-    .btn-cancel{
+    .btn-gray{
         @apply bg-gray-400 text-white hover:bg-gray-500  font-medium tracking-wider;
+    }
+    .btn-cancel{
+        @apply bg-white shadow border border-gray-300 text-gray-600 hover:bg-gray-50  font-medium tracking-wider;
+    }
+    .btn-purple{
+        @apply bg-purple-600 text-white hover:bg-purple-700 font-medium tracking-wider;
+    }
+    .btn-indigo{
+        @apply bg-indigo-600 text-white hover:bg-indigo-700 font-medium tracking-wider;
     }
     .container{
         @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -50,8 +75,12 @@
     .medium-text {
         @apply text-xs md:text-base;
     }
+    .large-text {
+        @apply text-sm md:text-lg;
+    }
     .td-cell{   
-            @apply px-3 py-2 text-base text-gray-800 border border-gray-500;
+            @apply px-3 py-1 md:text-base text-xs text-black border border-gray-800;
+            letter-spacing: 0.05rem;
     }
     .thin-scroll {
         scrollbar-width: thin;                 /* Firefox */
@@ -75,5 +104,95 @@
     .thin-scroll::-webkit-scrollbar-thumb:hover {
         background-color: #6b7280; /* gray-500 */
     }
-   
+    .top-header{
+        background-color: #16247B;  
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @apply text-white text-left border border-gray-800 uppercase font-bold md:text-lg text-sm  px-4 py-1 ;
+    }
+    
+    .sub-header{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       
+        @apply bg-gray-200 text-black text-left tracking-wide border border-gray-800 font-medium md:text-base text-xs  px-4 py-1 ;
+    }
+    .secondary-header{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       
+        @apply bg-amber-200 text-black tracking-wide text-left border border-gray-800 font-medium md:text-base text-xs  px-4 py-1  ;
+    }
+    .theme-button{
+        background-color: #01378E; 
+         
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        border: 1px solid rgba(255,255,255,0.12);
+
+            /* THIS creates the reflection look */
+            box-shadow:
+                inset 0 2px 0 rgba(255,255,255,0.45),   /* bright top shine */
+                inset 0 -2px 3px rgba(0,0,0,0.25),      /* curved bottom */
+            0 4px 6px rgba(0,0,0,0.22);           /* soft spread */
+
+        @apply text-white px-4 py-1 rounded    font-medium tracking-wider;
+    }
+    .theme-button:hover{
+        background-color: #012F6C; 
+    }
+    .form-label{
+        @apply block md:text-base lg:text-base text-black sm:text-sm font-normal font-sans  mb-1;
+      
+    }
+    .form-input{
+        @apply  border border-gray-400 rounded-sm bg-white w-full px-3 py-1 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500  ;
+    }
+    .card-dashboard {
+        @apply bg-white shadow-md rounded-md   border border-gray-300 p-5 flex flex-col justify-start;
+    }
+    .card-title {
+        @apply text-base md:text-lg  font-normal text-gray-500 mb-2;
+    }
+    .card-value {
+        @apply md:text-3xl text-2xl font-bold text-gray-700;
+    }
+    .card-macaron {
+        @apply flex items-center justify-between border p-4 rounded-md shadow ;
+    }
+    .card-macaron-title {
+        @apply text-sm md:text-base font-medium text-gray-800;
+    }
+    .card-macaron-value {
+        @apply text-lg md:text-xl font-semibold text-gray-800;  
+    }
+    .dashboard-title{
+        @apply text-xl md:text-2xl font-bold text-gray-800  ;
+    }
+    .table-header{
+        @apply bg-gray-200 text-gray-700 font-semibold tracking-wider  px-4 py-2 border border-gray-400;
+    }
+   .spinner-container {
+    @apply flex justify-center items-center ;
+     }
+   .spinner-xs {
+        @apply w-4 h-4 border-3 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+    }
+    .spinner-sm {
+        @apply w-8 h-8 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+    }
+    .spinner-md {
+        @apply w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+    }
+    .spinner-lg{
+        @apply w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+    }
+    .spinner-xl{
+        @apply w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+    }
+    .page-title{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @apply text-xl md:text-3xl font-bold text-gray-800   ;
+    }
+    .page-subtitle{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @apply text-base md:text-lg font-normal text-gray-600 mb-2 ;
+    }
+
 }
