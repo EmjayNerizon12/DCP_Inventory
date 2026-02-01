@@ -30,7 +30,7 @@
             </div>
             <div class="text-center">
                 <div class="text-2xl font-bold text-gray-700  ">Insert Internet Connectivity Information</div>
-                <div class="text-md text-green-600 mb-4">School Information</div>
+                <div class="text-base text-blue-600 mb-4">School Information</div>
             </div>
         </div>
         @forelse ($isp_question as $index => $question)
@@ -47,7 +47,7 @@
                                     class="mr-2">
                                 {{ $choice->choice_text }} @if ($choice->is_other == 1)
                                     <input type="text" name="other[{{ $question->id }}][{{ $choice->id }}]"
-                                        placeholder="Please specify" class="border rounded p-1 ml-2">
+                                        placeholder="Please specify" class="border border-gray-300 rounded p-1 ml-2">
                                 @endif
                             </label>
                         @endforeach
@@ -69,17 +69,18 @@
                     {{-- NUMBER --}}
                     @if ($question->question_type === 'number')
                         <input type="number" step="0.01" name="answer[{{ $question->id }}]"
-                            class="border rounded p-1" required>
+                            class="border border-gray-300 rounded p-1" required>
                     @endif
 
 
                     {{-- TEXT --}}
                     @if ($question->question_type === 'text')
-                        <input type="text" name="answer[{{ $question->id }}]" class="border rounded p-1" required>
+                        <input type="text" name="answer[{{ $question->id }}]"
+                            class="border border-gray-300 rounded p-1" required>
                     @endif
 
                     @if ($question->question_type === 'single')
-                        <select name="answer[{{ $question->id }}]" class="border rounded p-1" required>
+                        <select name="answer[{{ $question->id }}]" class="border border-gray-300 rounded p-1" required>
                             @foreach ($question->choices as $choice)
                                 <option value="{{ $choice->id }}">{{ $choice->choice_text }}</option>
                             @endforeach
@@ -93,12 +94,22 @@
         @empty
         @endforelse
         <div class="my-2 flex md:flex-row flex-col gap-2 justify-start">
-            <button
-                class="bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded shadow text-white font-medium tracking-wider">Save
-                Information</button>
-            <button onclick="document.getElementById('insert-info').classList.add('hidden')"
-                class="bg-gray-400 hover:bg-gray-500 px-4 py-1 rounded shadow text-white  font-medium tracking-wider"
-                type="button">Cancel</button>
+
+            <div
+                class="h-10   w-auto bg-white p-1 border border-gray-300  shadow-md rounded-full flex items-center justify-center">
+
+                <button title="Save Internet Report" type="submit" class="btn-submit h-8 py-1 px-4 rounded-full">
+                    Save Information
+                </button>
+            </div>
+            <div
+                class="h-10 w-auto bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+
+                <button onclick="document.getElementById('insert-info').classList.add('hidden')" title="Close"
+                    type="button" class="btn-cancel h-8 py-1 px-4 rounded-full">
+                    Cancel
+                </button>
+            </div>
 
         </div>
     </form>
