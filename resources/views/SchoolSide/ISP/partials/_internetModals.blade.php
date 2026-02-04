@@ -12,9 +12,6 @@
              </div>
          </div>
          <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
-
-
-
              <x-select-field name='isp_list_id' label="Internet Service Provider" :options="App\Models\ISP\ISPList::all()" :edit="false"
                  :required="false" valueField="pk_isp_list_id" textField="name" />
              <x-select-field name='isp_purpose' label="Purpose" :options="App\Models\ISP\ISPPurpose::all()" :edit="false" :required="false"
@@ -44,38 +41,28 @@
 
              </div>
          </div>
-
          <div class="flex flex-col  ">
-
              <div class="flex flex-row items-end gap-2">
-
                  <x-select-field name='isp_area' label="ISP Area of Connection" :options="App\Models\ISP\ISPAreaAvailable::all()" :edit="true"
                      :required="false" valueField="pk_isp_area_available_id" textField="name" />
-
-
                  <button title="Insert Area" type="button" class="btn-submit px-4 py-1 rounded" onclick="addArea()">
                      Add Area
                  </button>
              </div>
-
              <div class="flex flex-row items-center mt-4">
                  Selected Area/s:
                  <div id="selected-areas"></div>
              </div>
-
          </div>
-         <div class="flex flex-row md:justify-end justify-center  gap-2">
-
+         <div class="grid grid-cols-2 max-w-xs ml-auto gap-2">
              <button title="Show Edit Modal" type="button" onclick="closeComponentModal('add-details-modal')"
                  class="btn-cancel py-1 px-4 md:w-auto w-full rounded">
                  Cancel
              </button>
              <button id="submit-button" title="Show Edit Modal" type="submit"
                  class="btn-submit md:w-auto w-full flex items-center justify-center py-1 px-4 rounded">
-                 Save ISP Details
+                 Submit
              </button>
-
-
          </div>
      </form>
 
@@ -83,21 +70,20 @@
  </x-modal>
  <x-modal id="edit-details-modal" size="large-modal" type="edit" icon="wifi_w_8">
 
-     <form action="{{ route('schools.isp.update') }}" class="space-y-4" method="POST">
+     <form id="updateDetailsForm" action="{{ route('schools.isp.update') }}" class="space-y-4" method="POST">
          @csrf
          @method('PUT')
          <div class="flex flex-col items-center justify-center gap-0">
+             <input type="hidden" name="card-index" id="update-details-index">
+             <x-input-field type="hidden" name='pk_isp_details_id' label="" :required="false"
+                 :edit="true" />
              <div class="text-center">
                  <div class="page-title">Update Internet Service Provider</div>
                  <div class="page-subtitle">Information of School's Internet</div>
              </div>
          </div>
 
-         <x-input-field type="hidden" name='pk_isp_details_id' label="" :required="false" :edit="true" />
          <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
-
-
-
              <x-select-field name='isp_list_id' label="Internet Service Provider" :options="App\Models\ISP\ISPList::all()" :edit="true"
                  :required="false" valueField="pk_isp_list_id" textField="name" />
              <x-select-field name='isp_purpose' label="Purpose" :options="App\Models\ISP\ISPPurpose::all()" :edit="true" :required="false"
@@ -128,23 +114,17 @@
              </div>
          </div>
 
-         <div class="flex md:justify-end justify-center gap-2">
-
-             <button title="Show Edit Modal" type="button" onclick="closeComponentModal('edit-details-modal')"
+         <div class="grid grid-cols-2 max-w-xs ml-auto gap-2">
+             <button type="button" onclick="closeComponentModal('edit-details-modal')"
                  class="btn-cancel py-1 px-4 rounded md:w-auto w-full">
                  Cancel
              </button>
-             <button title="Show Edit Modal" type="submit"
+             <button id="update-details-button" type="submit"
                  class="btn-green  whitespace-nowrap h-8 py-1 px-4 rounded md:w-auto w-full  ">
-                 Update ISP Details
+                 Update
              </button>
-
-
-
          </div>
-
      </form>
-
  </x-modal>
  <script>
      const addDetailsForm = document.getElementById('add-details-form');
@@ -164,17 +144,53 @@
          const data = await response.json();
          if (!response.ok) {
              handleErrors(data.errors);
-             resetButton(button, 'Save ISP Details');
+             resetButton(button, 'Submit');
+             renderStatusModal(data);
+
              return;
          }
          addDetailsForm.reset();
-         resetButton(button, 'Save ISP Details');
+         resetButton(button, 'Submit');
          closeComponentModal('add-details-modal');
          await loadInternet(school_id);
          renderStatusModal(data);
+         clearErrors();
          console.log(totalInternet);
          const index = parseInt(totalInternet, 10);
          if (!Number.isNaN(index)) toggleCollapse(`isp-container-${index}`, index);
          scrollTo('isp-container-' + totalInternet);
+     });
+
+     const updateDetailsForm = document.getElementById('updateDetailsForm');
+     const updateButton = document.getElementById('update-details-button');
+     updateDetailsForm.addEventListener('submit', async (e) => {
+         e.preventDefault();
+         buttonLoading(updateButton);
+         const formData = new FormData(updateDetailsForm);
+         formData.append('_method', 'PUT');
+         const response = await fetch(updateDetailsForm.action, {
+             method: 'POST',
+             headers: {
+                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                 'Accept': 'application/json'
+             },
+             body: formData,
+         });
+         const data = await response.json();
+         if (!response.ok) {
+             handleErrors(data.errors);
+             resetButton(updateButton, 'Update');
+             return;
+         }
+         resetButton(updateButton, 'Update');
+         updateDetailsForm.reset();
+         renderStatusModal(data);
+         clearErrors();
+         closeComponentModal('edit-details-modal');
+         await loadInternet(school_id);
+         const index = parseInt(formData.get('card-index'), 10);
+         scrollTo('isp-container-' + totalInternet);
+         if (!Number.isNaN(index)) toggleCollapse(`isp-container-${index}`, index);
+
      });
  </script>

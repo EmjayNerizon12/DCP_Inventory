@@ -1,11 +1,17 @@
 <script>
     const school_id = document.getElementById('school_id').value;
 
-    function editAreaModal(isp_details_id, area_id) {
+    function editAreaModal(pk_isp_area_details_id, isp_details_id, area_id, cardNumber) {
+        closeComponentModal('modal-area-info');
+        removeOverflow();
+        const inputIndex = document.getElementById('update-card-index');
+        inputIndex.value = cardNumber;
         document.getElementById('edit_area_modal').classList.remove('hidden');
+        document.getElementById('pk_isp_area_details_id').value = pk_isp_area_details_id;
         document.getElementById('isp_details_id').value = isp_details_id;
         document.getElementById('isp_area_available_id').value = area_id;
         document.getElementById('old_isp_area_id').value = area_id;
+
     }
 
     function deleteArea(isp_details_id, area_id) {
@@ -29,21 +35,26 @@
     }
 
     function showInsertArea(isp_details_id, cardNumber) {
+        closeComponentModal('modal-area-info');
+        removeOverflow();
         const inputIndex = document.getElementById('card-index');
         inputIndex.value = cardNumber;
         document.getElementById('insert_area_modal').classList.remove('hidden');
         document.getElementById('insert_isp_details_id').value = isp_details_id;
-        document.body.classList.add('overflow-hidden');
+        removeOverflow();
+
     }
 
     function closeEditModal() {
         document.getElementById('edit-details-modal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+        addOverflow();
     }
 
-    function editISPDetailsModal(isp_id, isp_list, isp_connection_type, isp_internet_quality, isp_upload,
+    function editISPDetailsModal(cardNumber, isp_id, isp_list, isp_connection_type, isp_internet_quality, isp_upload,
         isp_download,
         isp_ping, isp_purpose, areas) {
+        const inputIndex = document.getElementById('update-details-index');
+        inputIndex.value = cardNumber;
         document.getElementById('edit-details-modal').classList.remove('hidden');
         document.getElementById('pk_isp_details_id').value = isp_id;
         document.getElementById('isp_list_id').value = isp_list;
@@ -54,29 +65,29 @@
         document.getElementById('isp_download').value = isp_download;
         document.getElementById('isp_ping').value = isp_ping;
 
-        document.body.classList.add('overflow-hidden');
+        removeOverflow();
     }
 
     function openISPDetailsModal() {
         document.getElementById('add-details-modal').classList.remove('hidden');
-        document.body.classList.add('overflow-hidden');
+        removeOverflow();
     }
 
     function closeISPDetailsModal() {
         document.getElementById('add-details-modal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+        addOverflow();
     }
 
     let areas = [];
 
     function closeInsertAreaModal() {
         document.getElementById('insert_area_modal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+        addOverflow();
     }
 
     function closeEditAreaModal() {
         document.getElementById('edit_area_modal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+        addOverflow();
     }
 
 
@@ -196,21 +207,12 @@
                                  </div>
                                  <div class="flex w-full flex-row my-2 gap-1 justify-center items-start  ">
     
-                                     <div
-                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
-    
-                                         <button  title="Insert Area" class="btn-submit p-1 rounded-full"
-                                             onclick="showInsertArea(${ internet?.pk_isp_details_id },${index + 1})">
-    
-                                             @include('SchoolSide.components.svg.area_w_8')
-    
-                                         </button>
-                                     </div>
+                                    
                                      <div
                                          class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
     
                                          <button title="Edit ISP" class="btn-update p-1 rounded-full"
-                                             onclick='editISPDetailsModal(${internet?.pk_isp_details_id},
+                                             onclick='editISPDetailsModal(${index+1},${internet?.pk_isp_details_id},
                                                             ${internet?.isp_list_id},${internet?.isp_connection_type_id},
                                                            ${internet?.isp_internet_quality_id},${internet?.isp_speed_test[0]?.upload},
                                                            ${internet?.isp_speed_test[0]?.download},
@@ -230,6 +232,17 @@
     
                                          </button>
                                      </div>
+                                      <div
+                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+    
+                                         <button  title="Insert Area" class="btn-submit p-1 rounded-full"
+                                          data-areas='${encodeURIComponent(JSON.stringify(internet?.isp_area_details ?? []))}' 
+                                         onclick="loadAreaModal(this,${internet?.pk_isp_details_id},${index + 1})">
+    
+                                             @include('SchoolSide.components.svg.area_w_8')
+    
+                                         </button>
+                                     </div>
                                      <div  
                                          class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
                                       
@@ -237,21 +250,10 @@
                                             title="Internet Information"
                                             onclick="${internet.isp_info.length > 0 
                                                 ? `showTableInfo(${internet.pk_isp_details_id})`
-                                                : `showInfoModal(${internet.pk_isp_details_id})`
+                                                : `showInfoModal(${internet.pk_isp_details_id},${index+ 1})`
                                             }"
                                             class="${internet.isp_info.length > 0  ? 'theme-button' : 'btn-cancel'} p-1 rounded-full">
-                                             <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                     stroke-linejoin="round"></g>
-                                                 <g id="SVGRepo_iconCarrier">
-                                                     <path fill-rule="evenodd" clip-rule="evenodd"
-                                                         d="M13.6 3H10V6.6H13.6V3ZM13.6 10.2H10V21H13.6V10.2Z"
-                                                         fill="currentColor">
-                                                     </path>
-                                                 </g>
-                                             </svg>
+                                              @include('SchoolSide.components.svg.wifi_w_8')
                                          </button>
     
                                      </div>
@@ -272,7 +274,7 @@
 
                                          <thead>
                                              <tr>
-                                                 <td colspan="8" class="top-header">
+                                                 <td colspan="7" class="top-header">
                                                      INTERNET SERVICE PROVIDER
                                                  </td>
                                              </tr>
@@ -292,10 +294,7 @@
                                                  <td class=" sub-header    text-center tracking-wider">
                                                      Quality
                                                  </td>
-                                                 <td class="sub-header   text-center  tracking-wider">
-                                                     Area Covered
-                                                 </td>
-
+                                                 
                                              </tr>
                                          </thead>
                                          <tbody class="tracking-wide">
@@ -334,47 +333,7 @@
                                                      ${internet?.isp_internet_quality?.name} </td>
 
 
-                                                 <td class="td-cell">
-                                                     <div class="flex flex-col">
-                                                         <div class="  text-left mb-2">
-                                                             <div class="flex justify-start  ">
-
-                                                                 <button title="Show Info Modal" type="button"
-                                                                     onclick="showInsertArea(${internet?.pk_isp_details_id ?? ''}, ${index + 1}) "
-                                                                     class="btn-submit rounded-sm px-2 py-0">
-                                                                     Insert Area
-                                                                 </button>
-
-                                                             </div>
-                                                         </div>
-                                                         ${(internet?.isp_area_details ?? []).map(area => `
-                                                             <div
-                                                                 class="flex md:flex-row flex-col justify-between md:gap-5 gap-2 border border-gray-300 px-2 py-1 rounded-sm shadow-sm mb-1">
-                                                                 <div class="font-normal whitespace-nowrap"
-                                                                     data-id="${area?.isp_area_available?.pk_isp_area_available_id ?? ''}">
-
-                                                                     ${area?.isp_area_available?.name ?? ''}
-
-
-                                                                 </div>
-                                                                 <div class="flex flex-row gap-2">
-                                                                     <button type="button"
-                                                                         onclick="editAreaModal(${internet?.pk_isp_details_id ?? ''}, ${area?.isp_area_available?.pk_isp_area_available_id ?? ''})"
-                                                                         class="btn-update px-2 py-0 rounded-sm">Edit
-                                                                     </button>
-                                                                     <button type="button"
-                                                                         onclick="deleteArea(${internet?.pk_isp_details_id ?? ''}, ${area?.isp_area_available?.pk_isp_area_available_id ?? ''})"
-                                                                         class="btn-delete px-2 py-0 rounded-sm">Remove
-                                                                     </button>
-                                                                 </div>
-                                                             </div>
-                                                         `).join('')}
-                                                     </div>
-
-
-
-                                                 </td>
-
+                                                 
 
                                              </tr>
                                          </tbody>

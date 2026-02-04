@@ -57,7 +57,7 @@
              <div
                  class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
-                 <button id="btnDiv2" onclick="showDiv2()" class="  btn-cancel rounded-full flex p-1  ">
+                 <button id="btnDiv2" onclick="showDiv2()" class="btn-gray rounded-full flex p-1  ">
                      @include('SchoolSide.components.svg.report_w_8')
 
                  </button>
@@ -65,34 +65,33 @@
          </div>
          <div id="divContainer1">
              <div class="flex justify-start my-2">
-
                  <button title="Show Info Modal" type="button" onclick="openISPDetailsModal()" class="theme-button">
                      Add New ISP
                  </button>
-
              </div>
              <div id="internetCardContainer">
-
              </div>
-
          </div>
          <div id="divContainer2" class="hidden">
              <div id="actionContainer"></div>
              <div id="printableArea">
                  @include('SchoolSide.components.print-header')
-
-                 <div id="report-container">
+                 <div class="overflow-x-auto shadow-md">
+                     <div id="report-container">
+                     </div>
                  </div>
              </div>
          </div>
      </div>
      @include('SchoolSide.ISP.partials.scripts')
-     @include('SchoolSide.ISPQ._tableReport')
+
      @include('SchoolSide.components.print')
-     @include('SchoolSide.ISP.partials._areaModal')
-     @include('SchoolSide.ISP.partials._detailsModal')
-     @include('SchoolSide.ISP.partials._modalAddInfo')
-     @include('SchoolSide.ISP.partials._modalEditInfo')
-     @include('SchoolSide.ISP.partials._tableInfo')
+     @include('SchoolSide.ISP.partials._areaModals')
+     @include('SchoolSide.ISP.partials._internetModals')
+     @include('SchoolSide.ISP.partials._infoModals')
+     @include('SchoolSide.ISP.partials._showInfo')
+     @include('SchoolSide.ISP.partials._showArea')
      @include('SchoolSide.components._scriptSwitchButton')
+     {{-- FROM ISP QUESTION FOLDER --}}
+     @include('SchoolSide.ISP.partials._tableReportandModal')
  @endsection
