@@ -209,7 +209,7 @@
     
                                     
                                      <div
-                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                                         class="action-button">
     
                                          <button title="Edit ISP" class="btn-update p-1 rounded-full"
                                              onclick='editISPDetailsModal(${index+1},${internet?.pk_isp_details_id},
@@ -223,7 +223,7 @@
                                          </button>
                                      </div>
                                      <div
-                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                                         class="action-button">
     
                                          <button type="button" title="Remove ISP" onclick="deleteISP(${internet?.id})"
                                              class="btn-delete p-1 rounded-full">
@@ -233,7 +233,7 @@
                                          </button>
                                      </div>
                                       <div
-                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                                         class="action-button">
     
                                          <button  title="Insert Area" class="btn-submit p-1 rounded-full"
                                           data-areas='${encodeURIComponent(JSON.stringify(internet?.isp_area_details ?? []))}' 
@@ -244,7 +244,7 @@
                                          </button>
                                      </div>
                                      <div  
-                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                                         class="action-button">
                                       
                                         <button
                                             title="Internet Information"
@@ -258,7 +258,7 @@
     
                                      </div>
                                      <div
-                                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                                         class="action-button">
     
                                          <button id="toggle-button-${index + 1}" class="btn-gray p-1 rounded-full"
                                              onclick="toggleCollapse('isp-container-${index + 1}',${index + 1})">

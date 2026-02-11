@@ -5,8 +5,10 @@ namespace App\Http\Controllers\SchoolEquipment;
 use App\Http\Controllers\Controller;
 use App\Models\School;
 use App\Models\SchoolEquipment\SchoolEquipment;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class SchoolEquipmentController extends Controller
 {
@@ -33,48 +35,78 @@ class SchoolEquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'property_number'            => 'required|string|max:100|unique:school_equipment,property_number',
-            'old_property_number'        => 'nullable|string|max:100',
-            'serial_number'              => 'required|string|max:100',
+        try {
 
-            'equipment_item_id'          => 'required|exists:school_equipment_items,id',
-            'unit_of_measure_id'         => 'required|exists:school_equipment_unit_of_measures,id',
-            'manufacturer_id'            => 'nullable|exists:school_equipment_manufacturers,id',
+            $validated = $request->validate([
+                'property_number'            => 'required|string|max:100|unique:school_equipment,property_number',
+                'old_property_number'        => 'nullable|string|max:100',
+                'serial_number'              => 'required|string|max:100',
 
-            'model'                      => 'nullable|string|max:255',
-            'specifications'             => 'nullable|string|max:255',
-            'supplier_or_distributor'    => 'nullable|string|max:255',
+                'unit_of_measure_id'         => 'required|exists:school_equipment_unit_of_measures,id',
+                'manufacturer_id'            => 'nullable|exists:school_equipment_manufacturers,id',
 
-            'category_id'                => 'nullable|exists:school_equipment_categories,id',
-            'classification_id'          => 'nullable|exists:school_equipment_classifications,id',
+                'model'                      => 'nullable|string|max:255',
+                'specifications'             => 'nullable|string|max:255',
+                'supplier_or_distributor'    => 'nullable|string|max:255',
 
-            'non_dcp'                    => 'required|boolean',
-            'dcp_batch_id'               => 'nullable|exists:dcp_batches,pk_dcp_batches_id',
-            'pmp_reference_no'           => 'nullable|string|max:255|unique:school_equipment,pmp_reference_no',
-            'gl_sl_code'                 => 'nullable|string|max:255|unique:school_equipment,gl_sl_code',
-            'uacs_code'                  => 'nullable|string|max:255|unique:school_equipment,uacs_code',
+                'category_id'                => 'nullable|exists:school_equipment_categories,id',
+                'classification_id'          => 'nullable|exists:school_equipment_classifications,id',
 
-            'acquisition_cost'           => 'nullable|numeric|min:0',
-            'acquisition_date'           => 'nullable|date',
+                'non_dcp'                    => 'required|boolean',
+                'dcp_batch_id'               => 'nullable|exists:dcp_batches,pk_dcp_batches_id',
+                'dcp_batch_item_id'          => 'nullable|exists:dcp_batch_items,pk_dcp_batch_items_id',
+                'non_dcp_item_id'            => 'nullable|exists:non_dcp_item,pk_non_dcp_item_id',
 
-            'mode_of_acquisition_id'     => 'nullable|exists:school_equipment_mode_of_acquisitions,id',
-            'source_of_acquisition_id'   => 'nullable|exists:school_equipment_source_of_acquisitions,id',
+                'pmp_reference_no'           => 'nullable|string|max:255|unique:school_equipment,pmp_reference_no',
+                'gl_sl_code'                 => 'nullable|string|max:255|unique:school_equipment,gl_sl_code',
+                'uacs_code'                  => 'nullable|string|max:255|unique:school_equipment,uacs_code',
 
-            'donor'                      => 'nullable|string|max:255',
-            'source_of_fund_id'          => 'nullable|exists:school_equipment_source_of_funds,id',
-            'allotment_class_id'         => 'nullable|exists:school_equipment_allotment_classes,id',
+                'acquisition_cost'           => 'nullable|numeric|min:0',
+                'acquisition_date'           => 'nullable|date',
 
-            'remarks'                    => 'nullable|string|max:1000',
-        ]);
+                'mode_of_acquisition_id'     => 'nullable|exists:school_equipment_mode_of_acquisitions,id',
+                'source_of_acquisition_id'   => 'nullable|exists:school_equipment_source_of_acquisitions,id',
 
-        // ✅ Add fields NOT coming from the form
-        $validated['school_id'] = Auth::guard('school')->user()->school->pk_school_id;
+                'donor'                      => 'nullable|string|max:255',
+                'source_of_fund_id'          => 'nullable|exists:school_equipment_source_of_funds,id',
+                'allotment_class_id'         => 'nullable|exists:school_equipment_allotment_classes,id',
 
-        // ✅ CLEAN CREATE
-        SchoolEquipment::create($validated);
+                'remarks'                    => 'nullable|string|max:1000',
+            ]);
+            if ($validated['non_dcp'] == 1) {
+                $validated['dcp_batch_id'] = null;
+                $validated['dcp_batch_item_id'] = null;
+            } else {
+                $validated['non_dcp_item_id'] = null;
+            }
+            // ✅ Add fields NOT coming from the form
+            $validated['school_id'] = Auth::guard('school')->user()->school->pk_school_id;
 
-        return redirect()->back()->with('success', 'Equipment successfully added.');
+            // ✅ CLEAN CREATE
+            $schoolEquipment =  SchoolEquipment::create($validated);
+            return response()->json([
+                'success' => true,
+                'message' => 'Equipment successfully added.'
+            ], 201);
+        } catch (ValidationException $e) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Validation errors occurred.',
+                    'errors' => $e->errors(),
+                ],
+                422
+            );
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'An error occurred while processing your request.',
+                    'error' => $e->getMessage(),
+                ],
+                500
+            );
+        }
     }
 
     /**
@@ -98,46 +130,72 @@ class SchoolEquipmentController extends Controller
      */
     public function update(Request $request)
     {
-        $validated = $request->validate([
 
-            'property_number'            => 'required|string|max:100',
-            'old_property_number'        => 'nullable|string|max:100',
-            'serial_number'              => 'required|string|max:100',
+        try {
 
-            'equipment_item_id'          => 'required|exists:school_equipment_items,id',
-            'unit_of_measure_id'         => 'required|exists:school_equipment_unit_of_measures,id',
-            'manufacturer_id'            => 'nullable|exists:school_equipment_manufacturers,id',
+            $validated = $request->validate([
 
-            'model'                      => 'nullable|string|max:255',
-            'specifications'             => 'nullable|string|max:255',
-            'supplier_or_distributor'    => 'nullable|string|max:255',
 
-            'category_id'                => 'nullable|exists:school_equipment_categories,id',
-            'classification_id'          => 'nullable|exists:school_equipment_classifications,id',
+                'property_number'            => 'required|string|max:100',
+                'old_property_number'        => 'nullable|string|max:100',
+                'serial_number'              => 'required|string|max:100',
 
-            'non_dcp'                    => 'required|boolean',
-            'dcp_batch_id'               => 'nullable|exists:dcp_batches,pk_dcp_batches_id',
-            'pmp_reference_no'           => 'nullable|string|max:255',
-            'gl_sl_code'                 => 'nullable|string|max:255',
-            'uacs_code'                  => 'nullable|string|max:255',
+                'unit_of_measure_id'         => 'required|exists:school_equipment_unit_of_measures,id',
+                'manufacturer_id'            => 'nullable|exists:school_equipment_manufacturers,id',
 
-            'acquisition_cost'           => 'nullable|numeric|min:0',
-            'acquisition_date'           => 'nullable|date',
+                'model'                      => 'nullable|string|max:255',
+                'specifications'             => 'nullable|string|max:255',
+                'supplier_or_distributor'    => 'nullable|string|max:255',
 
-            'mode_of_acquisition_id'     => 'nullable|exists:school_equipment_mode_of_acquisitions,id',
-            'source_of_acquisition_id'   => 'nullable|exists:school_equipment_source_of_acquisitions,id',
+                'category_id'                => 'nullable|exists:school_equipment_categories,id',
+                'classification_id'          => 'nullable|exists:school_equipment_classifications,id',
 
-            'donor'                      => 'nullable|string|max:255',
-            'source_of_fund_id'          => 'nullable|exists:school_equipment_source_of_funds,id',
-            'allotment_class_id'         => 'nullable|exists:school_equipment_allotment_classes,id',
+                'non_dcp'                    => 'required|boolean',
+                'dcp_batch_id'               => 'nullable|exists:dcp_batches,pk_dcp_batches_id',
+                'dcp_batch_item_id'          => 'nullable|exists:dcp_batch_items,pk_dcp_batch_items_id',
+                'non_dcp_item_id'            => 'nullable|exists:non_dcp_item,pk_non_dcp_item_id',
 
-            'remarks'                    => 'nullable|string|max:1000',
-        ]);
-        $equipment_result = SchoolEquipment::where('id', $request->id)->update($validated);
-        if ($equipment_result) {
-            return redirect()->back()->with('success', 'Equipment successfully updated.');
-        } else {
-            return redirect()->back()->with('error', 'No changes were made.');
+                'pmp_reference_no'           => 'nullable|string|max:255',
+                'gl_sl_code'                 => 'nullable|string|max:255',
+                'uacs_code'                  => 'nullable|string|max:255',
+
+                'acquisition_cost'           => 'nullable|numeric|min:0',
+                'acquisition_date'           => 'nullable|date',
+
+                'mode_of_acquisition_id'     => 'nullable|exists:school_equipment_mode_of_acquisitions,id',
+                'source_of_acquisition_id'   => 'nullable|exists:school_equipment_source_of_acquisitions,id',
+
+                'donor'                      => 'nullable|string|max:255',
+                'source_of_fund_id'          => 'nullable|exists:school_equipment_source_of_funds,id',
+                'allotment_class_id'         => 'nullable|exists:school_equipment_allotment_classes,id',
+
+                'remarks'                    => 'nullable|string|max:1000',
+            ]);
+            if ($validated['non_dcp'] == 1) {
+                $validated['dcp_batch_id'] = null;
+                $validated['dcp_batch_item_id'] = null;
+            } else {
+                $validated['non_dcp_item_id'] = null;
+            }
+            $equipment_result = SchoolEquipment::where('id', $request->id)->update($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Equipment successfully updated.',
+                'data' => $equipment_result
+            ], 201);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred',
+                'errors' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -149,9 +207,15 @@ class SchoolEquipmentController extends Controller
         $schoolEquipment = SchoolEquipment::findOrFail($id);
         $remove_id = $schoolEquipment->delete();
         if ($remove_id) {
-            return redirect()->back()->with('success', 'Equipment successfully deleted.');
+            return response()->json([
+                'success' => true,
+                'message' => 'Equipment successfully deleted.'
+            ], 200);
         } else {
-            return redirect()->back()->with('error', 'Failed to delete equipment.');
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete equipment.'
+            ], 500);
         }
     }
 }

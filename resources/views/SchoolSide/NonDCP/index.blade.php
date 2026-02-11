@@ -4,46 +4,13 @@
     @yield('title', 'DCP Dashboard')</title>
 
 @section('content')
-    <div class=" p-6 ">
+    <div class="md:p-6 p-2 ">
         <div class="flex justify-start space-x-4">
-            <div
-                class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
-                <div class="text-white bg-blue-600 p-2 rounded-full">
-                    <svg class="w-10 h-10" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve"
-                        fill="currentColor">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <style type="text/css">
-                                .st0 {
-                                    fill: none;
-                                    stroke: currentColor;
-                                    stroke-width: 2;
-                                    stroke-linecap: round;
-                                    stroke-linejoin: round;
-                                    stroke-miterlimit: 10;
-                                }
-                            </style>
-                            <g>
-                                <path
-                                    d="M16,12H3c-0.6,0-1,0.4-1,1v9c0,0.6,0.4,1,1,1h13c0.6,0,1-0.4,1-1v-9C17,12.4,16.6,12,16,12z">
-                                </path>
-                                <path d="M13,25H6c-0.6,0-1,0.4-1,1s0.4,1,1,1h7c0.6,0,1-0.4,1-1S13.6,25,13,25z"></path>
-                                <path
-                                    d="M29,5H19c-0.6,0-1,0.4-1,1v20c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V6C30,5.4,29.6,5,29,5z M28,7v9h-8V7H28z">
-                                </path>
-                                <path d="M22,11h4c0.6,0,1-0.4,1-1s-0.4-1-1-1h-4c-0.6,0-1,0.4-1,1S21.4,11,22,11z"></path>
-                                <path d="M26,12h-1c-0.6,0-1,0.4-1,1s0.4,1,1,1h1c0.6,0,1-0.4,1-1S26.6,12,26,12z"></path>
-                            </g>
-                        </g>
-                    </svg>
-                </div>
-            </div>
+
             <div>
 
-                <div class="text-2xl font-bold text-blue-800">Non DCP Items</div>
-                <div class="text-md font-medium tracking-wider text-gray-600 mb-4">eg. Computer, Laptop, Smart TV - Unit
+                <div class="page-title">Non DCP Items</div>
+                <div class="page-subtitle">eg. Computer, Laptop, Smart TV - Unit
                     Price, Date
                     Acquired
                 </div>
@@ -52,76 +19,67 @@
 
         </div>
         <div class="flex justify-start my-2">
-            <div
-                class="h-10 w-auto bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
-                <button title="Show Info Modal" type="button" onclick="openModal()"
-                    class="btn-submit h-8 py-1 px-4 rounded-full">
-                    Add New Item
-                </button>
-            </div>
+            <button title="Show Info Modal" type="button" onclick="openModal()" class="theme-button py-1 px-4 rounded">
+                Add New Item
+            </button>
+
         </div>
         <div class="overflow-x-auto">
-            <table class="table-auto  border border-gray-300 w-full table-collapse">
-                <thead class="bg-gray-100  border border-gray-500 text-white">
+            <table class="table-auto  border border-gray-800 w-full table-collapse">
+                <thead>
                     <tr>
-                        <th
-                            class="tracking-wider whitespace-nowrap border-b border-gray-500  py-2 px-2 font-semibold  text-gray-800">
+                        <td class="top-header" colspan="9">NON DCP ITEMS</td>
+                    </tr>
+                    <tr>
+                        <th class="sub-header text-center">
                             No. </th>
 
-                        <th
-                            class="tracking-wider whitespace-nowrap  border-b border-gray-500   py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Item - Description </th>
-                        <th
-                            class="tracking-wider whitespace-nowrap  border-b border-gray-500   py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Unit - Price </th>
-                        <th
-                            class="tracking-wider whitespace-nowrap  border-b border-gray-500   py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Date Acquired </th>
-                        <th
-                            class="tracking-wider whitespace-nowrap   border-b border-gray-500  py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Functional </th>
-                        <th
-                            class="tracking-wider whitespace-nowrap   border-b border-gray-500  py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Fund Source </th>
-                        <th
-                            class="tracking-wider whitespace-nowrap   border-b border-gray-500  py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Item Holder - Location </th>
-                        <th
-                            class="tracking-wider whitespace-nowrap   border-b border-gray-500  py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Remarks</th>
-                        <th
-                            class="tracking-wider whitespace-nowrap  border-b border-gray-500   py-2 px-2 font-semibold  text-gray-800">
+                        <th class="sub-header text-center">
                             Action</th>
 
                     </tr>
                 </thead>
                 <tbody class="tracking-wider">
 
-                    @foreach ($non_dcp as $index => $item)
+                    @forelse ($non_dcp as $index => $item)
                         <tr>
-                            <td class="py-2 px-2 bg-gray-300 border border-gray-500 text-center py-2 text-center">
+                            <td class="td-cell text-center">
                                 {{ $index + 1 }}</td>
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">{{ $item->item_description }}
+                            <td class="td-cell text-center">{{ $item->item_description }}
                             </td>
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">{{ $item->unit_price }}</td>
+                            <td class="td-cell text-center">{{ $item->unit_price }}</td>
 
-                            <td class="py-2 px-2 border border-gray-300 text-center">
-                                {{ \Carbon\Carbon::parse($item->date_acquired)->format('F j Y') }}
+                            <td class="td-cell text-center">
+                                {{ \Carbon\Carbon::parse($item->date_acquired)->format('F j, Y') }}
                             </td>
 
 
 
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">{{ $item->total_functional }}
+                            <td class="td-cell text-center">{{ $item->total_functional }}
                                 /
                                 {{ $item->total_item }}</td>
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">
+                            <td class="td-cell text-center">
                                 {{ $item->fund_source->name ?? 'N/A' }}
                             </td>
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">
+                            <td class="td-cell text-center">
                                 {{ $item->item_holder_and_location ?? 'N/A' }}</td>
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">{{ $item->remarks }}</td>
-                            <td class="py-2 px-2 border border-gray-300 py-2 text-center">
+                            <td class="td-cell text-center">{{ $item->remarks }}</td>
+                            <td class="td-cell text-center">
                                 <div class="flex flex-row gap-2 justify-center">
 
 
@@ -181,7 +139,13 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="9" class="text-center py-4 text-gray-500">No Non DCP items found for your
+                                school.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

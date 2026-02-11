@@ -12,7 +12,6 @@
 
     @endphp
     <div class="modal-content {{ $size ?? 'max-w-md' }} thin-scroll relative">
-
         {{-- @if ($size !== 'small-modal' && $size !== 'medium-modal')
             <div class="bg-[#16247B] flex justify-between items-center w-full text-center text-white text-base p-2">
                 <div>
@@ -58,6 +57,5 @@
             </div>
             {{ $slot }}
         </div>
-
     </div>
 </div>

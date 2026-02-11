@@ -1,4 +1,4 @@
-<svg fill="currentColor" class="h-8 w-8" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+<svg fill="currentColor" class="sm:h-8 sm:w-8 h-6 w-6" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 390 390" xml:space="preserve">
     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

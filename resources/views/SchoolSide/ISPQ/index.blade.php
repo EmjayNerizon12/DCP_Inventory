@@ -3,11 +3,8 @@
 
 @section('content')
     <div class="p-6 flex flex-col gap-3">
-
-        @include('SchoolSide.ISPQ.partials._modalInsertInfo')
+        @include('SchoolSide.ISPQ.partials._modalAddInfo')
         @include('SchoolSide.ISPQ.partials._modalEditInfo')
-
-
         @php
             $hasAnswers = \App\Models\ISPQ\ISPAnswer::where(
                 'school_id',
@@ -52,94 +49,93 @@
                 </div>
             @endif
         </div>
-
-        <table class=" border border-gray-300 tracking-wider bg-white w-full border border-gray-300 shadow-md p-4">
-            <thead>
-                <tr>
-                    <td class="top-header" colspan="3">overall Internet Information</td>
-                </tr>
-                <tr>
-                    <th class="sub-header text-center text-base">No.</th>
-                    <th class="sub-header text-center text-base">Question</th>
-                    <th class="sub-header text-center text-base">Answer(s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($isp_question as $question)
+        <div class="overflow-x-auto shadow-md">
+            <table class=" border border-gray-300 tracking-wider bg-white w-full border border-gray-300 shadow-md p-4">
+                <thead>
                     <tr>
-                        <td class="td-cell text-center">
-                            {{ $loop->iteration }}</td>
-                        <td class="td-cell font-semibold">{{ $question->question_text }}</td>
-                        <td class="td-cell">
-                            @foreach ($question->choices as $choice)
-                                @if ($question->question_type == 'multiple')
-                                    @php
-                                        $answer = \App\Models\ISPQ\ISPAnswer::where('choice_id', $choice->id)
-                                            ->with('choice')
-                                            ->where('school_id', Auth::guard('school')->user()->pk_school_id)
-                                            ->first();
+                        <td class="top-header" colspan="3">overall Internet Information</td>
+                    </tr>
+                    <tr>
+                        <th class="sub-header text-center text-base">No.</th>
+                        <th class="sub-header text-center text-base">Question</th>
+                        <th class="sub-header text-center text-base">Answer(s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($isp_question as $question)
+                        <tr>
+                            <td class="td-cell text-center">
+                                {{ $loop->iteration }}</td>
+                            <td class="td-cell font-semibold">{{ $question->question_text }}</td>
+                            <td class="td-cell">
+                                @foreach ($question->choices as $choice)
+                                    @if ($question->question_type == 'multiple')
+                                        @php
+                                            $answer = \App\Models\ISPQ\ISPAnswer::where('choice_id', $choice->id)
+                                                ->with('choice')
+                                                ->where('school_id', Auth::guard('school')->user()->pk_school_id)
+                                                ->first();
 
-                                    @endphp
+                                        @endphp
 
-                                    @php
-                                        $text = $answer ? $answer->choice->choice_text : null;
+                                        @php
+                                            $text = $answer ? $answer->choice->choice_text : null;
 
-                                    @endphp
+                                        @endphp
 
-                                    @if ($text)
-                                        {{ $text }}
+                                        @if ($text)
+                                            {{ $text }}
 
-                                        @if ($choice->is_other == 1 && $answer->other_value)
-                                            ({{ $answer->other_value }})
+                                            @if ($choice->is_other == 1 && $answer->other_value)
+                                                ({{ $answer->other_value }})
+                                            @endif
+
+                                            <br>
                                         @endif
-
+                                    @elseif ($question->question_type == 'single')
+                                        @php
+                                            $answer = \App\Models\ISPQ\ISPAnswer::where('choice_id', $choice->id)
+                                                ->with('choice')
+                                                ->where('school_id', Auth::guard('school')->user()->pk_school_id)
+                                                ->first();
+                                        @endphp
+                                        {{ $answer ? $answer->choice->choice_text : '' }}
+                                    @elseif ($question->question_type == 'boolean')
+                                        @php
+                                            $answer = \App\Models\ISPQ\ISPAnswer::where('choice_id', $choice->id)
+                                                ->with('choice')
+                                                ->where('school_id', Auth::guard('school')->user()->pk_school_id)
+                                                ->first();
+                                        @endphp
+                                        {{ $answer ? $answer->choice->choice_text : '' }}
+                                    @else
                                         <br>
                                     @endif
-                                @elseif ($question->question_type == 'single')
+                                @endforeach
+                                @if ($question->question_type == 'text')
                                     @php
-                                        $answer = \App\Models\ISPQ\ISPAnswer::where('choice_id', $choice->id)
-                                            ->with('choice')
+                                        $answer = \App\Models\ISPQ\ISPAnswer::where('question_id', $question->id)
                                             ->where('school_id', Auth::guard('school')->user()->pk_school_id)
                                             ->first();
                                     @endphp
-                                    {{ $answer ? $answer->choice->choice_text : '' }}
-                                @elseif ($question->question_type == 'boolean')
+                                    {{ $answer ? $answer->text_value : '' }}
+                                @elseif ($question->question_type == 'number')
                                     @php
-                                        $answer = \App\Models\ISPQ\ISPAnswer::where('choice_id', $choice->id)
-                                            ->with('choice')
+                                        $answer = \App\Models\ISPQ\ISPAnswer::where('question_id', $question->id)
                                             ->where('school_id', Auth::guard('school')->user()->pk_school_id)
-                                            ->first();
+                                            ->value('numeric_value');
                                     @endphp
-                                    {{ $answer ? $answer->choice->choice_text : '' }}
-                                @else
+                                    @if ($answer !== null)
+                                        ₱{{ number_format($answer, 2) }}
+                                    @endif
                                     <br>
                                 @endif
-                            @endforeach
-                            @if ($question->question_type == 'text')
-                                @php
-                                    $answer = \App\Models\ISPQ\ISPAnswer::where('question_id', $question->id)
-                                        ->where('school_id', Auth::guard('school')->user()->pk_school_id)
-                                        ->first();
-                                @endphp
-                                {{ $answer ? $answer->text_value : '' }}
-                            @elseif ($question->question_type == 'number')
-                                @php
-                                    $answer = \App\Models\ISPQ\ISPAnswer::where('question_id', $question->id)
-                                        ->where('school_id', Auth::guard('school')->user()->pk_school_id)
-                                        ->value('numeric_value');
-                                @endphp
-                                @if ($answer !== null)
-                                    ₱{{ number_format($answer, 2) }}
-                                @endif
-                                <br>
-                            @endif
-                        <td>
+                            <td>
 
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection

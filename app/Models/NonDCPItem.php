@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SchoolEquipment\SchoolEquipment;
 use Illuminate\Database\Eloquent\Model;
 
 class NonDCPItem extends Model
@@ -29,5 +30,9 @@ class NonDCPItem extends Model
     public function school()
     {
         return $this->belongsTo(School::class, 'school_id', 'pk_school_id');
+    }
+    public function schoolEquipment()
+    {
+        return $this->hasMany(SchoolEquipment::class, 'non_dcp_item_id', 'pk_non_dcp_item_id');
     }
 }

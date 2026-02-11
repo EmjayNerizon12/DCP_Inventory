@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SchoolEquipment\SchoolEquipmentAccountabilty;
 use Illuminate\Database\Eloquent\Model;
 
 class SchoolEmployee extends Model
@@ -14,6 +15,7 @@ class SchoolEmployee extends Model
         'lname',
         'birthdate',
         'employee_number',
+        'image_path',
         'position_title_id', //fk
         'salary_grade',
         'school_id',
@@ -73,5 +75,14 @@ class SchoolEmployee extends Model
     public function sourceOfFund()
     {
         return $this->belongsTo(EmpSourceOfFund::class, 'sources_of_fund_id', 'id');
+    }
+    public function schoolEquipmentAccounbility(){
+        return $this->hasMany(SchoolEquipmentAccountabilty::class, 'accountable_employee_id', 'pk_schools_employee_id');
+    }
+     public function schoolEquipmentCustoian(){
+        return $this->hasMany(SchoolEquipmentAccountabilty::class, 'custodian', 'pk_schools_employee_id');
+    }
+     public function schoolEquipmentEndUser(){
+        return $this->hasMany(SchoolEquipmentAccountabilty::class, 'end_user', 'pk_schools_employee_id');
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Models\SchoolEquipment;
 
 use App\Models\DCPBatch;
+use App\Models\DCPBatchItem;
+use App\Models\NonDCPItem;
 use App\Models\School;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +24,8 @@ class SchoolEquipment extends Model
         'unit_of_measure_id',
         'manufacturer_id',
         'dcp_batch_id',
+        'dcp_batch_item_id',
+        'non_dcp_item_id',
         'category_id',
         'classification_id',
         'mode_of_acquisition_id',
@@ -106,5 +110,19 @@ class SchoolEquipment extends Model
     public function equipmentStatuses()
     {
         return $this->hasMany(SchoolEquipmentStatus::class, 'school_equipment_id', 'id');
+    }
+    public function equipmentAccountability()
+    {
+        return $this->hasMany(SchoolEquipmentAccountabilty::class, 'school_equipment_id', 'id');
+    }
+    public function equipmentDocument()
+    {
+        return $this->hasMany(SchoolEquipmentDocument::class, 'school_equipment_id', 'id');
+    }
+    public function dcpBatchItem(){
+        return $this->belongsTo(DCPBatchItem::class, 'dcp_batch_item_id', 'pk_dcp_batch_items_id');
+    }
+    public function nonDCPItem(){
+        return $this->belongsTo(NonDCPItem::class, 'non_dcp_item_id', 'pk_non_dcp_item_id');
     }
 }

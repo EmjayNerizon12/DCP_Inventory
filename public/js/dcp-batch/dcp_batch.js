@@ -1,3 +1,4 @@
+console.log(x);
 $('#searchBatch').on('keyup', function () {
     const keyword = $(this).val();
 
@@ -70,7 +71,7 @@ $('#searchBatch').on('keyup', function () {
 
 
     // Add form submission
-    const form = document.getElementById('dcp_add_form');
+        const form = document.getElementById('dcp_add_form');
     if (form) {
         form.addEventListener('submit', function (e) {
             e.preventDefault();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\School\DCPBatchItemController;
 use App\Http\Controllers\Api\School\ISPController;
 use App\Http\Controllers\Api\School\ISPReportController;
 use App\Http\Controllers\Api\School\ItemConditionController;
+use App\Http\Controllers\Api\School\SchoolEquipmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\School\SchoolInventoryController;
 use App\Models\SchoolEmployee;
@@ -27,5 +28,8 @@ Route::prefix('School')->group(function () {
         return response()->json(['success' => true, 'data' => $employees], 200);
     });
     Route::get('schoolInternet/{schoolId}', [ISPController::class, 'index']);
+    Route::get('schoolEquipment/{schoolId}', [SchoolEquipmentController::class, 'index']);
+    Route::get('dcpBatchItem/items/{dcpBatchId}', [DCPBatchItemController::class, 'show']);
+    Route::get('dcpBatchItem/show-item/{dcpBatchItemId}', [DCPBatchItemController::class, 'showItems']);
 });
 Route::post('login', [AuthController::class, 'login']);

@@ -17,6 +17,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class SchoolEquipmentContoller extends Controller
 {
@@ -40,24 +41,24 @@ class SchoolEquipmentContoller extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $validated = $request->validate([
-            "selected_equipment" => "required|integer",       // CCTV, Biometric
-            "e_cctv_type"      => " integer",      // Brand/Model
-            "e_biometric_type"      => "integer",      // Brand/Model
-            "e_brand"          => "required|integer",      // Brand/Model
-            "e_power_source"   => "required|integer",       // PoE, DC adapter, etc.
-            "e_location"       => "required|integer",      // Building, room, outdoor
-            "date_installed"   => "required|date",                // Must be a valid date
-            "total_amount"     => "required|numeric|min:0",       // Money value
-            "e_installer"      => "required|integer",      // Installer name
-            "e_incharge"       => "required|integer ",      // Person in-charge
 
-            "no_of_cctv"      => "nullable|integer ",       // Dome, Bullet, PTZ (nullable if not CCTV)
-            "no_of_functional" => "required|integer|min:0",       // Number of functional units
-        ]);
-        $school_id =  Auth::guard("school")->user()->school->pk_school_id;
         try {
+            $validated = $request->validate([
+                "selected_equipment" => "required|integer",       // CCTV, Biometric
+                "e_cctv_type"      => " integer",      // Brand/Model
+                "e_biometric_type"      => "integer",      // Brand/Model
+                "e_brand"          => "required|integer",      // Brand/Model
+                "e_power_source"   => "required|integer",       // PoE, DC adapter, etc.
+                "e_location"       => "required|integer",      // Building, room, outdoor
+                "date_installed"   => "required|date",                // Must be a valid date
+                "total_amount"     => "required|numeric|min:0",       // Money value
+                "e_installer"      => "required|integer",      // Installer name
+                "e_incharge"       => "required|integer ",      // Person in-charge
 
+                "no_of_cctv"      => "nullable|integer ",       // Dome, Bullet, PTZ (nullable if not CCTV)
+                "no_of_functional" => "required|integer|min:0",       // Number of functional units
+            ]);
+            $school_id =  Auth::guard("school")->user()->school->pk_school_id;
             $equipment_details = EquipmentDetails::create([
                 'equipment_type_id'           => $validated['selected_equipment'],
                 'equipment_brand_model_id'          => $validated['e_brand'],
@@ -89,11 +90,24 @@ class SchoolEquipmentContoller extends Controller
                     ]);
                 }
                 if (isset($equipment_details) || isset($equipment_biometrics)) {
-                    return redirect()->back()->with('success', 'Equipment added successfully.');
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'New School Equipment added successfully!',
+                    ]);
                 }
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->getMessage(),
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ]);
         }
     }
     public function update(Request $request)

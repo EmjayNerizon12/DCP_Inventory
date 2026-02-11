@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SchoolEquipment\SchoolEquipment;
 use Illuminate\Database\Eloquent\Model;
 
 class DCPBatchItem extends Model
@@ -78,5 +79,8 @@ class DCPBatchItem extends Model
     public function dcpItemCurrentCondition()
     {
         return $this->hasOne(DCPItemCondition::class, 'dcp_batch_item_id', 'pk_dcp_batch_items_id');
+    }
+    public function schoolEquipment(){
+        return $this->hasMany(SchoolEquipment::class, 'dcp_batch_item_id', 'pk_dcp_batch_items_id');
     }
 }

@@ -18,6 +18,8 @@ use App\Http\Controllers\EmpSourceOfFundController;
 use App\Http\Controllers\SchoolEquipmentContoller;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ISPController;
+use App\Http\Controllers\ISPInfo\ISPInfoController;
+use App\Http\Controllers\ISPQ\ISPAnswerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PackagesInformationController;
@@ -47,6 +49,16 @@ use App\Models\DCPBatchItem;
 use App\Models\DCPItemTypes;
 use App\Models\DCPPackageTypes;
 use App\Models\EmpSourceOfFund;
+use App\Models\Equipment\EquipmentBiometricDetails;
+use App\Models\Equipment\EquipmentBiometricType;
+use App\Models\Equipment\EquipmentBrand;
+use App\Models\Equipment\EquipmentCCTVDetails;
+use App\Models\Equipment\EquipmentCCTVType;
+use App\Models\Equipment\EquipmentIncharge;
+use App\Models\Equipment\EquipmentInstaller;
+use App\Models\Equipment\EquipmentLocation;
+use App\Models\Equipment\EquipmentPowerSource;
+use App\Models\Equipment\EquipmentType;
 use App\Models\SchoolData;
 use App\Models\SchoolEmployee;
 use App\Models\SchoolEquipment\SchoolEquipmentDocument;
@@ -101,6 +113,7 @@ Route::post('/School/submit-schooldata', [SchoolDetailsController::class, 'store
 Route::put('/School/update-schooldata', [SchoolDetailsController::class, 'updateSchoolDataForm'])->name('school.update.schooldata');
 Route::get('/School/delete-school-data/{id}', [SchoolDetailsController::class, 'delete_school_data'])->name('school.delete.schooldata');
 Route::get('Admin/Schools-User', [SchoolDetailsController::class, 'user'])->name('user.schools')->middleware('adminRoleOnly');
+Route::get('Admin/Schools-User/api-get-accounts', [SchoolAccountController::class, 'showAccounts'])->name('user.schools.list.account')->middleware('adminRoleOnly');
 Route::get('Schools/index', [SchoolDetailsController::class, 'index'])->name('index.schools')->middleware('adminRoleOnly');
 Route::post('Submit-New-School', [SchoolDetailsController::class, 'store'])->name('store.schools');
 Route::get('/schools/{SchoolID}/edit', [SchoolDetailsController::class, 'edit'])->name('schools.edit');
@@ -108,6 +121,7 @@ Route::delete('/schools/{SchoolID}', [SchoolDetailsController::class, 'destroy']
 Route::get('/schools/{SchoolID}', [SchoolDetailsController::class, 'show'])->name('schools.show');
 Route::post('/update-school/{SchoolID}', [SchoolDetailsController::class, 'updateSchool'])->name('schools.update');
 Route::get('/Admin/schools/search', [SchoolDetailsController::class, 'search_school'])->name('search.schools');
+Route::post('/School/upload-school-logo', [SchoolDetailsController::class, 'uploadSchoolImage'])->name('school.upload.logo');
 Route::get('/Admin/Employee/index', [EmployeeController::class, 'index'])->name('employee.index');
 Route::post('/Admin/Employee/store', [EmployeeController::class, 'store'])->name('employee.store');
 Route::put('/Admin/Employee/update', [EmployeeController::class, 'update'])->name('employee.update');
@@ -199,6 +213,7 @@ Route::get('Admin/api/Reports', [ReportsController::class, 'generateReport'])->n
 Route::get('Admin/api/schools-with-packages', [DCPBatchController::class, 'getSchoolsWithPackages'])->name('api.schools.with.packages');
 Route::get('Admin/api/cost', [ReportsController::class, 'totalCost'])->name('api.reports.cost');
 
+
 Route::resource('emp-cause-of-separation', EmpCauseOfSeparationController::class);
 Route::resource('emp-source-of-fund', EmpSourceOfFundController::class);
 Route::resource('emp-position', EmpPositionController::class);
@@ -209,10 +224,13 @@ Route::resource('emp-ro-office', EmpROOfficeController::class);
 Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
     Route::get('/get-current-conditions', [SchoolDashboardController::class, 'getItemConditionCounts'])->name('schools.get.current_conditions');
     Route::get('/dashboard', [SchoolDashboardController::class, 'index'])->name('school.dashboard');
+
+    //DASHBOARD API
+    Route::get('/Dashboard/api/api-get-dcp-information', [SchoolDashboardController::class, 'getDashboardDCPInformation'])->name('schools.dashboard.DCP-information');
+    Route::get('/Dashboard/api/api-get-information', [SchoolDashboardController::class, 'getDashboardInfomation'])->name('schools.dashboard.information');
     Route::get('/packages-info/{id}', [PackagesInformationController::class, 'index'])->name('schools.packages.info');
     Route::get('items-condition/{id}', [SchoolItemConditionController::class, 'index'])->name('schools.item.condition');
     Route::post('item-condition', [SchoolItemConditionController::class, 'comboSearch'])->name('schools.item.condition.combo');
-
     Route::get('/profile', function () {
 
         $school = Auth::guard('school')->user()->school;
@@ -221,9 +239,8 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
             ->get();
         $submittedGradeLevels = $schoolData->pluck('GradeLevelID')->toArray();
 
-        return view('SchoolSide.SchoolProfile', compact('schoolData', 'submittedGradeLevels'));
+        return view('SchoolSide.SchoolsInfo.index', compact('schoolData', 'submittedGradeLevels'));
     })->name('school.profile');
-
     Route::get('/dcp-service-report', function () {
         return view('SchoolSide.DCPServiceReport');
     })->name('school.dcp_service_report');
@@ -237,7 +254,7 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
             ->orderBy('dcp_batches.created_at', 'desc')
             ->get();
 
-        return view('SchoolSide.DCPInventory', compact('batch_items'));
+        return view('SchoolSide.DCPInventory.DCPInventory', compact('batch_items'));
     })->name('school.dcp_inventory');
 
     Route::get('DCPInventory/{item_id}', [SchoolDCPBatchController::class, 'showItems'])->name('school.dcp_inventory.items');
@@ -247,7 +264,9 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
 
     Route::get('/dcp-batch/{batch}/items', [SchoolDCPBatchController::class, 'items'])->name('school.dcp_items');
     Route::get('/dcp-batch/{batch}/item-status', [SchoolDCPBatchController::class, 'itemStatus'])->name('school.dcp_item_status');
-    Route::get('/dcp-batch/{batch}/warranty', [SchoolDCPBatchController::class, 'warranty'])->name('school.dcp_item_warranty');
+    Route::get('/dcp-batch/{batchId}/item-status/search/{searchTerm?}', [SchoolDCPBatchController::class, 'searchProductFromStatus'])->name('school.dcp_item_status.search');
+
+    Route::get('/dcp-batch/{item}/warranty', [SchoolDCPBatchController::class, 'warranty'])->name('school.dcp_item_warranty');
     Route::put('/dcp-batch/{item}', [SchoolDCPBatchController::class, 'updateItem'])->name('school.dcp_items.update');
     Route::post('update-batch-status/{batchId}', [SchoolDCPBatchController::class, 'updateBatchStatus'])->name('school.update.batch_status');
     Route::put('batch-status/{batchId}', [SchoolDCPBatchController::class, 'editUpdateBatchStatus'])->name('batch_status.update');
@@ -273,7 +292,37 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
     Route::post('/Equipment/store', [SchoolEquipmentContoller::class, 'store'])->name('schools.equipment.store');
     Route::put('/Equipment/update', [SchoolEquipmentContoller::class, 'update'])->name('schools.equipment.update');
     Route::delete('/Equipment/delete/{equipment_id}/{type}', [SchoolEquipmentContoller::class, 'destroy'])->name('schools.equipment.delete');
-
+    Route::get('/CCTV/index', function () {
+        $equipment_type = EquipmentType::all();
+        $equipment_brand_model = EquipmentBrand::all();
+        $equipment_installer = EquipmentInstaller::all();
+        $equipment_incharge = EquipmentIncharge::all();
+        $equipment_location = EquipmentLocation::all();
+        $equipment_power_source = EquipmentPowerSource::all();
+        $cctv_type = EquipmentCCTVType::all();
+        $cctv_info = EquipmentCCTVDetails::where('school_id', Auth::guard('school')->user()->school->pk_school_id)->get();
+        return view("SchoolSide.CCTV.index", compact('cctv_type', 'cctv_info', 'equipment_type', 'equipment_brand_model', 'equipment_installer', 'equipment_incharge', 'equipment_location', 'equipment_power_source'));
+    })->name('schools.cctv.index');
+    Route::get('/Biometrics/index', function () {
+        $equipment_type = EquipmentType::all();
+        $equipment_brand_model = EquipmentBrand::all();
+        $equipment_installer = EquipmentInstaller::all();
+        $equipment_incharge = EquipmentIncharge::all();
+        $equipment_location = EquipmentLocation::all();
+        $equipment_power_source = EquipmentPowerSource::all();
+        $biometric_type = EquipmentBiometricType::all();
+        $biometric_info = EquipmentBiometricDetails::where('school_id', Auth::guard('school')->user()->school->pk_school_id)->get();
+        return view("SchoolSide.Biometrics.index", compact(
+            'biometric_info',
+            'biometric_type',
+            'equipment_type',
+            'equipment_brand_model',
+            'equipment_installer',
+            'equipment_incharge',
+            'equipment_location',
+            'equipment_power_source'
+        ));
+    })->name('schools.biometrics.index');
     Route::get('Report/index', [SchoolReportController::class, 'index'])->name('schools.report.index');
     Route::get('Report/condition', [SchoolReportController::class, 'condition'])->name('schools.report.condition');
     Route::get('Report/api/condition/{condition_id}', [SchoolReportController::class, 'condition_report'])->name('schools.report.api.condition');
@@ -281,6 +330,9 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
     Route::post('Employee/submit', [SchoolEmployeeController::class, 'store'])->name('schools.employee.store');
     Route::put('Employee/update', [SchoolEmployeeController::class, 'update'])->name('schools.employee.update');
     Route::delete('Employee/delete/{id}', [SchoolEmployeeController::class, 'destroy'])->name('schools.employee.destroy');
+    Route::get('Employee/search-school-employee-list/{searchTerm?}', [SchoolEmployeeController::class, 'searchEmployee'])->name('school.employee.list');
+
+
     Route::get('Account/index', [SchoolAccountController::class, 'index'])->name('schools.account.index');
     Route::post('Account/change-password', [SchoolAccountController::class, 'change_password'])->name('schools.account.change-password');
     Route::get('NonDCPItem/index', [SchoolNonDCPItemController::class, 'index'])->name('schools.nondcpitem.index');
@@ -303,7 +355,10 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
         ->parameters([
             'school-equipment-accountability-receiver-type' => 'receiverType'
         ]);
-
+    Route::resource('ISP-Question', ISPAnswerController::class);
+    Route::resource('ISP-Info', ISPInfoController::class);
+    Route::put('ISP-Question', [ISPAnswerController::class, 'update'])
+        ->name('ISP-Question.update');
     Route::get('school-employee-list', [SchoolEmployeeController::class, 'showSchoolEmployees'])->name('school.employee.list');
     Route::get('Employee/get-data', [SchoolEmployeeController::class, 'get_data']);
     //END OF PREFIX SCHOOL

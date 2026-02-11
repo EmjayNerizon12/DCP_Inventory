@@ -90,8 +90,8 @@
                      </div>
                  </div>
                  <div class="text-center">
-                     <div class="text-2xl font-bold text-gray-700">School Equipment Accountability</div>
-                     <div class="text-md text-gray-600 mb-4">Assigning Accountability to School Equipment</div>
+                     <div class="page-title">School Equipment Accountability</div>
+                     <div class="page-subtitle">Assigning Accountability to School Equipment</div>
                  </div>
              </div>
 
@@ -105,11 +105,11 @@
                                 class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                             <option value="">Select </option>
                             ${employees.map(emp => `
-                                     <option value="${emp.pk_schools_employee_id}"
-                                         ${emp.pk_schools_employee_id === data?.accountable_employee_id ? 'selected' : ''}>
-                                         ${emp.fname} ${emp.mname ?? ''} ${emp.lname} ${emp.suffix_name ?? ''}
-                                     </option>
-                                 `).join('')}
+                                        <option value="${emp.pk_schools_employee_id}"
+                                            ${emp.pk_schools_employee_id === data?.accountable_employee_id ? 'selected' : ''}>
+                                            ${emp.fname} ${emp.mname ?? ''} ${emp.lname} ${emp.suffix_name ?? ''}
+                                        </option>
+                                    `).join('')}
                         </select>
                     </div>
 
@@ -128,10 +128,10 @@
                                 class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                             <option value="">Select </option>
                             ${receiverTypes.map(rt => `
-                                                                                                                                                        <option value="${rt.id}" ${rt.id === data?.receiver_type_id ? 'selected' : ''}>
-                                                                                                                                                            ${rt.name}
-                                                                                                                                                        </option>
-                                                                                                                                                    `).join('')}
+                                                                                                                                                           <option value="${rt.id}" ${rt.id === data?.receiver_type_id ? 'selected' : ''}>
+                                                                                                                                                               ${rt.name}
+                                                                                                                                                           </option>
+                                                                                                                                                       `).join('')}
                         </select>
                     </div>
 
@@ -197,23 +197,23 @@
                                 class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                             <option value="">-- Select Transaction Type --</option>
                             ${transactionTypes.map(ty => `
-                                                                                                                                                        <option value="${ty.id}" ${ty.id === data?.transaction_type_id ? 'selected' : ''}>
-                                                                                                                                                            ${ty.name}
-                                                                                                                                                        </option>
-                                                                                                                                                    `).join('')}
+                                                                                                                                                           <option value="${ty.id}" ${ty.id === data?.transaction_type_id ? 'selected' : ''}>
+                                                                                                                                                               ${ty.name}
+                                                                                                                                                           </option>
+                                                                                                                                                       `).join('')}
                         </select>
                     </div>
 
-                    <div class="flex md:flex-row flex-col gap-2 my-2">
+                    <div class="flex md:justify-end justify-center gap-2 my-2">
+                        <button type="button" onclick="closeUserRecipientModal()"
+                                class="btn-cancel px-4 py-1 rounded transition-colors md:w-auto w-full  ">
+                            Cancel
+                        </button>
                     <button type="submit"
-                            class="  ${isUpdate ? 'btn-green' : 'btn-submit'} px-4 py-1 rounded transition-colors">
+                            class="  ${isUpdate ? 'btn-green' : 'btn-submit'} px-4 py-1 rounded transition-colors md:w-auto w-full">
                         ${isUpdate ? 'Update Accountability' : 'Save Accountability'}
                     </button>
 
-                    <button type="button" onclick="closeUserRecipientModal()"
-                            class="btn-cancel px-4 py-1 rounded transition-colors">
-                        Cancel
-                    </button>
                     </div>
                 </form>
             `;

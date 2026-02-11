@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\School;
 
 use App\Http\Controllers\Controller;
+use App\Models\DCPBatch;
 use App\Models\DCPBatchItem;
 use App\Models\DCPBatchItemBrand;
 use App\Models\DCPCurrentCondition;
@@ -60,9 +61,19 @@ class DCPBatchItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $batchId)
     {
-        //
+        $items = DCPBatchItem::where('dcp_batch_id', $batchId)
+            ->with(['dcpItemType', 'dcpItemCurrentCondition.dcpCurrentCondition', 'brand_details', 'schoolEquipment'])
+            ->get();
+        return response()->json(['success' => true, 'data' => $items], 200);
+    }
+    public function showItems(int $itemId)
+    {
+        $item = DCPBatchItem::where('pk_dcp_batch_items_id', $itemId)
+            ->with(['dcpItemType', 'dcpItemCurrentCondition.dcpCurrentCondition', 'brand_details', 'dcpBatch'])
+            ->first();
+        return response()->json(['success' => true, 'data' => $item], 200);
     }
 
     /**

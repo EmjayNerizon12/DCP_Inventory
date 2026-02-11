@@ -1,226 +1,220 @@
 @php
-    $equipment = $equipment ?? null;
+	$equipment = $equipment ?? null;
 @endphp
 
 <div class="grid md:grid-cols-3 grid-cols-1 gap-4 mb-4">
+	<div class="md:col-span-3 col-span-1 text-lg font-bold tracking-wider">
+		DCP Information
+		<hr>
+	</div>
+	<div class="md:col-span-3 col-span-1">
+		<label class="font-medium">Is the Equipment a Non DCP Product? <span class="text-red-600">(required)</span></label>
+		<div class="flex items-center gap-4 mt-1">
+			<label class="flex items-center gap-1">
+				<input type="radio" name="non_dcp" id="non_dcp_yes" value="1">
+				<span>Yes</span>
+			</label>
+			<label class="flex items-center gap-1">
+				<input type="radio" name="non_dcp" value="0" id="non_dcp_no">
+				<span>No</span>
+			</label>
+		</div>
+	</div>
 
-    {{-- Basic Info --}}
-    <div>
-        <label for="property_number">Property No. <span class="text-red-600">(required)</span></label>
-        <input type="text" name="property_number"
-            value="{{ old('property_number', $equipment->property_number ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	{{-- <x-select-field name="dcp_batch_id" label="DCP Batch" :options="" :required="false" :edit="false"
+        valueField="pk_dcp_batches_id" textField="batch_label" /> --}}
+	<div id="nonDCPContainer" class="hidden">
+		<div class="w-full">
+			<label for="" class="form-label">Non DCP Item </label>
+			<select class="form-input" name="non_dcp_item_id">
+				<option value="">Select Non DCP</option>
+				@foreach (App\Models\NonDCPItem::where('school_id', Auth::guard('school')->user()->school->pk_school_id)->get() as $item)
+					<option value="{{ $item->pk_non_dcp_item_id }}">
+						{{ $item->item_description }}</option>
+				@endforeach
+			</select>
+			<div class="error text-red-500 text-sm" data-error="non_dcp_item_id"></div>
 
-    <div>
-        <label for="old_property_number">Old/Prev. Property No.</label>
-        <input type="text" name="old_property_number"
-            value="{{ old('old_property_number', $equipment->old_property_number ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+		</div>
+	</div>
+	<div id="dcpBatchContainer" class="md:col-span-3 hidden col-span-1 flex md:flex-row flex-col gap-2">
+		<div class="w-full">
+			<label for="" class="form-label">DCP Batch </label>
+			<select class="form-input" name="dcp_batch_id" id="select-dcp-batch-id">
+				<option value="">Select DCP Batch</option>
+				@foreach (App\Models\DCPBatch::where('school_id', Auth::guard('school')->user()->school->pk_school_id)->get() as $batch)
+					<option value="{{ $batch->pk_dcp_batches_id }}"
+						{{ (string) old('dcp_batch_id', (string) ($equipment->dcp_batch_id ?? '')) === (string) $batch->pk_dcp_batches_id ? 'selected' : '' }}>
+						{{ $batch->batch_label }}</option>
+				@endforeach
+			</select>
+			<div class="error text-red-500 text-sm" data-error="dcp_batch_id"></div>
 
-    <div>
-        <label for="serial_number">Serial No. <span class="text-red-600">(required)</span></label>
-        <input type="text" name="serial_number" value="{{ old('serial_number', $equipment->serial_number ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+		</div>
+		<div class="w-full">
+			<label for="" class="form-label">Batch Item</label>
+			<select class="form-input" name="dcp_batch_item_id" id="select-dcp-batch-item">
+				<option value="">Select DCP Batch Item</option>
+			</select>
+			<div class="error text-red-500 text-sm" data-error="dcp_batch_item_id"></div>
 
-    <div>
-        <label for="equipment_item_id">Item <span class="text-red-600">(required)</span></label>
-        <select name="equipment_item_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\EquipmentItems::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('equipment_item_id', $equipment->equipment_item_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+		</div>
+	</div>
+	<div class="md:col-span-3 col-span-1 text-lg font-bold tracking-wider">
+		Basic Information
+		<hr>
+	</div>
+	{{-- Basic Info --}}
 
-    <div>
-        <label for="unit_of_measure_id">Unit of Measure <span class="text-red-600">(required)</span></label>
-        <select name="unit_of_measure_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentUnitOfMeasure::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('unit_of_measure_id', $equipment->unit_of_measure_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<x-input-field type="text" name="property_number" label="Property No." :required="true" :edit="false" />
 
-    <div>
-        <label for="manufacturer_id">Manufacturer/Brand</label>
-        <select name="manufacturer_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentManufacturer::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('manufacturer_id', $equipment->manufacturer_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<x-input-field type="text" name="old_property_number" label="Old/Prev. Property No." :required="false"
+		:edit="false" />
+	<x-input-field type="text" name="serial_number" label="Serial No." :required="true" :edit="false" />
 
-    <div>
-        <label for="model">Model</label>
-        <input type="text" name="model" value="{{ old('model', $equipment->model ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-select-field name="unit_of_measure_id" label="Unit of Measure" :options="App\Models\SchoolEquipment\SchoolEquipmentUnitOfMeasure::all()" :required="true" :edit="false"
+		valueField="id" textField="name" />
 
-    <div>
-        <label for="specifications">Specification</label>
-        <input type="text" name="specifications"
-            value="{{ old('specifications', $equipment->specifications ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-select-field name="manufacturer_id" label="Manufacturer/Brand" :options="App\Models\SchoolEquipment\SchoolEquipmentManufacturer::all()" :required="false"
+		:edit="false" valueField="id" textField="name" />
 
-    <div>
-        <label for="supplier_or_distributor">Supplier or Distributor</label>
-        <input type="text" name="supplier_or_distributor"
-            value="{{ old('supplier_or_distributor', $equipment->supplier_or_distributor ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-input-field type="text" name="model" label="Model" :required="false" :edit="false" />
 
-    <div>
-        <label for="category_id">Category</label>
-        <select name="category_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentCategories::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('category_id', $equipment->category_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<x-input-field type="text" name="specifications" label="Specifications" :required="false" :edit="false" />
 
-    <div>
-        <label for="classification_id">Classification</label>
-        <select name="classification_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentClassification::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('classification_id', $equipment->classification_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<x-input-field type="text" name="supplier_or_distributor" label="Supplier or Distributor" :required="false"
+		:edit="false" />
+	<x-select-field name="category_id" label="Category" :options="App\Models\SchoolEquipment\SchoolEquipmentCategories::all()" :required="false" :edit="false"
+		valueField="id" textField="name" />
+	<x-select-field name="classification_id" label="Classification" :options="App\Models\SchoolEquipment\SchoolEquipmentClassification::all()" :required="false"
+		:edit="false" valueField="id" textField="name" />
 
-    <div>
-        <label class="font-medium">Non DCP <span class="text-red-600">(required)</span></label>
-        <div class="flex items-center gap-4 mt-1">
-            <label class="flex items-center gap-1">
-                <input type="radio" name="non_dcp" value="1" @checked(old('non_dcp', $equipment->non_dcp ?? '') == 1)>
-                <span>Yes</span>
-            </label>
-            <label class="flex items-center gap-1">
-                <input type="radio" name="non_dcp" value="0" @checked(old('non_dcp', $equipment->non_dcp ?? '') == 0)>
-                <span>No</span>
-            </label>
-        </div>
-    </div>
+	<div class="md:col-span-3 col-span-1 text-lg font-bold tracking-wider">
+		Reference Information
+		<hr>
+	</div>
 
-    <div>
-        <label for="dcp_batch_id">DCP Batch</label>
-        <select name="dcp_batch_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\DCPBatch::where('school_id', Auth::guard('school')->user()->school->pk_school_id)->get() as $batch)
-                <option value="{{ $batch->pk_dcp_batches_id }}" @selected(old('dcp_batch_id', $equipment->dcp_batch_id ?? '') == $batch->pk_dcp_batches_id)>
-                    {{ $batch->batch_label }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<x-input-field type="text" name="pmp_reference_no" label="Procurement Management Plan" :required="false"
+		:edit="false" />
 
-    <div>
-        <label for="pmp_reference_no">Procurement Management Plan (PMP) No.</label>
-        <input type="text" name="pmp_reference_no"
-            value="{{ old('pmp_reference_no', $equipment->pmp_reference_no ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-input-field type="text" name="gl_sl_code" label="GL-SL Code (NGAS Code)" :required="false" :edit="false" />
 
-    <div>
-        <label for="gl_sl_code">GL-SL Code (NGAS Code)</label>
-        <input type="text" name="gl_sl_code" value="{{ old('gl_sl_code', $equipment->gl_sl_code ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-input-field type="text" name="uacs_code" label="UACS Code" :required="false" :edit="false" />
 
-    <div>
-        <label for="uacs_code">UACS</label>
-        <input type="text" name="uacs_code" value="{{ old('uacs_code', $equipment->uacs_code ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<div class="md:col-span-3 col-span-1 text-lg font-bold tracking-wider">
+		Acquisition Information
+		<hr>
+	</div>
+	<x-input-field type="number" name="acquisition_cost" label="Acquisition Cost" :required="true" :edit="false" />
+	<x-input-field type="date" name="acquisition_date" label="Acquisition Date" :required="false" :edit="false" />
 
-    <div>
-        <label for="acquisition_cost">Acquisition Cost</label>
-        <input type="number" step="0.01" name="acquisition_cost"
-            value="{{ old('acquisition_cost', $equipment->acquisition_cost ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-select-field name="mode_of_acquisition_id" label="Mode of Acquisition" :options="App\Models\SchoolEquipment\SchoolEquipmentModeOfAcquisition::all()" :required="false"
+		:edit="false" valueField="id" textField="name" />
 
-    <div>
-        <label for="acquisition_date">Acquisition Date</label>
-        <input type="date" name="acquisition_date"
-            value="{{ old('acquisition_date', $equipment->acquisition_date ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-select-field name="source_of_acquisition_id" label="Source of Acquisiton" :options="App\Models\SchoolEquipment\SchoolEquipmentSourceOfAcquisition::all()" :required="false"
+		:edit="false" valueField="id" textField="name" />
 
-    <div>
-        <label for="mode_of_acquisition_id">Mode of Acquisition</label>
-        <select name="mode_of_acquisition_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentModeOfAcquisition::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('mode_of_acquisition_id', $equipment->mode_of_acquisition_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<div class="md:col-span-3 col-span-1 text-lg font-bold tracking-wider">
+		Other Information
+		<hr>
+	</div>
+	<x-input-field type="text" name="donor" label="Donor" :required="false" :edit="false" />
 
-    <div>
-        <label for="source_of_acquisition_id">Source of Acquisition</label>
-        <select name="source_of_acquisition_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentSourceOfAcquisition::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('source_of_acquisition_id', $equipment->source_of_acquisition_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+	<x-select-field name="source_of_fund_id" label="Source of Fund" :options="App\Models\SchoolEquipment\SchoolEquipmentSourceOfFund::all()" :required="false"
+		:edit="false" valueField="id" textField="name" />
 
-    <div>
-        <label for="donor">Donor</label>
-        <input type="text" name="donor" value="{{ old('donor', $equipment->donor ?? '') }}"
-            class="w-full border border-gray-400 rounded px-2 py-1">
-    </div>
+	<x-select-field name="allotment_class_id" label="Allotment Class" :options="App\Models\SchoolEquipment\SchoolEquipmentAllotmentClass::all()" :required="false"
+		:edit="false" valueField="id" textField="name" />
+	<div class="md:col-span-3 col-span-1">
 
-    <div>
-        <label for="source_of_fund_id">Source of Fund</label>
-        <select name="source_of_fund_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentSourceOfFund::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('source_of_fund_id', $equipment->source_of_fund_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    <div>
-        <label for="allotment_class_id">Allotment Class</label>
-        <select name="allotment_class_id" class="w-full border border-gray-400 rounded px-2 py-1">
-            <option value="">Select</option>
-            @foreach (App\Models\SchoolEquipment\SchoolEquipmentAllotmentClass::all() as $item)
-                <option value="{{ $item->id }}" @selected(old('allotment_class_id', $equipment->allotment_class_id ?? '') == $item->id)>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    <div>
-        <label for="remarks">Remarks</label>
-        <textarea name="remarks" class="w-full border border-gray-400 rounded px-2 py-1">{{ old('remarks', $equipment->remarks ?? '') }}</textarea>
-    </div>
-
+		<label for="remarks" class="form-label">Remarks</label>
+		<textarea name="remarks" class="form-input">{{ old('remarks', $equipment->remarks ?? '') }}</textarea>
+	</div>
 </div>
+
+<script>
+	const dcpBatchSelect = document.getElementById('select-dcp-batch-id');
+	const dcpBatchItemSelect = document.getElementById('select-dcp-batch-item');
+	dcpBatchItemSelect.addEventListener('change', async (e) => {
+
+		cascadeDCPItemDetails(e.target.value);
+	});
+	async function cascadeDCPItemDetails(batchItemId) {
+		const response = await fetch(`/api/School/dcpBatchItem/show-item/${batchItemId}`);
+		const res = await response.json();
+		const data = res.data;
+		console.log(data);
+		const acq_cost = document.querySelector('input[name="acquisition_cost"]');
+		const acq_date = document.querySelector('input[name="acquisition_date"]');
+		const serial_number = document.querySelector('input[name="serial_number"]');
+		acq_cost.value = data.unit_price;
+		acq_date.value = data.dcp_batch.delivery_date;
+		serial_number.value = data.serial_number;
+	}
+	async function loadBatchItems(batchId) {
+		if (!dcpBatchItemSelect) return;
+		// Clear existing items and add placeholder
+		dcpBatchItemSelect.innerHTML = '';
+		const placeholder = document.createElement('option');
+		placeholder.value = '';
+		placeholder.textContent = 'Select DCP Batch Item';
+		dcpBatchItemSelect.appendChild(placeholder);
+
+		if (!batchId) return;
+
+		try {
+			const response = await fetch(`/api/School/dcpBatchItem/items/${batchId}`);
+			if (!response.ok) throw new Error('Network response was not ok');
+			const res = await response.json();
+			const data = res.data || [];
+
+			data.forEach(value => {
+				const option = document.createElement('option');
+				option.value = value.pk_dcp_batch_items_id;
+				// be defensive in accessing nested props
+				if (value.school_equipment.length > 0) {
+					option.disabled = true;
+				}
+				option.textContent =
+					`${value.pk_dcp_batch_items_id} - ${value.generated_code || 'No code'}`;
+
+				dcpBatchItemSelect.appendChild(option);
+			});
+		} catch (err) {
+			console.error('Failed to load batch items', err);
+		}
+	}
+
+	if (dcpBatchSelect) {
+		dcpBatchSelect.addEventListener('change', (e) => {
+			loadBatchItems(e.target.value);
+		});
+
+		// initial load if a batch is already selected (edit form)
+		document.addEventListener('DOMContentLoaded', () => {
+			const initialId = dcpBatchSelect.value;
+			if (initialId) loadBatchItems(initialId);
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const radios = document.querySelectorAll('input[name="non_dcp"]');
+
+		const dcpContainer = document.getElementById('dcpBatchContainer');
+		const nonDcpContainer = document.getElementById('nonDCPContainer');
+
+		radios.forEach(radio => {
+			radio.addEventListener('change', (e) => {
+				if (e.target.value === '0') {
+					// No
+					dcpContainer.classList.remove('hidden');
+					nonDcpContainer.classList.add('hidden');
+				} else {
+					// Yes
+					nonDcpContainer.classList.remove('hidden');
+					dcpContainer.classList.add('hidden');
+				}
+			});
+		});
+	});
+</script>

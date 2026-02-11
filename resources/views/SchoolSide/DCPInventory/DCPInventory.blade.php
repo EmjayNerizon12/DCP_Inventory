@@ -2,9 +2,10 @@
 <title>@yield('title', 'DCP Inventory')</title>
 
 @section('content')
-    <div class=" p-6 ">
+    <input type="hidden" id="school_id" value="{{ Auth::guard('school')->user()->school->pk_school_id }}">
+    <div class="md:p-6 p-2 ">
         <div class="flex  flex-row  justify-start   mb-4  md:space-x-4">
-            <div class="md:flex hidden justify-center items-start">
+            <div class=" flex hidden justify-center items-start">
                 <div
                     class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
                     <div class="text-white bg-blue-600 p-2 rounded-full">
@@ -22,23 +23,28 @@
                 </div>
             </div>
             <div>
+                <div class="page-title">
 
-                <h1 class="text-2xl font-bold tracking-wide text-blue-700 ">
                     DCP School Product Inventory
-                </h1>
-                <div class="mb-2 tracking-wider font-medium">Below is a sample list of DCP equipment assigned to your
-                    school.
+                </div>
+
+                <div class="page-subtitle">List of Products Acquired
                 </div>
             </div>
         </div>
-        <div class="flex md:flex-row flex-col items-center md:mb-0 mb-4">
-            <div class="w-full flex flex-col">
+        <div class="flex md:flex-row flex-col justify-between items-center md:mb-0 mb-4 space-y-2">
+            <div class="w-full flex flex-col  ">
                 <label class="text-md text-gray-700 font-medium tracking-wider">Search Product</label>
-                <input type="text" id="searchBatchItem" placeholder="Search for items..."
-                    class="border border-gray-300 shadow-md rounded px-4 tracking-wider py-1 mb-4 md:w-1/3 w-full ">
+                <div class="flex flex-row gap-2">
+
+                    <input type="text" id="searchBatchItem" placeholder="Search for items..."
+                        class="form-input max-w-sm">
+                    <button type="button" id="btnSearch" onclick="searchBatchItems()"
+                        class="theme-button w-auto">Search</button>
+                </div>
             </div>
 
-            <div class="flex justify-start md:justify-end">
+            <div class="flex justify-start md:w-auto w-full">
                 <div
                     class="h-10 w-auto bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center md:justify-center justify-start">
                     <button title="Show Info Modal" type="button"
@@ -49,36 +55,37 @@
                 </div>
             </div>
         </div>
-        <div
-            class="overflow-x-auto  thin-scroll h-96 rounded-sm shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-200 ">
+
+        <div class="spinner-container" id="spinner-container">
+            <div class="spinner-lg"></div>
+        </div>
+        <div id="table-container"
+            class="overflow-x-auto hidden thin-scroll h-auto max-h-[70vh] rounded-sm shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-200 ">
             <table class="min-w-full w-full md:w-full bg-white    ">
-                <thead class="text-left bg-gray-100 border border-gray-500 ">
+                <thead class="text-left  ">
                     <tr>
-                        <th
-                            class="tracking-wider text-center whitespace-nowrap  border-b border-gray-500  py-2 px-2 font-semibold text-gray-800 text-center">
+                        <td class="top-header" colspan="6">Product Inventory</td>
+                    </tr>
+                    <tr>
+                        <th class="sub-header tracking-wider  ">
                             No.
                         </th>
-                        <th
-                            class="tracking-wider  whitespace-nowrap  border-b border-gray-500  py-2 px-2 font-semibold text-gray-800 text-center">
+                        <th class="sub-header tracking-wider  ">
                             Product Code
                         </th>
                         {{-- <th class=" tracking-wider px-4 py-2 font-semibold border-b border-gray-500 text-gray-800 ">Warranty
                         </th> --}}
-                        <th
-                            class="tracking-wider  whitespace-nowrap   border-b border-gray-500   py-2 px-2 font-semibold text-gray-800 text-center">
+                        <th class="sub-header tracking-wider  ">
                             Batch Label</th>
 
-                        <th
-                            class=" tracking-wider  whitespace-nowrap   border-b border-gray-500   py-2 px-2 font-semibold text-gray-800 text-center">
+                        <th class=" sub-header tracking-wider  ">
                             Product
                         </th>
-                        <th
-                            class=" tracking-wider  whitespace-nowrap   border-b border-gray-500   py-2 px-2 font-semibold text-gray-800 text-center">
+                        <th class=" sub-header tracking-wider  ">
                             Brand
                         </th>
-                        <th
-                            class="tracking-wider  whitespace-nowrap  border-b border-gray-500    py-2 px-2 font-semibold text-gray-800 text-center">
-                            Action</th>
+                        <th class="sub-header tracking-wider                                      ">
+                            Product Information</th>
                     </tr>
                 </thead>
                 <tbody class="tracking-wide" id="batchItemsTableBody">

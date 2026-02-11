@@ -10,11 +10,11 @@
         divContainer2.classList.add('hidden');
 
         // Button styles
-        btnDiv1.classList.remove('btn-cancel');
+        btnDiv1.classList.remove('btn-gray');
         btnDiv1.classList.add('btn-submit');
 
         btnDiv2.classList.remove('btn-submit');
-        btnDiv2.classList.add('btn-cancel');
+        btnDiv2.classList.add('btn-gray');
     }
 
     function showDiv2() {
@@ -23,11 +23,11 @@
         divContainer1.classList.add('hidden');
 
         // Button styles
-        btnDiv2.classList.remove('btn-cancel');
+        btnDiv2.classList.remove('btn-gray');
         btnDiv2.classList.add('btn-submit');
 
         btnDiv1.classList.remove('btn-submit');
-        btnDiv1.classList.add('btn-cancel');
+        btnDiv1.classList.add('btn-gray');
     }
     showDiv1();
 </script>

@@ -19,7 +19,7 @@ class SelectField extends Component
     public bool $edit;
     public string $textField;
     public string $valueField;
-    public function __construct(string $name, string $label,  $options = [], bool $edit, bool $required = false, string $valueField = 'id', string $textField = 'name')
+    public function __construct(string $name, string $label,  $options = [], bool $required = false, bool $edit,  string $valueField = 'id', string $textField = 'name')
     {
         $this->name = $name;
         $this->label = $label;

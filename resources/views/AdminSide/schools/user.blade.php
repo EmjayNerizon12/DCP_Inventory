@@ -8,11 +8,74 @@
             font-weight: 500 !important;
         }
     </style>
-    <div class="p-2  md:mx-5 md:my-5 mx-0 my-0">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4"
-            style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-            School User Account
-        </h2>
+    <div class="">
+        <div id="list-account"></div>
+    </div>
+    <script>
+        async function getAccountList() {
+            const container = document.getElementById("list-account");
+            const response = await fetch('Schools-User/api-get-accounts');
+            const res = await response.json();
+            const data = res.data;
+            const table = document.createElement('table');
+            table.classList.add('table', 'table-striped', 'table-bordered', 'table-hover');
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>No.</th>
+                    <th>School Name</th>
+                    <th>School Level</th>
+                    <th>Default Password</th> 
+                </tr>
+            `;
+            const tbody = document.createElement('tbody');
+            data.forEach((obj, index) => {
+                if (obj.default_password != 'admin') {
+
+                    tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                    <td>${obj.school?.SchoolName}</td>
+                    <td>${obj.school?.SchoolLevel}</td>
+                    <td>${obj.default_password}</td>
+                    </tr>
+                    `;
+                }
+            });
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            container.appendChild(table);
+            console.log(res.data);
+        }
+        getAccountList();
+    </script>
+    <div class=" md:my-5 mx-0 my-0">
+        <div class=" flex justify-start gap-2 items-center mb-2">
+            <div
+                class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
+                <div class="text-white bg-blue-600 p-2 rounded-full">
+                    <svg viewBox="0 0 24 24" class="h-10 w-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M21 10L12 5L3 10L6 11.6667M21 10L18 11.6667M21 10V10C21.6129 10.3064 22 10.9328 22 11.618V16.9998M6 11.6667L12 15L18 11.6667M6 11.6667V17.6667L12 21L18 17.6667L18 11.6667"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div style="letter-spacing: 0.05rem  ">
+                <h2 class="text-2xl font-bold text-gray-700  "
+                    style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                    School User Account
+                </h2>
+                <div class="text-md text-gray-600  ">School User Account List
+                </div>
+            </div>
+        </div>
+
 
         <input type="text" id="searchSchoolUser" placeholder="Search school..."
             class="border border-gray-300 rounded-lg px-4 py-2 mb-4 md:w-1/3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500">

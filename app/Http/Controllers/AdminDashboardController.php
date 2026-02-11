@@ -24,7 +24,7 @@ class AdminDashboardController extends Controller
         $conditions =   $conditions->map(function ($group) {
             return [
                 'id' => $group->first()->current_condition_id,
-                'condition' => $group->first()->dcpCurrentCondition->name,
+                'condition' => $group->first()->dcpCurrentCondition?->name,
                 'count' => $group->count(),
             ];
         })->values()->toArray();

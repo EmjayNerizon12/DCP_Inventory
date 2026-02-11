@@ -24,17 +24,15 @@ class LoginController extends Controller
 
         if ($request->fromAdmin) {
             session()->flush();
-            $users = SchoolUser::where('username', $request->username)->get();
+            $users = SchoolUser::where('username', $request->username)->first();
             // dd($request->password);
             session(['UserRole' => 'School']);
 
-            foreach ($users as $user) {
-                if ($request->password == $user->default_password) {
-                    Auth::guard('school')->login($user, $request->has('remember'));
-                    $user->last_login = now();
-                    $user->save();
-                    return redirect()->intended('School/dashboard');
-                }
+            if ($users && $request->password == $users->default_password) {
+                Auth::guard('school')->login($users, $request->has('remember'));
+                $users->last_login = now();
+                $users->save();
+                return redirect()->intended('School/dashboard');
             }
         }
         if ($request->username == "admin") {
@@ -44,22 +42,29 @@ class LoginController extends Controller
             }
             session(['UserRole' => 'Admin']);
             session(['admin_logged_in' => true]);
-            return redirect()->route('AdminSide-Dashboard');
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Successful',
+                'redirect_url' => route('AdminSide-Dashboard')
+            ]);
         } else {
-            $users = SchoolUser::where('username', $request->username)->get();
+            $users = SchoolUser::where('username', $request->username)->first();
             // dd($request->password);
             session(['UserRole' => 'School']);
 
-            foreach ($users as $user) {
-                if (Hash::check($request->password, $user->password)) {
-                    Auth::guard('school')->login($user, $request->has('remember'));
-                    $user->last_login = now();
-                    $user->save();
-                    return redirect()->intended('School/dashboard');
-                }
+
+            if (Hash::check($request->password, $users->password)) {
+                Auth::guard('school')->login($users, $request->has('remember'));
+                $users->last_login = now();
+                $users->save();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Login Successful',
+                    'redirect_url' => url('School/dashboard')
+                ]);
             }
         }
-        return back()->withErrors(['login' => 'Invalid credentials']);
+        return response()->json(['login' => 'Invalid credentials']);
     }
 
     public function logout()

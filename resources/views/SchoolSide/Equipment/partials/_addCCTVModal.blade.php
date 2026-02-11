@@ -141,13 +141,13 @@
                  </div>
              </div>
 
-             <div class="flex justify-end gap-2 mt-4">
-                 <button type="submit" class="btn-submit px-6 py-1 rounded shadow ">
-                     Submit
-                 </button>
+             <div class="flex md:justify-end justify-center gap-2 mt-4">
                  <button type="button" onclick="closeModal(1)"
-                     class="btn-cancel rounded shadow  text-white px-6 py-1 rounded">
+                     class="btn-cancel rounded md:w-auto w-full text-white px-4 py-1 rounded">
                      Cancel
+                 </button>
+                 <button type="submit" class="btn-submit px-4 py-1 rounded md:w-auto w-full  ">
+                     Save Details
                  </button>
              </div>
 

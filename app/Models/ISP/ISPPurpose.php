@@ -9,7 +9,7 @@ class ISPPurpose extends Model
     protected $table = "isp_purpose";
     protected $primaryKey = "pk_isp_purpose_id";
     protected $fillable = [
-        'purpose',
+        'name',
         'created_at',
         'updated_at'
     ];

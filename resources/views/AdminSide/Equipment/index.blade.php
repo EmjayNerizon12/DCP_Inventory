@@ -18,559 +18,71 @@
              border-radius: 5px !important;
          }
      </style>
-     <div class="my-5">
-         <div class="text-2xl font-bold text-gray-700  mx-5 ">Biometric and CCTV Equipment Details</div>
-         <div class="text-lg font-normal text-gray-600 mb-4 mx-5  ">Create, View, Edit and Remove Details</div>
-     </div>
-     <div class="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-2 mx-5 mb-10">
+     <div class=" md:my-5 mx-0 my-0">
+         <div class=" flex justify-start gap-2 items-center mb-2">
 
-         {{-- CCTV CAMERA TYPE   --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
-             <div class="flex flex-col h-full">
-                 <div>
-
-                     <div class="text-2xl font-bold text-gray-700    ">CCTV Camera Type</div>
-                     <div class="text-md font-normal text-gray-600">
-                         A list of available CCTV camera types.
-                     </div>
-                     <button onclick="openModal('camera_type')"
-                         class="px-4 py-1 my-1  bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition">Create New
-                     </button>
-
+             <div
+                 class="h-16 w-16 bg-white p-3 border border-gzray-300 shadow-lg rounded-full flex items-center justify-center">
+                 <div class="text-white bg-blue-600 p-2 rounded-full">
+                     <svg fill="currentColor" class="h-10 w-10" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 507.901 507.901" xml:space="preserve"
+                         stroke="currentColor" stroke-width="8.126416">
+                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                         <g id="SVGRepo_iconCarrier">
+                             <g>
+                                 <g>
+                                     <path
+                                         d="M493.9,68.251H14.1c-7.8,0-14.1,6.3-14.1,14.1v126.4c0,7.8,6.3,14.1,14.1,14.1h9.6c7.2,120.8,107.8,216.8,230.3,216.8 s223-96,230.2-216.8h9.6c7.8,0,14.1-6.3,14.1-14.1v-126.4C508,74.551,501.7,68.251,493.9,68.251z M254,411.451 c-107,0-194.9-83.4-202-188.6h404C448.8,328.051,361,411.451,254,411.451z M479.6,194.651H28.2v-98.2h183.4v24.6 c0,7.8,6.3,14.1,14.1,14.1s14.1-6.3,14.1-14.1v-24.6H268v56.9c0,7.8,6.3,14.1,14.1,14.1c7.8,0,14.1-6.3,14.1-14.1v-56.9h183.4 V194.651z">
+                                     </path>
+                                 </g>
+                             </g>
+                             <g>
+                                 <g>
+                                     <path
+                                         d="M254,263.951c-29.4,0-53.3,23.9-53.3,53.3c0,29.4,23.9,53.3,53.3,53.3c29.4,0,53.3-23.9,53.3-53.3 C307.3,287.851,283.4,263.951,254,263.951z M254,342.351c-13.9,0-25.1-11.2-25.1-25.1c0-13.9,11.3-25.1,25.1-25.1 s25.1,11.2,25.1,25.1C279.1,331.151,267.9,342.351,254,342.351z">
+                                     </path>
+                                 </g>
+                             </g>
+                         </g>
+                     </svg>
                  </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white  ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white  text-left ">
-                                     Camera Type
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($cameraType as $index => $type)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $type->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $type->pk_e_cctv_camera_type_id }},'{{ $type->name }}','camera_type')"
-                                                     class="px-4 py-1 flex items-center shadow-md  ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>
-                                                     Edit</button>
+             </div>
 
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $type->pk_e_cctv_camera_type_id }},'camera_type')"
-                                                     class="px-4 flex items-center py-1  shadow-md bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
+             <div style="letter-spacing: 0.05rem">
+                 <h2 class="text-2xl font-bold text-gray-800 uppercase">Biometric and CCTV Equipment Details</h2>
+                 <div class="text-lg text-gray-600 ">Create, View, Edit and Remove Details</div>
 
-                         </tbody>
-                     </table>
-                 </div>
              </div>
          </div>
+         <div class="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-2  mb-10">
 
-         {{-- BIOMETRIC TYPE --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
+             {{-- CCTV CAMERA TYPE   --}}
+             @include('AdminSide.Equipment.Crud.cctv')
 
-             <div class="flex flex-col h-full">
-                 <div>
+             {{-- BIOMETRIC TYPE --}}
+             @include('AdminSide.Equipment.Crud.biometric')
 
-                     <div class="text-2xl font-bold text-gray-700    ">Biometric Authentication Type</div>
-                     <div class="text-md font-normal text-gray-600     ">Here are the available biometric authentication
-                         methods</div>
+             {{-- POWERSOURCE  --}}
+             @include('AdminSide.Equipment.Crud.powersource')
 
-                     <button onclick="openModal('biometric_type')"
-                         class="px-4 py-1 my-1  bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition">Create New
-                     </button>
+             {{-- INSTALLER --}}
+             @include('AdminSide.Equipment.Crud.installer')
 
-                 </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white    ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white    text-left ">
-                                     Camera Type
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($biometric as $index => $type)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border   border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $type->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $type->pk_e_biometric_type_id }}, '{{ $type->name }}', 'biometric_type')"
-                                                     class="px-4 py-1 flex items-center shadow-md  ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>
-                                                     Edit</button>
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $type->pk_e_biometric_type_id }},'biometric_type')"
-                                                     class="px-4 flex items-center  shadow-md  py-1 bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
+             {{-- BRAND MODEL --}}
+             @include('AdminSide.Equipment.Crud.brandmodel')
 
-                                         </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
+             {{-- LOCATION  --}}
+             @include('AdminSide.Equipment.Crud.location')
 
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-         {{-- POWERSOURCE  --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
+             {{-- INCHARGE  --}}
+             @include('AdminSide.Equipment.Crud.incharge')
 
-             <div class="flex flex-col h-full">
-                 <div>
-
-                     <div class="text-2xl font-bold text-gray-700    ">Equipment Power Source</div>
-                     <div class="text-md font-normal text-gray-600     "> Specify the type of power supply used for the
-                         equipment</div>
-
-                     <button onclick="openModal('powersource')"
-                         class="px-4 py-1 my-1  bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition">Create New
-                     </button>
-
-                 </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white   ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white   text-left ">
-                                     Power Source
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($powersource as $index => $type)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border   border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $type->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $type->pk_equipment_power_source_id }}, '{{ $type->name }}', 'powersource')"
-                                                     class="px-4 shadow-md flex items-center py-1  ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>
-                                                     Edit</button>
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $type->pk_equipment_power_source_id }},'powersource')"
-                                                     class="px-4 flex items-center shadow-md  py-1 bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
-
-                                         </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
-
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-         {{-- INSTALLER --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
-
-             <div class="flex flex-col h-full">
-                 <div>
-
-                     <div class="text-2xl font-bold text-gray-700    ">Equipment Installer/Contactor</div>
-                     <div class="text-md font-normal text-gray-600     "> Record the name of the installer or contractor.
-                     </div>
-
-                     <button onclick="openModal('installer')"
-                         class="px-4 py-1  my-1 bg-blue-600 text-white rounded-sm   hover:bg-blue-700 transition">Create
-                         New
-                     </button>
-
-                 </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white    ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white    text-left ">
-                                     Installer / Contractor
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($installer as $index => $installer)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border   border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $installer->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $installer->pk_equipment_installer_id }},'{{ $installer->name }}','installer')"
-                                                     class="px-4 py-1 flex items-center shadow-md ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>Edit</button>
-
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $installer->pk_equipment_installer_id }},'installer')"
-                                                     class="px-4 flex items-center py-1 shadow-md  bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
-
-                                         </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
-
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-         {{-- BRAND MODEL --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
-
-             <div class="flex flex-col h-full">
-                 <div>
-
-                     <div class="text-2xl font-bold text-gray-700    ">Equipment Brand / Model</div>
-                     <div class="text-md font-normal text-gray-600     ">Identify the brand and model number of the
-                         installed equipment.</div>
-
-                     <button onclick="openModal('brand')"
-                         class="px-4 py-1 my-1  bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition">Create New
-                     </button>
-
-                 </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white    ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white   text-left ">
-                                     Equipment Brand / Model
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($brand as $index => $model)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border   border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $model->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $model->pk_equipment_brand_model_id }}, '{{ $model->name }}', 'brand')"
-                                                     class="px-4 py-1 shadow-md flex items-center  ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>
-                                                     Edit</button>
-
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $model->pk_equipment_brand_model_id }},'brand')"
-                                                     class="px-4 flex items-center shadow-md   py-1 bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
-
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-         {{-- LOCATION  --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
-
-             <div class="flex flex-col h-full">
-                 <div>
-
-                     <div class="text-2xl font-bold text-gray-700    ">Equipment Location </div>
-                     <div class="text-md font-normal text-gray-600     ">Indicate the exact location or area where the
-                         equipment is installed.</div>
-
-                     <button onclick="openModal('location')"
-                         class="px-4 py-1 my-1  bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition">Create New
-                     </button>
-
-                 </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white   ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white   text-left ">
-                                     Equipment Location Deployed
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($location as $index => $loc)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border   border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $loc->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $loc->pk_equipment_location_id }}, '{{ $loc->name }}', 'location')"
-                                                     class="px-4 py-1 flex  items-center shadow-md  ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>
-                                                     Edit</button>
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $loc->pk_equipment_location_id }},'location')"
-                                                     class="px-4 flex items-center shadow-md  py-1 bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
-
-                                         </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
-
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-         {{-- INCHARGE  --}}
-         <div style="max-height: 400px" class=" bg-white shadow-xl h-full rounded-lg   border border-gray-600 px-5 py-5">
-
-             <div class="flex flex-col h-full">
-                 <div>
-
-                     <div class="text-2xl font-bold text-gray-700    ">Person In-Charge to the Equipment</div>
-                     <div class="text-md font-normal text-gray-600     "> Provide the name of the person responsible for
-                         monitoring and maintaining the equipment.</div>
-
-                     <button onclick="openModal('incharge')"
-                         class="px-4 py-1 my-1  bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition">Create New
-                     </button>
-
-                 </div>
-                 <div class="overflow-y-auto h-full    border border-gray-500">
-                     <table class="table-auto w-full border-collapse">
-                         <thead class="bg-gray-700 sticky top-0 z-1 ">
-                             <tr>
-                                 <th class="py-2 px-2 text-white   ">
-                                     No.
-                                 </th>
-                                 <th class="py-2 px-2 text-white   text-left ">
-                                     Person In-Charge
-                                 </th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($incharge as $index => $person)
-                                 <tr>
-                                     <td class="border border-gray-300 text-center">{{ $index + 1 }}</td>
-                                     <td class="border   border-gray-300 px-5 ">
-                                         <div class="py-1 flex flex-row gap-4">
-                                             <div class="w-full py-1">
-                                                 {{ $person->name }}
-                                             </div>
-                                             <div class="mt-1   flex flex-row gap-2  " style="height: fit-content">
-                                                 <button type="button"
-                                                     onclick="openEditModal({{ $person->pk_equipment_incharge_id }}, '{{ $person->name }}' , 'incharge')"
-                                                     class="px-4 shadow-md flex items-center py-1  ml-auto bg-blue-500 text-white text-md rounded-sm hover:bg-blue-600 transition-all m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z" />
-                                                     </svg>
-                                                     Edit</button>
-                                                 <button type="button"
-                                                     onclick="deleteFunction({{ $person->pk_equipment_incharge_id }},'incharge')"
-                                                     class="px-4 flex items-center shadow-md  py-1 bg-red-600 hover:bg-red-700 text-md text-white rounded-sm transition-all
-                                                            m-0">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         stroke-width="2">
-                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                     </svg>
-                                                     Delete</button>
-                                             </div>
-
-                                         </div>
-                 </div>
-                 </td>
-                 </tr>
-                 @endforeach
-
-                 </tbody>
-                 </table>
-             </div>
          </div>
      </div>
-     </div>
+     <br><br>
+     @include('AdminSide.Equipment.Crud.modal')
 
-     <form id="delete-form" method="POST" style="display:none;">
-         @csrf
-         @method('DELETE')
-     </form>
-     <div id="overall-modal"
-         class="modal fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-         <div class="modal-content bg-white px-4 py-1 mx-5 rounded-md md:w-1/4 w-full">
-             <form id="modal-form" class="  mt-2" method="POST">
-                 @csrf
-                 @method('POST')
-                 <div class="text-2xl font-bold text-gray-700 w-full   " id="modal-title"></div>
-                 <div class="text-lg font-normal text-gray-600 w-full  " id="modal-subtitle"></div>
-                 <input type="hidden" name="target" id="target">
-                 <div>
-
-                     <input class="w-full border border-gray-400 rounded py-1 px-3 my-1" type="text" name="name"
-                         id="name">
-                 </div>
-                 <div class="flex flex-row w-full gap-2">
-
-                     <button type="submit" class=" w-full bg-blue-600 text-white px-4 py-1 rounded-sm">Save</button>
-                     <button type="button" onclick="closeModal()"
-                         class="w-full bg-gray-400 text-white px-4 py-1 rounded-sm">Cancel</button>
-                 </div>
-
-             </form>
-         </div>
-     </div>
-
-     <div id="edit-overall-modal"
-         class="modal fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-         <div class="modal-content bg-white px-4 py-1 mx-5 rounded-md md:w-1/4 w-full">
-             <form id="edit-modal-form" class="  mt-2" method="POST">
-                 @csrf
-                 @method('PUT')
-                 <div class="text-2xl font-bold text-gray-700 w-full   " id="edit-modal-title"></div>
-                 <div class="text-lg font-normal text-gray-600 w-full  " id="edit-modal-subtitle"></div>
-                 <input type="hidden" name="target" id="edit_target">
-                 <div>
-                     <input type="hidden" name="id" id="edit_id">
-                     <input class="w-full border border-gray-400 rounded py-1 px-3 my-1" type="text" name="name"
-                         id="edit_name">
-                 </div>
-                 <div class="flex flex-row w-full gap-2">
-
-                     <button type="submit"
-                         class=" w-full bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-sm">Update</button>
-                     <button type="button" onclick="closeEditModal()"
-                         class="w-full bg-gray-400 text-white px-4 py-1 rounded-sm">Cancel</button>
-                 </div>
-
-             </form>
-         </div>
-     </div>
      <script>
          function deleteFunction(id, type) {
              if (confirm("Are you sure you want to delete this " + type + "?")) {

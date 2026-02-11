@@ -2,8 +2,30 @@
 <title>@yield('title', 'DCP Inventory')</title>
 
 @section('content')
-    <div class="p-2 md:mx-5 md:my-5 mx-0 my-0">
-        <h1 style="letter-spacing: 0.05rem" class="text-2xl font-bold text-gray-800 uppercase mb-4">Search Product</h1>
+    <div class="  md:my-5 mx-0 my-0">
+        <div class=" flex justify-start gap-2 items-center ">
+
+            <div
+                class="h-16 w-16 bg-white p-3 mb-2 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
+                <div class="text-white bg-blue-600 p-2 rounded-full">
+                    <svg viewBox="0 0 24 24" class="h-10 w-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M4 11C4 7.13401 7.13401 4 11 4C14.866 4 18 7.13401 18 11C18 14.866 14.866 18 11 18C7.13401 18 4 14.866 4 11ZM11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C13.125 20 15.078 19.2635 16.6177 18.0319L20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L18.0319 16.6177C19.2635 15.078 20 13.125 20 11C20 6.02944 15.9706 2 11 2Z"
+                                fill="currentColor"></path>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div class="w-full" style="letter-spacing: 0.05rem flex flex-col items-center">
+
+                <h1 style="letter-spacing: 0.05rem" class="text-2xl font-bold text-gray-800 uppercase mb-4">Search Product
+                </h1>
+            </div>
+        </div>
+
         <div style="letter-spacing: 0.05rem" class="mb-4 text-gray-600"
             style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
             <form id="searchForm">

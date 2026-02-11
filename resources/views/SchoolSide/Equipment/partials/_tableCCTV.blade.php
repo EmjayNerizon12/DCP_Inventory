@@ -1,96 +1,90 @@
      <div class="overflow-x-auto ">
          @if ($cctv_info->isNotEmpty())
              @foreach ($cctv_info as $index => $info)
-                 <div>
-
-
-
+                 <div class="my-2">
                      <table class="w-full border-collapse  ">
                          <tbody>
 
                              <tr>
-                                 <td colspan="6" class=" uppercase   py-2 text-lg font-medium text-left">
-
-                                     <div class="flex justify-start  ">
-                                         <div
-                                             class="h-10 w-auto bg-white p-1 border border-gray-300 shadow-md rounded-sm flex items-center justify-center">
-
-                                             <button title="Show Info Modal" type="button"
-                                                 class="bg-green-600 text-white flex items-center  font-medium tracking-wider h-8 py-1 px-4 rounded-sm">
+                                 <td colspan="6" class="top-header">
 
 
-                                                 CCTV No. {{ $index + 1 }}
-                                             </button>
+                                     <div class="flex justify-between">
+                                         <div>
+                                             CCTV No. {{ $index + 1 }}
+                                         </div>
+                                         <div>
+                                             &#8369; {{ number_format($info?->equipment_details?->total_amount, 2) }}
                                          </div>
                                      </div>
                                  </td>
 
                              </tr>
                              <tr>
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Brand / Model
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->equipment_details->brand_model->name ?? '' }}
                                  </td>
 
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Camera Type
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->cctv_type->name ?? '' }}
                                  </td>
 
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Date Installed
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
-                                     {{ $info->equipment_details->date_installed ?? '' }}
+                                 <td class="td-cell">
+                                     {{ \Carbon\Carbon::parse($info?->equipment_details?->date_installed)->format('F d, Y') ?? '' }}
                                  </td>
                              </tr>
 
                              <tr>
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      No. of Cameras
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->no_of_units ?? '' }}
                                  </td>
 
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Functional Cameras
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->no_of_functional ?? '' }}/{{ $info->no_of_units ?? '' }}
                                  </td>
 
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Power Source
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->equipment_details->powersource->name ?? '' }}
                                  </td>
                              </tr>
 
                              <tr>
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Location
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->equipment_details->location->name ?? '' }}
                                  </td>
 
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Installer
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->equipment_details->installer->name ?? '' }}
                                  </td>
 
-                                 <td class="bg-gray-100 border border-gray-500 px-3 py-2 font-semibold">
+                                 <td class="sub-header">
                                      Person In-Charge
                                  </td>
-                                 <td class="border border-gray-500 px-3 py-2">
+                                 <td class="td-cell">
                                      {{ $info->equipment_details->incharge->name ?? '' }}
                                  </td>
                              </tr>

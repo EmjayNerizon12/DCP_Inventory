@@ -14,7 +14,7 @@
 
           <x-select-field name="insert_isp_area_available_id" label="ISP Area of Connection" :options="App\Models\ISP\ISPAreaAvailable::all()"
               :required="false" :edit="true" valueField="pk_isp_area_available_id" textField="name" />
-          <div class="grid grid-cols-2 max-w-xs ml-auto gap-2 mt-4">
+          <div class="grid grid-cols-2 gap-2 mt-4">
               <button title="Show Edit Modal" type="button" onclick="closeInsertAreaModal(1)"
                   class="btn-cancel w-full h-8 py-1 px-4 rounded">
                   Cancel
@@ -48,7 +48,8 @@
                   :required="true" :edit="true" valueField="pk_isp_area_available_id" textField="name" />
 
           </div>
-          <div class="grid grid-cols-2 max-w-xs ml-auto gap-2">
+          <div class="grid grid-cols-2 gap-2 mt-4">
+
 
 
               <button type="button" onclick="closeComponentModal('edit_area_modal')"

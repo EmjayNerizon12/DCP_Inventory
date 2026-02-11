@@ -37,10 +37,7 @@ class ISPInfo extends Model
         'created_at',
         'updated_at'
     ];
-    public function ispInfos()
-    {
-        return $this->hasMany(ISPInfo::class, 'mode_of_acq_id', 'id');
-    }
+
     public function sourceOfAcq()
     {
         return $this->belongsTo(ISPSourceOfAcq::class, 'source_of_acq_id', 'id');

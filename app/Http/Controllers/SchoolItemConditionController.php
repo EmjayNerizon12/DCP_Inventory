@@ -41,7 +41,7 @@ class SchoolItemConditionController extends Controller
         return view('SchoolSide.ItemsCondition', compact('items_result', 'id', 'totals'));
     }
 
-    public function comboSearch(Request $request)
+    public function  comboSearch(Request $request)
     {
         return redirect()->route('schools.item.condition', ['id' => $request->condition_id]);
     }

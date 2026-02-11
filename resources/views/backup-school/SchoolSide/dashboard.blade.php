@@ -5,7 +5,6 @@
 @section('title', 'DCPMS Dashboard')
 
 @section('content')
-
     <style>
         .bg-white {
             letter-spacing: 0.02rem;

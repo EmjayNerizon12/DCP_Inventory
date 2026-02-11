@@ -21,7 +21,33 @@ class SchoolDetailsController extends Controller
     /**
      * Display a listing of the resource.
      */
-
+    public function uploadSchoolImage(Request $request)
+    {
+        $validated = $request->validate([
+            'school_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        // return response()->json([
+        //     'success' => true,
+        //     'data' =>  $request->school_image,
+        // ]);
+        if ($request->hasFile('school_image')) {
+            $image = $request->file('school_image');
+            $imageName = uniqid('logo_') . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('school-logo'), $imageName);
+            $validated['image_path'] = $imageName;
+        }
+        $school_id = Auth::guard('school')->user()->school->pk_school_id;
+        $school_data = School::where('pk_school_id', $school_id)
+            ->first();
+        $school_data->update([
+            'image_path' =>  $validated['image_path'],
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'School image uploaded successfully!',
+            'image' => asset('school-logo/' . $imageName),
+        ]);
+    }
     public function insertNonTeaching(Request $request)
     {
         $validated = $request->validate([

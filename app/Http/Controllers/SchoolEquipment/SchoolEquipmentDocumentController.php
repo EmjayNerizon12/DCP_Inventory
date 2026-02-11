@@ -4,7 +4,9 @@ namespace App\Http\Controllers\SchoolEquipment;
 
 use App\Http\Controllers\Controller;
 use App\Models\SchoolEquipment\SchoolEquipmentDocument;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class SchoolEquipmentDocumentController extends Controller
 {
@@ -29,16 +31,30 @@ class SchoolEquipmentDocumentController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'school_equipment_id' => 'required|exists:school_equipment,id',
-            'document_type_id' => 'required|integer|exists:school_equipment_document_types,id',
-            'document_number' => 'required|string|max:255',
-        ]);
-        $document = SchoolEquipmentDocument::create($validated);
-        if ($document) {
-            return redirect()->back()->with('success', 'Document added successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Failed to add document.');
+        try {
+
+            $validated = $request->validate([
+                'school_equipment_id' => 'required|exists:school_equipment,id',
+                'document_type_id' => 'required|integer|exists:school_equipment_document_types,id|unique:school_equipment_documents,document_type_id,NULL,id,school_equipment_id,' . $request->school_equipment_id,
+                'document_number' => 'required|string|max:255',
+            ]);
+            $document = SchoolEquipmentDocument::create($validated);
+            return response()->json([
+                'success' => true,
+                'message' => 'School Equipment Document saved successfully',
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An Error Occured',
+                'errors' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -63,16 +79,30 @@ class SchoolEquipmentDocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'document_type_id' => 'required|integer|exists:school_equipment_document_types,id',
-            'document_number' => 'required|string|max:255',
-        ]);
-        $document = SchoolEquipmentDocument::findOrFail($id);
-        $document->update($validated);
-        if ($document) {
-            return redirect()->back()->with('success', 'Document updated successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Failed to update document.');
+        try {
+
+            $validated = $request->validate([
+                'document_type_id' => 'required|integer|exists:school_equipment_document_types,id|unique:school_equipment_documents,document_type_id,NULL,id,school_equipment_id,' . $request->school_equipment_id,
+                'document_number' => 'required|string|max:255',
+            ]);
+            $document = SchoolEquipmentDocument::findOrFail($id);
+            $document->update($validated);
+            return response()->json([
+                'success' => true,
+                'message' => 'School Equipment Document saved successfully',
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An Error Occured',
+                'errors' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -81,14 +111,26 @@ class SchoolEquipmentDocumentController extends Controller
      */
     public function destroy(string $id)
     {
-        $document = SchoolEquipmentDocument::findOrFail($id);
-        $remove_document = $document->delete();
 
-        if ($remove_document) {
-
-            return redirect()->back()->with('success', 'Document deleted successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Failed to delete document.');
+        try {
+            $document = SchoolEquipmentDocument::findOrFail($id);
+            $remove_document = $document->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'School Equipment Document removed successfully',
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An Error Occured',
+                'errors' => $e->getMessage(),
+            ], 500);
         }
     }
 }

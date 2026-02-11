@@ -2,14 +2,33 @@
 <title>@yield('title', 'DCP Conditions')</title>
 
 @section('content')
-    <div class="p-2 md:mx-5 md:my-5 mx-0 my-0">
-        <div class="flex md:flex-row flex-col justify-between items-center mb-4">
-            <div class="w-full" style="letter-spacing: 0.05rem">
-                <h2 class="text-2xl font-bold text-gray-800 uppercase">DCP item current condition</h2>
-                <div id="page-title" style="letter-spacing: 0.05rem!important" class="text-lg font-medium uppercase  "></div>
+    <div class="p-2 md:my-5 mx-0 my-0">
 
+        <div class="flex md:flex-row flex-col justify-between items-center mb-4">
+            <div class="  flex justify-start gap-2 items-center ">
+
+                <div
+                    class="h-16 w-16 bg-white p-3 border border-gzray-300 shadow-lg rounded-full flex items-center justify-center">
+                    <div class="text-white bg-blue-600 p-2 rounded-full">
+                        <svg fill="currentColor" class="w-10 h-10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd"
+                                    d="M384,-2.84217094e-14 L384,74.666 L426.666667,74.6666667 L426.666667,181.333333 L384,181.333 L384,256 L-2.13162821e-14,256 L-2.13162821e-14,-2.84217094e-14 L384,-2.84217094e-14 Z M341.333333,42.6666667 L42.6666667,42.6666667 L42.6666667,213.333333 L341.333333,213.333333 L341.333333,42.6666667 Z M234.083198,55.7493229 L269.58401,79.4165312 L189.982396,198.818952 L113.830111,122.666667 L144,92.4967773 L183.338667,131.818667 L234.083198,55.7493229 Z"
+                                    transform="translate(42.667 128)"></path>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="w-full" style="letter-spacing: 0.05rem">
+                    <h2 class="text-2xl font-bold text-gray-800 uppercase">DCP item current condition</h2>
+                    <div id="page-title" style="letter-spacing: 0.05rem!important" class="text-lg font-medium uppercase  ">
+                    </div>
+
+                </div>
             </div>
-            <div class="w-50 flex md:justify-end justify-start my-2">
+            <div class="w-50 flex md:justify-end justify-start my-2 mx-5">
                 <select style="letter-spacing: 0.05rem" id="select-condition"
                     class="px-3 py-2 text-md border border-gray-300 shadow-sm  rounded-md bg-white mb-2"
                     onchange="showCondition()">

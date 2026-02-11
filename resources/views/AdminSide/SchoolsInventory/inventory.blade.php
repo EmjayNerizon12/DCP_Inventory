@@ -50,12 +50,35 @@
         }
     </style>
 
-    <div class="p-2 md:mx-5 md:my-5 mx-0 my-0">
-        <h1 style="letter-spacing: 0.05rem" class="text-2xl font-bold text-gray-800 uppercase">DCP Inventory</h1>
-        <div style="letter-spacing: 0.05rem" class="mb-4 text-gray-600"
-            style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-            Select a school to filter items, or view all by default.
+    <div class="md:my-5 mx-0 my-0">
+        <div class="my-5 flex justify-start gap-2 items-center ">
+
+            <div
+                class="h-16 w-16 bg-white p-3 border border-gzray-300 shadow-lg rounded-full flex items-center justify-center">
+                <div class="text-white bg-blue-600 p-2 rounded-full">
+                    <svg fill="currentColor" class="h-10 w-10" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                        xml:space="preserve">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M275.2,512L480,409.6l20.5-307.2l-225.3,61.4V512z M29.5,409.6L234.3,512V163.8L9,102.4L29.5,409.6z M254.8,0L9,61.4 l245.8,61.4l245.8-61.4L254.8,0z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div class="w-full" style="letter-spacing: 0.05rem flex flex-col items-center">
+                <h1 style="letter-spacing: 0.05rem" class="text-2xl font-bold text-gray-800 uppercase">DCP Inventory</h1>
+                <div style="letter-spacing: 0.05rem" class="mb-4 text-lg text-gray-600"
+                    style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                    Select a school to filter items, or view all by default.
+                </div>
+
+            </div>
         </div>
+
         <div class="bg-white border border-gray-400 shadow-xl rounded-lg overflow-hidden p-6 mb-2  mx-0 my-0"
             class="bg-white ">
 

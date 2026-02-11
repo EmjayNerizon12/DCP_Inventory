@@ -353,12 +353,35 @@
             }
         });
     </script>
-    <div class="p-2  md:mx-5 md:my-5 mx-0 my-0">
-        <div class="flex md:flex-row flex-col md:justify-between justify-start items-center text-md"
+    <div class=" md:my-5 mx-0 my-0">
+        <div class="flex md:flex-row flex-col md:justify-between justify-start items-center text-md mb-2"
             style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;letter-spacing:0.05rem">
             <div class="w-full">
-                <h2 class="text-2xl font-bold text-gray-700">School List</h2>
-                <div class="text-md text-gray-600 md:mb-5 mb-2">List of Schools under DepEd Computerization Program</div>
+                <div class=" flex justify-start gap-2 items-center ">
+                    <div
+                        class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
+                        <div class="text-white bg-blue-600 p-2 rounded-full">
+                            <svg viewBox="0 0 24 24" class="h-10 w-10" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M21 10L12 5L3 10L6 11.6667M21 10L18 11.6667M21 10V10C21.6129 10.3064 22 10.9328 22 11.618V16.9998M6 11.6667L12 15L18 11.6667M6 11.6667V17.6667L12 21L18 17.6667L18 11.6667"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div style="letter-spacing: 0.05rem  ">
+                        <h2 class="text-2xl font-bold text-gray-700">School List</h2>
+                        <div class="text-lg text-gray-600  ">List of Schools under DepEd Computerization Program
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="flex items-center md:justify-end justify-start w-full mb-2">
                 <button class="bg-blue-600 hover:bg-blue-700 shadow-md text-md text-white py-2 px-4 rounded"

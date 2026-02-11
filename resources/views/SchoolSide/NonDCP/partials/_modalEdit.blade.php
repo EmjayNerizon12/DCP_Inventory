@@ -36,10 +36,10 @@
                      </svg>
                  </div>
              </div>
-             <div class="text-2xl font-bold text-green-600 ">
+             <div class="page-title">
                  Edit Non-DCP Item
              </div>
-             <div>This information will be included for reports.</div>
+             <div class="page-subtitle">This information will be included for reports.</div>
          </div>
          <form action="{{ route('schools.nondcpitem.update') }}" method="POST"
              class="grid md:grid-cols-2 grid-cols-1 gap-2">
@@ -95,13 +95,13 @@
                  <textarea name="remarks" id="remarks" class="border border-gray-300   w-full px-2 py-1"
                      placeholder="Description of the Non-DCP item"></textarea>
              </div>
-             <div class="flex justify-end  col-span-2 gap-2  ">
-                 <button type="submit" class="btn-green py-1 px-4   rounded shadow ">
-                     Update this Item
-                 </button>
-                 <button type="button" class=" py-1 px-4 btn-cancel rounded shadow "
+             <div class="flex md:justify-end justify-center  col-span-2 gap-2  ">
+                 <button type="button" class="md:w-auto w-full py-1 px-4 btn-cancel rounded   "
                      onclick="document.getElementById('edit-modal').classList.add('hidden')">
                      Cancel
+                 </button>
+                 <button type="submit" class="md:w-auto w-full  btn-green py-1 px-4   rounded   ">
+                     Update this Item
                  </button>
              </div>
          </form>

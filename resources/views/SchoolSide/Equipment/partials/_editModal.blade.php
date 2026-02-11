@@ -166,14 +166,13 @@
                 </div>
             </div>
 
-            <div class="flex justify-end gap-2 mt-4">
-                <button type="submit"
-                    class="bg-green-600 hover:bg-green-700 text-white px-6 py-1  tracking-wider font-medium rounded shadow ">
-                    Update
-                </button>
+            <div class="flex md:justify-end justify-center gap-2 mt-4">
                 <button type="button" onclick="closeModal(3)"
-                    class="btn-cancel px-6 py-1  tracking-wider  rounded shadow ">
+                    class="btn-cancel px-6 py-1 md:w-auto w-full   rounded   ">
                     Cancel
+                </button>
+                <button type="submit" class="btn-green md:w-auto w-full px-4 py-1  rounded   ">
+                    Update Details
                 </button>
             </div>
 

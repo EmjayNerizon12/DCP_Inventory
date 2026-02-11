@@ -3,103 +3,123 @@
 <title>@yield('title', 'Warranty Status of Items')</title>
 
 @section('content')
-    <div class="  my-5 mx-5 max-w-full  px-4     font-[Verdana]">
-        @if ($warranties->count())
-            <div class="flex flex-col justify-center items-center w-full">
+    <div class="p-6">
 
-                @foreach ($warranties as $warranty)
-                    <div class="border-1 w-full">
-                        <a onclick="history.back()"
-                            class="inline-flex border-1 items-center cursor-pointer text-blue-600 w-full text-left text-md font-semibold hover:underline">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                            </svg>
-                            DCP Item
-                        </a>
-                        <h2 class="text-2xl  border-1 w-full font-bold text-blue-700  text-left">Warranty of DCP Item</h2>
-                        <p class="mb-2 w-full border-1 text-left">Monitor the warranty status of your DCP items</p>
-                    </div>
+        @if ($warranty)
+            <div class="flex flex-row justify-start items-start gap-2 w-full">
+                <div class="inline-flex  items-center text-blue-600  text-base font-semibold hover:underline  ">
 
                     <div
-                        class="bg-white   w-full border border-gray-300 rounded-sm p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                        <!-- Item Type -->
+                        class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
-                        {{-- <div class="mb-3">
-                            <h2 class="text-xl font-bold text-blue-700">
-                                {{ $warranty->batchItem->dcpBatch->school->SchoolName ?? 'N/A' }}
-                            </h2>
-                            <p class="text-sm text-gray-500">School</p>
-                        </div> --}}
-
-                        <div class="flex justify-between">
-
-                            <div class="mb-3">
-                                <h2 class="text-xl font-bold text-green-700">
-                                    {{ $warranty->batchItem->dcpBatch->batch_label ?? 'N/A' }}
-                                </h2>
-                                <p class="text-sm font-semibold text-gray-500">Batch</p>
-                            </div>
-                            <div class="mb-5">
-                                <span
-                                    class="inline-block px-4 py-1 rounded-full text-sm font-bold text-white
-                                {{ $warranty->status->name === 'Expired' ? 'bg-red-500' : 'bg-green-600' }}">
-                                    {{ $warranty->status->name ?? 'N/A' }}
-                                </span>
-                                {{-- <p class="text-sm font-semibold text-gray-500 mt-1">Warranty Status</p> --}}
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <h2 class="text-xl font-bold text-green-700">
-                                {{ $warranty->batchItem->dcpItemType->name ?? 'N/A' }}
-                            </h2>
-                            <p class="text-sm font-semibold text-gray-500">Product/Item</p>
-                        </div>
-
-                        <!-- Serial Number -->
-                        <div class="mb-3">
-                            <p class="text-lg font-semibold text-blue-700 tracking-wide">
-                                {{ $warranty->batchItem->generated_code ?? 'N/A' }}
-                            </p>
-                            <p class="text-sm font-semibold text-gray-500">Serial Number</p>
-                        </div>
-
-                        <!-- Warranty Status Badge -->
-
-
-                        <!-- Start / End Dates -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-1 text-md text-center mb-3">
-                            <div class="bg-green-200 p-2 border border-gray-800">
-                                <p class="text-gray-800 font-medium">Start Date</p>
-                                <p class="text-gray-800">
-                                    {{ \Carbon\Carbon::parse($warranty->warranty_start_date)->format('M d, Y') }}
-                                </p>
-                            </div>
-                            <div class="bg-red-200 p-2 border border-gray-800">
-                                <p class="text-gray-800 font-medium">End Date</p>
-                                <p class="text-gray-800">
-                                    {{ \Carbon\Carbon::parse($warranty->warranty_end_date)->format('M d, Y') }}
-                                </p>
-                            </div>
-                            <div class="bg-blue-200 p-2 border border-gray-800">
-                                <p class="text-gray-800 font-medium">Remaining</p>
-                                @php
-
-                                    $endDate = \Carbon\Carbon::parse($warranty->warranty_end_date);
-                                    $now = \Carbon\Carbon::now();
-                                    $diff = $now->diff($endDate);
-                                @endphp
-
-                                <p class="text-gray-800 font-semibold text-lg">
-                                    {{ $diff->y }}years, {{ $diff->m }}months, {{ $diff->d }}days
-
-                                </p>
-                            </div>
-                        </div>
-
-
+                        <button onclick="window.history.back()" class="  btn-submit  p-1 rounded-full">
+                            <svg fill="currentColor" class="w-8 h-8" version="1.1" id="Layer_1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 472.615 472.615" xml:space="preserve">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M167.158,117.315l-0.001-77.375L0,193.619l167.157,153.679v-68.555c200.338,0.004,299.435,153.932,299.435,153.932 c3.951-19.967,6.023-40.609,6.023-61.736C472.615,196.295,341.8,117.315,167.158,117.315z">
+                                            </path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
                     </div>
-                @endforeach
+                </div>
+                <div class=" w-full">
+
+                    <div class="page-title">
+                        Warranty of DCP Product
+                    </div>
+                    <div class="page-subtitle">
+                        Monitor the warranty status of your DCP items
+                    </div>
+
+                </div>
+            </div>
+            <div
+                class="bg-white   w-full border border-gray-300 rounded-sm p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+
+                <div class="flex justify-between">
+
+                    <div class="mb-3">
+                        <p class="text-sm font-semibold text-gray-500">Batch</p>
+
+                        <h2 class="text-xl font-bold text-green-700">
+                            {{ $warranty?->batchItem?->dcpBatch?->batch_label ?? 'N/A' }}
+                        </h2>
+                    </div>
+                    <div class="mb-5 md:block hidden">
+                        @php
+                            $status = $warranty?->status?->name ?? null;
+
+                        @endphp
+
+                        <button
+                            class="px-4 py-1 rounded {{ $status === 'Expired' ? 'btn-delete hover:bg-red-600' : 'btn-green hover:bg-green-600' }}">
+
+                            {{ $status ?? 'N/A' }}
+                        </button>
+
+                        {{-- <p class="text-sm font-semibold text-gray-500 mt-1">Warranty Status</p> --}}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h2 class="text-xl font-bold text-green-700">
+                        <p class="text-sm font-semibold text-gray-500">Product/Item</p>
+
+                        {{ $warranty->batchItem->dcpItemType->name ?? 'N/A' }}
+                    </h2>
+                </div>
+
+                <!-- Serial Number -->
+                <div class="mb-3">
+                    <p class="text-sm font-semibold text-gray-500">Serial Number</p>
+
+                    <p class="text-lg font-semibold text-blue-700 tracking-wide">
+                        {{ $warranty->batchItem->generated_code ?? 'N/A' }}
+                    </p>
+                </div>
+
+                <!-- Warranty Status Badge -->
+
+
+                <!-- Start / End Dates -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-1  text-base text-center mb-3">
+                    <div class="bg-green-200 p-2 border border-gray-800">
+                        <p class="text-gray-800 font-medium">Start Date</p>
+                        <p class="text-gray-800">
+                            {{ \Carbon\Carbon::parse($warranty->warranty_start_date ?? null)->format('M d, Y') }}
+                        </p>
+                    </div>
+                    <div class="bg-red-200 p-2 border border-gray-800">
+                        <p class="text-gray-800 font-medium">End Date</p>
+                        <p class="text-gray-800">
+                            {{ \Carbon\Carbon::parse($warranty->warranty_end_date ?? null)->format('M d, Y') }}
+                        </p>
+                    </div>
+                    <div class="bg-blue-200 p-2 border border-gray-800">
+                        <p class="text-gray-800 font-medium">Remaining</p>
+                        @php
+
+                            $endDate = \Carbon\Carbon::parse($warranty->warranty_end_date ?? null);
+                            $now = \Carbon\Carbon::now();
+                            $diff = $now->diff($endDate);
+                        @endphp
+
+                        <p class="text-gray-800 font-semibold text-lg">
+                            {{ $diff->y }}years, {{ $diff->m }}months, {{ $diff->d }}days
+
+                        </p>
+                    </div>
+                </div>
+
+
             </div>
         @else
             <div class="text-center text-gray-500 text-lg mt-12 font-[Verdana]">

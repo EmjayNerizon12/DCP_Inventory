@@ -158,7 +158,7 @@ class SchoolEmployeeController extends Controller
             if ($employee->image_path) {
 
                 $oldPath = public_path(
-                    'school-employee/' . $validated['school_id'] . '-' . $schoolName . '/' . $employee->image_path
+                    'school-employee/' . $school_id . '-' . $schoolName . '/' . $employee->image_path
                 );
 
                 if (File::exists($oldPath)) {

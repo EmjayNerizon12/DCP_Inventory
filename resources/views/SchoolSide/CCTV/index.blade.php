@@ -42,14 +42,14 @@
 
          <div class="flex justify-between items-center gap-4 ">
 
-             <button title="Show Info Modal" type="button" onclick="openModal(1)" class="theme-button">
+             <button title="Show Info Modal" type="button" onclick="openModal(1)" class="btn-submit px-4 py-1 rounded">
                  Add CCTV Record
              </button>
 
              <div
-                 class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                 class="action-button hidden">
 
-                 <button class="btn-cancel p-1 rounded-full" onclick="window.print()">
+                 <button class="btn-cancel  p-1 rounded-full" onclick="window.print()">
                      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">

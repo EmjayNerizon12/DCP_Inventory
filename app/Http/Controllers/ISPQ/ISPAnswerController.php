@@ -8,6 +8,8 @@ use App\Models\ISPQ\ISPAnswer;
 use App\Models\ISPQ\ISPChoice;
 use App\Models\ISPQ\ISPQuestion;
 use App\Services\ISPQ\QuestionChoiceService;
+use App\Services\ISPQ\PostAnswer;
+use App\Services\ISPQ\PostAnswerService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,93 +38,30 @@ class ISPAnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostAnswerService $postAnswer, Request $request)
     {
         $school_id = Auth::guard('school')->user()->pk_school_id;
-
         $question_list  = ISPQuestion::all();
-        try {
-            foreach ($question_list as $question) {
-                if ($question->question_type == 'text') {
-                    ISPAnswer::create([
-                        'school_id' => $school_id,
-                        'question_id' => $question->id,
-                        'choice_id' => null,
-                        'other_value' => null,
-                        'text_value' => $request->answer[$question->id],
-                        'numeric_value' => null,
-                    ]);
-                }
-                if ($question->question_type == 'number') {
-                    ISPAnswer::create([
-                        'school_id' => $school_id,
-                        'question_id' => $question->id,
-                        'choice_id' => null,
-                        'other_value' => null,
-                        'text_value' => null,
-                        'numeric_value' => (int)$request->answer[$question->id],
-                    ]);
-                }
-                if ($question->question_type == 'multiple') {
-                    foreach ($request->answer[$question->id] as $choice_id) {
-                        if (ISPChoice::find($choice_id)->choice_text !== 'Others') {
-                            ISPAnswer::create([
-                                'school_id' => $school_id,
-                                'choice_id' => $choice_id,
-                                'question_id' => $question->id,
-                                'other_value' => null,
-                                'text_value' => null,
-                                'numeric_value' => null,
-                            ]);
-                        }
-                        if (isset($request->other[$question->id][$choice_id])) {
-                            ISPAnswer::create([
-                                'school_id' => $school_id,
-                                'choice_id' => $choice_id,
-                                'question_id' => $question->id,
-                                'other_value' => $request->other[$question->id][$choice_id],
-                                'text_value' => null,
-                                'numeric_value' => null,
-                            ]);
-                        }
-                    }
-                    if (isset($request->other_value[$question->id])) {
-                        ISPAnswer::create([
-                            'school_id' => $school_id,
-                            'choice_id' => null,
-                            'question_id' => $question->id,
-                            'other_value' => $request->other_value[$question->id],
-                            'text_value' => null,
-                            'numeric_value' => null,
-                        ]);
-                    }
-                }
-                if ($question->question_type == 'single') {
-                    ISPAnswer::create([
-                        'school_id' => $school_id,
-                        'choice_id' => $request->answer[$question->id],
-                        'question_id' => $question->id,
-                        'other_value' => null,
-                        'text_value' => null,
-                        'numeric_value' => null,
-                    ]);
-                }
-                if ($question->question_type == 'boolean') {
-                    ISPAnswer::create([
-                        'question_id' => $question->id,
-                        'school_id' => $school_id,
-                        'choice_id' => $request->answer[$question->id],
-                        'other_value' => null,
-                        'text_value' => null,
-                        'numeric_value' => null,
-                    ]);
-                }
-            }
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred while submitting your answers: ' . $e->getMessage());
-        }
 
-        return redirect()->back()->with('success', 'Your answers have been submitted successfully.');
+        $totalSuccess = 0;
+        $totalQuestion = count($question_list);
+        foreach ($question_list as $question) {
+            $post = $postAnswer->post($request, $school_id, $question);
+            if ($post) {
+                $totalSuccess++;
+            }
+        }
+        if ($totalSuccess == $totalQuestion) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Your answers have been submitted successfully.',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'There was an error submitting your answers. Please try again.',
+            ]);
+        }
     }
 
     /**
@@ -153,8 +92,9 @@ class ISPAnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ISPAnswer $iSPAnswer)
+    public function destroy(int $school_id)
     {
-        //
+        ISPAnswer::where('school_id', $school_id)->delete();
+        return redirect()->back()->with('success', 'Answers deleted successfully.');
     }
 }

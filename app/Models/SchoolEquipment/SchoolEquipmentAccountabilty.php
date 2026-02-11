@@ -17,9 +17,11 @@ class SchoolEquipmentAccountabilty extends Model
         'accountable_employee_id',
         'date_assigned_to_accountable_employee',
 
+        'custodian',
+        'custodian_received_date',
 
-        'receiver_type_id',
-        'date_received',
+        'end_user',
+        'end_user_received_date',
 
         'created_at',
         'updated_at',
@@ -37,12 +39,13 @@ class SchoolEquipmentAccountabilty extends Model
     {
         return $this->belongsTo(SchoolEquipmentTransactionType::class, 'transaction_type_id', 'id');
     }
-    public function endUser()
+   public function equipmentCustodian()
     {
-        return $this->hasMany(SchoolEquipmentEndUser::class, 'accountability_id', 'id');
-    }
-    public function receiverType()
+        return $this->belongsTo(SchoolEmployee::class, 'custodian', 'pk_schools_employee_id');
+    } 
+    public function equipmentEndUser()
     {
-        return $this->belongsTo(SchoolEquipmentReceiverType::class, 'receiver_type_id', 'id');
+        return $this->belongsTo(SchoolEmployee::class, 'end_user', 'pk_schools_employee_id');
     }
+
 }

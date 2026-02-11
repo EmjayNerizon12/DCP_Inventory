@@ -3,6 +3,7 @@
 namespace App\Models\ISP;
 
 use App\Models\ISP\ISPList;
+use App\Models\ISPInfo\ISPInfo;
 use App\Models\School;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,13 +14,17 @@ class ISPDetails extends Model
     protected $fillable = [
         'school_id', //FK
         'isp_list_id', //FK done
-        'isp_purpose_id',
+        'isp_purpose_id', //FK
         'isp_connection_type_id', //FK donr
         'isp_internet_quality_id', //FK Done
         'created_at',
         'updated_at'
     ];
 
+    public function ispInfo()
+    {
+        return $this->hasMany(ISPInfo::class, 'school_internet_id', 'pk_isp_details_id');
+    }
     public function ispList()
     {
         return $this->belongsTo(ISPList::class, 'isp_list_id', 'pk_isp_list_id');

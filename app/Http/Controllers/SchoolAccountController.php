@@ -13,6 +13,12 @@ class SchoolAccountController extends Controller
     {
         return view('SchoolSide.Account.index');
     }
+
+    public function showAccounts()
+    {
+        $list = SchoolUser::with('school')->get();
+        return response()->json(['success' => true, 'data' => $list]);
+    }
     public function change_password(Request $request)
     {
         $request->validate([
@@ -20,10 +26,7 @@ class SchoolAccountController extends Controller
             'current_password' => 'required',
             'new_password' => 'required|min:8|confirmed',
         ]);
-
-
         $user = Auth::guard('school')->user()->school->schoolUser;
-
         if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Current password is incorrect.']);
         } else if ($request->current_password === $request->new_password) {

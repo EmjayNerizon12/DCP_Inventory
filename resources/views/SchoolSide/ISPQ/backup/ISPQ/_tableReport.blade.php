@@ -64,7 +64,7 @@
 
          if (res.data.isAnswered) {
              actionContainer.innerHTML = `
-             <div>
+             <div  >
                     <div
                         class="h-10 w-auto hidden flex items-center justify-center">
 
@@ -108,7 +108,7 @@
 
          const tableReport = document.createElement('table');
          tableReport.className =
-             'w-full border';
+             '  w-full border  ';
          const tbodyReport = document.createElement('tbody');
          const theadReport = document.createElement('thead');
          theadReport.innerHTML = `<tr>

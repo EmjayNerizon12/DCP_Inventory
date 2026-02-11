@@ -18,4 +18,8 @@ class ISPQuestion extends Model
     {
         return $this->hasMany(ISPChoice::class, 'question_id', 'id');
     }
+    public function answers()
+    {
+        return $this->hasMany(ISPAnswer::class, 'question_id', 'id');
+    }
 }

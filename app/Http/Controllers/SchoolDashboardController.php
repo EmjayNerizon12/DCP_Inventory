@@ -8,7 +8,12 @@ use App\Models\DCPCurrentCondition;
 use App\Models\DCPItemCondition;
 use App\Models\DCPItemTypes;
 use App\Models\DCPPackageTypes;
+use App\Models\Equipment\EquipmentBiometricDetails;
+use App\Models\Equipment\EquipmentCCTVDetails;
+use App\Models\ISP\ISPDetails;
 use App\Models\SchoolData;
+use App\Models\SchoolEmployee;
+use App\Models\SchoolEquipment\SchoolEquipment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -124,7 +129,7 @@ class SchoolDashboardController extends Controller
                 }
             }
         }
-        return view('SchoolSide.dashboard', compact(
+        return view('SchoolSide.Dashboard.index', compact(
             'totalLearners',
             'item_sorted',
             'totalClassrooms',
@@ -144,43 +149,5 @@ class SchoolDashboardController extends Controller
             'total_out_of_warranty',
             'total_under_warranty'
         ));
-    }
-
-    public function getItemConditionCounts()
-    {
-        $school = Auth::guard('school')->user()->school;
-
-        // Get all DCP batches for this school
-        $batches = DCPBatch::where('school_id', $school->pk_school_id)->get();
-
-        // Collect all batch items
-        $items = collect();
-        foreach ($batches as $batch) {
-            $batch_items = DCPBatchItem::where('dcp_batch_id', $batch->pk_dcp_batches_id)->get();
-            $items = $items->merge($batch_items);
-        }
-
-        // Initialize counter
-        $conditionCounts = [];
-
-        // Loop through items and get their condition names
-        foreach ($items as $item) {
-            $condition_id = DCPItemCondition::where('dcp_batch_item_id', $item->pk_dcp_batch_items_id)
-                ->value('current_condition_id');
-
-            if ($condition_id) {
-                $condition_name = DCPCurrentCondition::where('pk_dcp_current_conditions_id', $condition_id)
-                    ->value('name');
-
-                if ($condition_name) {
-                    if (!isset($conditionCounts[$condition_name])) {
-                        $conditionCounts[$condition_name] = 0;
-                    }
-                    $conditionCounts[$condition_name]++;
-                }
-            }
-        }
-
-        return response()->json($conditionCounts);
     }
 }

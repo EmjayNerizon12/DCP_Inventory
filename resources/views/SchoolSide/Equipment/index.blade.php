@@ -14,7 +14,7 @@
              <div class="flex justify-start mb-2 space-x-4">
 
                  <div
-                     class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
+                     class="h-16 w-16 hidden bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
                      <div class="text-white bg-blue-600 p-2 rounded-full">
                          <svg class="h-10 w-10" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 280.606 280.606" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -32,26 +32,23 @@
                      </div>
                  </div>
                  <div>
-                     <div class="text-2xl font-bold text-gray-700   ">CCTV Information</div>
-                     <div class="text-md font-normal text-gray-600 mb-2  tracking-wide">Create, View, Edit and Remove
+                     <div class="page-title">CCTV Information</div>
+                     <div class="page-subtitle">Create, View, Edit and Remove
                          Details</div>
 
 
                  </div>
              </div>
              <div>
-                 <div class="flex justify-start mb-3">
-                     <div class="flex justify-start my-2">
-                         <div
-                             class="h-10 w-auto bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
-                             <button title="Show Info Modal" type="button" onclick="openModal(1)"
-                                 class="btn-submit h-8 py-1 px-4 rounded-full">
-                                 Add CCTV Record
-                             </button>
-                         </div>
-                     </div>
+                 <div class="flex justify-start my-4">
+
+                     <button title="Show Info Modal" type="button" onclick="openModal(1)" class="theme-button">
+                         Add CCTV Record
+                     </button>
+
                  </div>
+
              </div>
              @include('SchoolSide.Equipment.partials._tableCCTV')
 
@@ -61,7 +58,7 @@
          <div class="px-5 py-5 bg-white mb-4 rounded-md border border-gray-300">
              <div class="flex justify-start mb-4 space-x-4">
                  <div
-                     class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
+                     class="h-16 w-16 hidden bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
                      <div class="text-white bg-blue-600 p-2 rounded-full">
                          <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 32 32" version="1.1"
                              xmlns="http://www.w3.org/2000/svg">
@@ -77,8 +74,8 @@
                      </div>
                  </div>
                  <div>
-                     <div class="text-2xl font-bold text-gray-700   ">Biometrics Information</div>
-                     <div class="text-md font-normal text-gray-600 mb-2 tracking-wide ">Create, View, Edit and Remove
+                     <div class="page-title">Biometrics Information</div>
+                     <div class="page-subtitle">Create, View, Edit and Remove
                          Details</div>
                      <div>
 
@@ -87,15 +84,12 @@
                  </div>
 
              </div>
-             <div class="flex justify-start my-2">
-                 <div
-                     class="h-10 w-auto bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+             <div class="flex justify-start my-4">
 
-                     <button title="Show Info Modal" type="button" onclick="openModal(2)"
-                         class="btn-submit h-8 py-1 px-4 rounded-full">
-                         Add Biometrics Record
-                     </button>
-                 </div>
+                 <button title="Show Info Modal" type="button" onclick="openModal(2)" class="theme-button">
+                     Add Biometrics Record
+                 </button>
+
              </div>
              @include('SchoolSide.Equipment.partials._tableBiometric')
          </div>
