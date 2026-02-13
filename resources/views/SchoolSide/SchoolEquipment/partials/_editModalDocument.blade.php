@@ -1,4 +1,4 @@
-<x-modal id="edit-document-modal" size="small-modal" type="edit" icon="report_w_8">
+<x-modal id="edit-document-modal" size="small-modal" type="edit" icon="report-lg">
 	<form class="space-y-4" id="editDocumentForm" method="POST">
 		@csrf
 		@method('PUT')

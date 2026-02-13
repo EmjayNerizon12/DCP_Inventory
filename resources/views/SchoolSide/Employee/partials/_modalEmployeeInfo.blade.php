@@ -1,7 +1,7 @@
 @include('SchoolSide.components.print')
 
 
-<x-modal id="show-employee-modal" title="test-modal" size="extra-large-modal" type="add" icon="employee_w_8">
+<x-modal id="show-employee-modal" title="test-modal" size="extra-large-modal" type="add" icon="employee-sm">
     <div class="flex flex-col items-center justify-center ">
         <div class="w-full flex flex-col justify-center w-full text-center">
 

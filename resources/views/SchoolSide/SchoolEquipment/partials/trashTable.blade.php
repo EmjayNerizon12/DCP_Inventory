@@ -63,7 +63,7 @@
                                 '{{ $equipment->allotment_class_id }}',
                                 '{{ $equipment->remarks }}'
                                     )">
-                     @include('SchoolSide.components.svg.edit_w_8')
+                     @include('SchoolSide.components.svg.edit-sm')
 
                  </button>
              </div>
@@ -76,7 +76,7 @@
                      class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
                      <button type="submit" class="text-white bg-red-600 hover:bg-red-700 p-1 rounded-full">
-                         @include('SchoolSide.components.svg.delete_w_8')
+                         @include('SchoolSide.components.svg.delete-sm')
                      </button>
                  </div>
              </form>
@@ -141,7 +141,7 @@
                  <button id="toggle-button-{{ $equipment->id }}" class="btn-gray p-1 rounded-full"
                      onclick="toggleCollapse('equipment-print-{{ $equipment->id }}',{{ $equipment->id }})">
 
-                     @include('SchoolSide.components.svg.dashboard_w_8')
+                     @include('SchoolSide.components.svg.dashboard-sm')
 
                  </button>
              </div>
@@ -372,7 +372,7 @@
                                                  <button title="Insert Document" type="button"
                                                      onclick="openDocumentModal({{ $equipment->id }})"
                                                      class="text-white bg-blue-600 hover:bg-blue-700 p-1 rounded-full">
-                                                     @include('SchoolSide.components.svg.plus_w_8')
+                                                     @include('SchoolSide.components.svg.plus-sm')
                                                  </button>
                                              </div>
 
@@ -382,7 +382,7 @@
                                                  <button title="Edit Document" type="button"
                                                      onclick="showDocumentEditModal({{ $document->id }}, {{ $document->document_type_id }}, '{{ $document->document_number }}')"
                                                      class="btn-update p-1 rounded-full">
-                                                     @include('SchoolSide.components.svg.edit_w_8')
+                                                     @include('SchoolSide.components.svg.edit-sm')
 
                                                  </button>
                                              </div>
@@ -397,7 +397,7 @@
 
                                                      <button type="submit" title="Remove Document"
                                                          class="text-white bg-red-600 hover:bg-red-700 p-1 rounded-full">
-                                                         @include('SchoolSide.components.svg.delete_w_8')
+                                                         @include('SchoolSide.components.svg.delete-sm')
 
                                                      </button>
                                                  </div>
@@ -420,7 +420,7 @@
                                                  <button title="Insert Supporting Document" type="button"
                                                      onclick="openDocumentModal({{ $equipment->id }})"
                                                      class="text-white bg-blue-600 hover:bg-blue-700 p-1 rounded-full">
-                                                     @include('SchoolSide.components.svg.plus_w_8')
+                                                     @include('SchoolSide.components.svg.plus-sm')
 
                                                  </button>
                                              </div>

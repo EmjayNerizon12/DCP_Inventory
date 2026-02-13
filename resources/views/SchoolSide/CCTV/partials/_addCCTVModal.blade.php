@@ -1,4 +1,4 @@
-<x-modal id="add-cctv-modal" size="large-modal" type="add" icon="cctv_w_8">
+<x-modal id="add-cctv-modal" size="large-modal" type="add" icon="cctv-sm">
 
     <form action="{{ route('schools.equipment.store') }}" id="addCCTVForm" method="POST">
         @csrf

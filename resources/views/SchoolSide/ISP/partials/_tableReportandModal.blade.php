@@ -1,4 +1,4 @@
- <x-modal id="info-modal" size="medium-modal" type="add" icon="wifi_w_8">
+ <x-modal id="info-modal" size="medium-modal" type="add" icon="wifi-sm">
      <div class="grid grid-cols-1 gap-2  ">
          <form id="ispForm" action="{{ route('ISP-Question.store') }}" method="POST">
              <div class="flex flex-col items-center justify-center gap-0">

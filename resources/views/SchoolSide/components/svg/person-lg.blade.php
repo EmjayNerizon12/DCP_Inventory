@@ -1,4 +1,4 @@
-<svg class="sm:h-8 sm:w-8 h-6 w-6" viewBox="-102.4 -102.4 1228.80 1228.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+<svg class="h-10 w-10" viewBox="-102.4 -102.4 1228.80 1228.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
 <g id="SVGRepo_iconCarrier">

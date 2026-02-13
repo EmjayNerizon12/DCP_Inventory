@@ -1,5 +1,5 @@
- <svg fill="currentColor" class="sm:w-8 sm:h-8 h-6 w-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+ <svg fill="currentColor" class="sm:h-8 sm:w-8 h-6 w-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+     <g id="SVGRepo_bgCarrier" s8troke-width="0"></g>
      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
      <g id="SVGRepo_iconCarrier">
          <path

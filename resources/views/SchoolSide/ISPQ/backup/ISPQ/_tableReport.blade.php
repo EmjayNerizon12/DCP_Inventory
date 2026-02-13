@@ -6,7 +6,7 @@
                  <div
                      class="h-16 w-16 bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
                      <div class="text-white bg-blue-600 p-2 rounded-full">
-                         @include('SchoolSide.components.svg.wifi_w_10')
+                         @include('SchoolSide.components.svg.wifi-lg')
                      </div>
                  </div>
              </div>

@@ -1,4 +1,4 @@
-<x-modal id="modal-table-info" size="super-large-modal" type="add" icon="wifi_w_8">
+<x-modal id="modal-table-info" size="super-large-modal" type="add" icon="wifi-sm">
     <div class="flex flex-col items-center justify-center gap-0">
         <div class="text-center">
             <div class="page-title">Additional Information for Internet Service</div>

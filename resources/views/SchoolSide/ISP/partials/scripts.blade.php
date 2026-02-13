@@ -218,7 +218,7 @@
                                                            ${internet?.isp_speed_test[0]?.download},
                                                             ${internet?.isp_speed_test[0]?.ping}, "${internet?.isp_purpose_id ?? ''}",
                                                            ${JSON.stringify(internet?.isp_area_details)})'>
-                                             @include('SchoolSide.components.svg.edit_w_8')
+                                             @include('SchoolSide.components.svg.edit-sm')
     
                                          </button>
                                      </div>
@@ -227,7 +227,7 @@
     
                                          <button type="button" title="Remove ISP" onclick="deleteISP(${internet?.id})"
                                              class="btn-delete p-1 rounded-full">
-                                             @include('SchoolSide.components.svg.delete_w_8')
+                                             @include('SchoolSide.components.svg.delete-sm')
     
     
                                          </button>
@@ -239,7 +239,7 @@
                                           data-areas='${encodeURIComponent(JSON.stringify(internet?.isp_area_details ?? []))}' 
                                          onclick="loadAreaModal(this,${internet?.pk_isp_details_id},${index + 1})">
     
-                                             @include('SchoolSide.components.svg.area_w_8')
+                                             @include('SchoolSide.components.svg.area-sm')
     
                                          </button>
                                      </div>
@@ -253,7 +253,7 @@
                                                 : `showInfoModal(${internet.pk_isp_details_id},${index+ 1})`
                                             }"
                                             class="${internet.isp_info.length > 0  ? 'theme-button' : 'btn-cancel'} p-1 rounded-full">
-                                              @include('SchoolSide.components.svg.wifi_w_8')
+                                              @include('SchoolSide.components.svg.wifi-sm')
                                          </button>
     
                                      </div>
@@ -263,7 +263,7 @@
                                          <button id="toggle-button-${index + 1}" class="btn-gray p-1 rounded-full"
                                              onclick="toggleCollapse('isp-container-${index + 1}',${index + 1})">
     
-                                             @include('SchoolSide.components.svg.dashboard_w_8')
+                                             @include('SchoolSide.components.svg.dashboard-sm')
     
                                          </button>
                                      </div>

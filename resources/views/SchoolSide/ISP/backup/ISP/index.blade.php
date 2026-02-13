@@ -66,7 +66,7 @@
                  class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
                  <button id="btnDiv2" onclick="showDiv2()" class="  btn-cancel rounded-full flex p-1  ">
-                     @include('SchoolSide.components.svg.report_w_8')
+                     @include('SchoolSide.components.svg.report-sm')
 
                  </button>
              </div>
@@ -130,7 +130,7 @@
                                          <button title="Insert Area" class="btn-submit p-1 rounded-full"
                                              onclick="showInsertArea({{ $content->id }})">
 
-                                             @include('SchoolSide.components.svg.area_w_8')
+                                             @include('SchoolSide.components.svg.area-sm')
 
                                          </button>
                                      </div>
@@ -143,7 +143,7 @@
                                                           {{ $content->isp_internet_quality_id }} ,{{ $content->ispSpeedTest[0]->upload }},{{ $content->ispSpeedTest[0]->download }},
                                                            {{ $content->ispSpeedTest[0]->ping }}, "{{ $content->isp_purpose_id ?? '' }}",
                                                             @json($content->ispAreaDetails))'>
-                                             @include('SchoolSide.components.svg.edit_w_8')
+                                             @include('SchoolSide.components.svg.edit-sm')
 
                                          </button>
                                      </div>
@@ -152,7 +152,7 @@
 
                                          <button type="button" title="Remove ISP" onclick="deleteISP({{ $content->id }})"
                                              class="btn-delete p-1 rounded-full">
-                                             @include('SchoolSide.components.svg.delete_w_8')
+                                             @include('SchoolSide.components.svg.delete-sm')
 
 
                                          </button>

@@ -24,13 +24,16 @@
         @apply max-w-full md:max-w-xl lg:max-w-2xl ;
     }
     .small-modal {
-        @apply max-w-full md:max-w-md lg:max-w-sm ;
+        @apply max-w-sm;
     }
     .super-large-modal {
         @apply max-w-full md:max-w-4xl lg:max-w-5xl ;
     }
     .extra-large-modal {
         @apply max-w-full md:max-w-5xl lg:max-w-6xl ;
+    }
+    .modal-button-container{
+        @apply flex w-full sm:justify-end justify-center max-w-full gap-2;
     }
     button {
           border: 1px solid rgba(255,255,255,0.12);

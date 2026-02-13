@@ -1,4 +1,4 @@
-  <x-modal id="insert_area_modal" size="small-modal" type="add" icon="area_w_8">
+  <x-modal id="insert_area_modal" size="small-modal" type="add" icon="area-sm">
 
       <form id="addAreaForm" action="{{ route('schools.isp.add.area') }}" class="mt-2" method="POST">
           @csrf
@@ -27,7 +27,7 @@
       </form>
 
   </x-modal>
-  <x-modal id="edit_area_modal" size="small-modal" type="edit" icon="area_w_8">
+  <x-modal id="edit_area_modal" size="small-modal" type="edit" icon="area-sm">
       <form id="editAreaForm" action="{{ route('schools.isp.update.area') }}" class="mt-2" method="POST">
           @csrf
           @method('PUT')

@@ -1,4 +1,4 @@
-<x-modal id="add-equipment-modal" size="super-large-modal" type="add" icon="equipment_w_8">
+<x-modal id="add-equipment-modal" size="super-large-modal" type="add" icon="equipment-lg">
 	<form id="addEquipmentForm" method="POST" action="{{ route('SchoolEquipment.store') }}">
 		@csrf
 		@method('POST')
@@ -10,15 +10,15 @@
 		</div>
 		<input type="hidden" name="totalEquipment" value="{{ count($school_equipments) }}">
 		@include('SchoolSide.SchoolEquipment.partials._addEquipmentForm')
-		<div class="flex w-full flex-row justify-end gap-2">
+		<div class="modal-button-container">
 			<button type="button" onclick="closeComponentModal('add-equipment-modal')"
-				class="btn-cancel w-fit rounded px-4 py-1">Cancel</button>
-			<button id="addEquipmentForm-button" type="submit" class="btn-submit w-fit rounded px-4 py-1">Submit
+				class="btn-cancel sm:w-fit w-full rounded px-4 py-1">Cancel</button>
+			<button id="addEquipmentForm-button" type="submit" class="btn-submit sm:w-fit w-full rounded px-4 py-1">Submit
 				Equipment</button>
 		</div>
 	</form>
 </x-modal>
-<x-modal id="edit-equipment-modal" size="super-large-modal" type="edit" icon="equipment_w_8">
+<x-modal id="edit-equipment-modal" size="super-large-modal" type="edit" icon="equipment-lg">
 	<form class="space-y-4" id="editEquipmentForm" method="POST">
 		@csrf
 		@method('PUT')
@@ -30,13 +30,12 @@
 		</div>
 		@include('SchoolSide.SchoolEquipment.partials._editEquipmentForm')
 
-		<div class="flex w-full flex-row justify-end gap-2">
-
+		<div class="modal-button-container">
 			<button type="button" onclick="closeComponentModal('edit-equipment-modal')"
-				class="btn-cancel w-fit rounded px-4 py-1">Cancel
+				class="btn-cancel sm:w-fit w-full rounded px-4 py-1">Cancel
 			</button>
-
-			<button type="submit" id="equipment-update-button" class="btn-green w-fit rounded px-4 py-1">Update Equipment
+			<button type="submit" id="equipment-update-button" class="btn-green sm:w-fit w-full rounded px-4 py-1">Update
+				Equipment
 			</button>
 		</div>
 	</form>

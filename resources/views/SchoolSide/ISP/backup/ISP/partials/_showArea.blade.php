@@ -1,4 +1,4 @@
-<x-modal id="modal-area-info" size="medium-modal" type="add" icon="area_w_8">
+<x-modal id="modal-area-info" size="medium-modal" type="add" icon="area-sm">
     <div class="flex flex-col items-center justify-center gap-0">
         <div class="text-center">
             <div class="page-title"> Internet Service Area Covered </div>

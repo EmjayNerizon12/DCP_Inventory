@@ -117,13 +117,13 @@ function renderStatusForm(res, condition, disposition, equipmentId,cardIndex) {
                 </div>
                 </div>
                 
-                        <div class="flex flex-row justify-end w-full gap-2">
+                        <div class="modal-button-container">
                 <button type="button" onclick="closeComponentModal('show-status-list')"
-                class=" w-fit btn-cancel px-4 py-1 rounded transition-colors">
+                class=" sm:w-fit w-full btn-cancel px-4 py-1 rounded transition-colors">
                 Cancel
                 </button>
                 <button type="submit" id="submitStatusBtn"
-                        class="w-fit ${isUpdate ? 'btn-green' : 'btn-submit'}  px-4 py-1 rounded transition-colors">
+                        class="sm:w-fit w-full ${isUpdate ? 'btn-green' : 'btn-submit'}  px-4 py-1 rounded transition-colors">
                     ${isUpdate ? 'Update Status' : 'Save Status'}
                 </button>
             </div>
