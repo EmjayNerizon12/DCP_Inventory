@@ -43,7 +43,7 @@
 
 						<button class="btn-update p-1 rounded-full"
 							onclick="openEditModal('cctv',{{ $info->equipment_details->pk_equipment_details_id }},{{ $info->equipment_details->brand_model->pk_equipment_brand_model_id }},{{ $info->no_of_units }},{{ $info->cctv_type->pk_e_cctv_camera_type_id }},{{ $info->equipment_details->powersource->pk_equipment_power_source_id }},{{ $info->equipment_details->location->pk_equipment_location_id }},{{ $info->equipment_details->total_amount }},{{ $info->equipment_details->installer->pk_equipment_installer_id }},{{ $info->no_of_functional }}, {{ $info->equipment_details->incharge->pk_equipment_incharge_id }},'{{ $info->equipment_details->date_installed }}')">
-							@include('SchoolSide.components.svg.edit_w_8')
+							@include('SchoolSide.components.svg.edit-sm')
 
 						</button>
 					</div>
@@ -51,14 +51,14 @@
 
 						<button class="text-white bg-red-600 hover:bg-red-700 p-1 rounded-full"
 							onclick="deleteFunction({{ $info->pk_e_cctv_details_id }}, 'cctv')">
-							@include('SchoolSide.components.svg.delete_w_8')
+							@include('SchoolSide.components.svg.delete-sm')
 
 						</button>
 					</div>
 					<div class="action-button">
 						<button id="toggle-button-{{ $loop->iteration }}" class="btn-gray p-1 rounded-full"
 							onclick="toggleCollapse('cctv-container-{{ $loop->iteration }}', {{ $loop->iteration }})">
-							@include('SchoolSide.components.svg.dashboard_w_8')
+							@include('SchoolSide.components.svg.dashboard-sm')
 						</button>
 					</div>
 				</div>

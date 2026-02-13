@@ -1,4 +1,4 @@
-<x-modal id="add-document-modal" size="small-modal" type="add" icon="report_w_8">
+<x-modal id="add-document-modal" size="small-modal" type="add" icon="report-lg">
 	<form method="POST" id="addDocumentForm" class="space-y-4" action="{{ route('school-equipment-document.store') }}">
 		@csrf
 		@method('POST')

@@ -1,4 +1,4 @@
-<x-modal id="modal-equipment-document" size="medium-modal" type="add" icon="report_w_8">
+<x-modal id="modal-equipment-document" size="medium-modal" type="add" icon="report-lg">
 	<div class="space-y-2">
 		<div class="flex flex-col items-center justify-center gap-0">
 			<div class="text-center">

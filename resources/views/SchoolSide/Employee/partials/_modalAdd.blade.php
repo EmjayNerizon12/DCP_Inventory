@@ -1,4 +1,4 @@
- <x-modal id="add-employee-modal" size="extra-large-modal" type="add" icon="employee_w_8">
+ <x-modal id="add-employee-modal" size="extra-large-modal" type="add" icon="employee-sm">
      <form action="{{ route('schools.employee.store') }}" method="POST" enctype="multipart/form-data">
          @csrf
          @method('POST')

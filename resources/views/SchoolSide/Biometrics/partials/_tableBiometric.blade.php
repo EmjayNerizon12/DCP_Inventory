@@ -100,7 +100,7 @@
                          <button id="toggle-button-{{ $loop->iteration }}" class="btn-gray p-1 rounded-full"
                              onclick="toggleCollapse('biometric-container-{{ $loop->iteration }}', {{ $loop->iteration }})">
 
-                             @include('SchoolSide.components.svg.dashboard_w_8')
+                             @include('SchoolSide.components.svg.dashboard-sm')
 
                          </button>
                      </div>

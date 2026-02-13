@@ -143,14 +143,14 @@ import './_submitAccountability.js';
                     </select>
                 </div>
 
-                        <div class="grid grid-cols-2 max-w-xs ml-auto gap-2">
+                    <div class="modal-button-container">
 
                     <button type="button" onclick="closeComponentModal('show-user-list')"
-                            class="btn-cancel px-4 py-1 rounded transition-colors md:w-auto w-full  ">
+                            class="btn-cancel px-4 py-1 rounded transition-colors sm:w-fit w-full">
                         Cancel
                     </button>
                 <button type="submit" id="submitAccountabilityBtn"
-                        class="  ${isUpdate ? 'btn-green' : 'btn-submit'} px-4 py-1 rounded transition-colors md:w-auto w-full">
+                        class="  ${isUpdate ? 'btn-green' : 'btn-submit'} px-4 py-1 rounded transition-colors sm:w-fit w-full">
                     ${isUpdate ? 'Update' : 'Submit'}
                 </button>
 

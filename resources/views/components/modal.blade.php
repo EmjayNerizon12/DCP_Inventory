@@ -47,8 +47,8 @@
                             : asset('icon/logo.png') }}"
                         class="w-24 h-24 rounded-full border border-gray-300 object-cover shadow-lg">
                     <div
-                        class="h-14 absolute bottom-0 right-0 translate-x-1/2 w-14 bg-white p-1 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
-                        <div class="text-white {{ $bgColor }}  p-2 rounded-full">
+                        class="  absolute bottom-0 right-0 translate-x-1/2 w-14 h-14 action-button">
+                        <div class="text-white {{ $bgColor }}  p-1 rounded-full">
                             @include('SchoolSide.components.svg.' . $icon)
                         </div>
                     </div>

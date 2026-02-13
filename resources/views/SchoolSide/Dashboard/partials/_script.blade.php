@@ -27,13 +27,13 @@
             const employee_card = document.createElement('div');
             employee_card.innerHTML = `
             <div class="card-dashboard">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
-                                    <div class="bg-blue-600 text-white md:w-16 md:h-16 h-12 w-12 rounded-full flex items-center justify-center">
+                                    <div class="bg-blue-600 text-white dashboard-icon                                               ">
                                         <!-- Archive Icon -->
-                                        <svg class="md:w-10 md:h-10 w-6 h-6" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                                        <svg class="lg:w-10 lg:h-10 w-6 h-6" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
                                             fill="currentColor">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -69,14 +69,14 @@
             internet_card.innerHTML = `
 
                          <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
 
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                        <svg class="md:w-10 md:h-10 w-6 h-6" fill="currentColor" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+                                        <svg class="lg:w-10 lg:h-10 w-6 h-6" fill="currentColor" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                             <g id="SVGRepo_iconCarrier">
@@ -107,13 +107,13 @@
             cctv_card.innerHTML = `
 
                          <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                        <svg class="md:w-10 md:h-10 w-6 h-6" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                        <svg class="lg:w-10 lg:h-10 w-6 h-6" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 280.606 280.606" xmlns:xlink="http://www.w3.org/1999/xlink"
                                             enable-background="new 0 0 280.606 280.606" transform="matrix(-1, 0, 0, 1, 0, 0)">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -140,14 +140,14 @@
             biometrics_card.innerHTML = `
 
                          <div class="card-dashboard ">
-                              <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                              <div class="dashboard-container">
 
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                            <svg class="md:w-10 md:h-10 w-6 h-6" fill="currentColor" viewBox="0 0 32 32" version="1.1"
+                            <svg class="lg:w-10 lg:h-10 w-6 h-6" fill="currentColor" viewBox="0 0 32 32" version="1.1"
                              xmlns="http://www.w3.org/2000/svg">
                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -173,13 +173,13 @@
             other_card.innerHTML = `
 
                          <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="md:w-10 md:h-10 w-6 h-6" fill="currentColor">
+                                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="lg:w-10 lg:h-10 w-6 h-6" fill="currentColor">
                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                 <g id="SVGRepo_iconCarrier">
@@ -244,13 +244,13 @@
         const batch_card = document.createElement('div');
         batch_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-green-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                       <svg class="md:w-10 md:h-10 w-6 h-6" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                                       <svg class="lg:w-10 lg:h-10 w-6 h-6" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M12 3L3 8V16L12 21L21 16V8L12 3Z" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                     <path d="M3.5 7.8L12 12.5L20.5 7.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -270,13 +270,13 @@
         const items_card = document.createElement('div');
         items_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-yellow-400 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                          <svg class="md:w-10 md:h-10 w-6 h-6" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                                          <svg class="lg:w-10 lg:h-10 w-6 h-6" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M3 7H21V10H3V7Z" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M5 10H19V18C19 19 18 20 17 20H7C6 20 5 19 5 18V10Z" stroke-linecap="round"
                                         stroke-linejoin="round" />
@@ -301,13 +301,13 @@
         const underWarranty_card = document.createElement('div');
         underWarranty_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-green-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                        <svg fill="currentColor" class="md:w-10 md:h-10 w-6 h-6" viewBox="0 0 52 52" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg">
+                                        <svg fill="currentColor" class="lg:w-10 lg:h-10 w-6 h-6" viewBox="0 0 52 52" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
@@ -332,13 +332,13 @@
         const outWarranty_card = document.createElement('div');
         outWarranty_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-red-600 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                               <svg viewBox="0 0 16 16" class="md:w-10 md:h-10 w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                               <svg viewBox="0 0 16 16" class="lg:w-10 lg:h-10 w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -374,13 +374,13 @@
         const learner_total_card = document.createElement('div');
         learner_total_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-400 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                               <svg class="md:w-10 md:h-10 w-6 h-6" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                               <svg class="lg:w-10 lg:h-10 w-6 h-6" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -414,14 +414,14 @@
         const teachers_total_card = document.createElement('div');
         teachers_total_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-400 text-white dashboard-icon">
                                         <!-- Archive Icon -->
                               
-                                    <svg fill="currentColor" class="md:w-10 md:h-10 w-6 h-6" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                                    <svg fill="currentColor" class="lg:w-10 lg:h-10 w-6 h-6" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                         <g id="SVGRepo_iconCarrier">
@@ -451,13 +451,13 @@
         const classrooms_total_card = document.createElement('div');
         classrooms_total_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-400 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                        <svg fill="currentColor" class="md:w-10 md:h-10 w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <svg fill="currentColor" class="lg:w-10 lg:h-10 w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                 <g id="SVGRepo_iconCarrier">
@@ -479,13 +479,13 @@
         const sections_total_card = document.createElement('div');
         sections_total_card.innerHTML = `
                      <div class="card-dashboard ">
-                            <div class="flex md:flex-row flex-col justify-center md:items-start items-center w-full gap-4">
+                            <div class="dashboard-container">
                                 <div
                                     class="dashboard-icon-container">
 
                                     <div class="bg-blue-400 text-white dashboard-icon">
                                         <!-- Archive Icon -->
-                                        <svg viewBox="0 0 64 64" class="md:w-10 md:h-10 w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        <svg viewBox="0 0 64 64" class="lg:w-10 lg:h-10 w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                 aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet"
                                                 fill="currentColor">
                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

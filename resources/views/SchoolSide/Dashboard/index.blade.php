@@ -30,7 +30,7 @@
                         src="{{ asset('icon/sdo-logo.png') }}" alt="">
                     <img class="h-14  md:hidden block  w-auto rounded-full object-contain border border-gray-300 shadow-md"
                         src="{{ asset('icon/logo.png') }}" alt="">
-                    <img class="h-14 w-14 rounded-full object-contain border border-gray-300 shadow-md"
+                    <img class="h-14 w-14 rounded-full object-cover border border-gray-300 shadow-md"
                         src="{{ Auth::guard('school')->user()->school->image_path ? asset('school-logo/' . Auth::guard('school')->user()->school->image_path) : asset('icon/logo.png') }}"
                         alt="SDO Logo">
 

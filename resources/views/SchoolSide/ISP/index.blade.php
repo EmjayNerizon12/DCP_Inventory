@@ -42,7 +42,7 @@
                  class="action-button">
 
                  <button id="btnDiv1" onclick="showDiv1()" class="btn-submit rounded-full flex p-1  ">
-                     @include('SchoolSide.components.svg.dashboard_w_8')
+                     @include('SchoolSide.components.svg.dashboard-sm')
                 
                  </button>
              </div>
@@ -50,7 +50,7 @@
                  class="action-button">
 
                  <button id="btnDiv2" onclick="showDiv2()" class="btn-gray rounded-full flex p-1  ">
-                     @include('SchoolSide.components.svg.report_w_8')
+                     @include('SchoolSide.components.svg.report-sm')
 
                  </button>
              </div>

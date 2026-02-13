@@ -653,10 +653,10 @@
                 collapse.classList.toggle('hidden'); // just show/hide
                 if (collapse.classList.contains('hidden')) {
                     // Section is now hidden → show dashboard icon
-                    toggleButton.innerHTML = `@include('SchoolSide.components.svg.dashboard_w_8')`;
+                    toggleButton.innerHTML = `@include('SchoolSide.components.svg.dashboard-sm')`;
                 } else {
                     // Section is now visible → show area icon
-                    toggleButton.innerHTML = `@include('SchoolSide.components.svg.cross_w_8')`;
+                    toggleButton.innerHTML = `@include('SchoolSide.components.svg.cross-sm')`;
                 }
 
                 console.warn('Toggled');

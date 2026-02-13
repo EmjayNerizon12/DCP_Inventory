@@ -1,4 +1,4 @@
- <x-modal id="edit-employee-modal" size="super-large-modal" type="edit" icon="employee_w_8">
+ <x-modal id="edit-employee-modal" size="super-large-modal" type="edit" icon="employee-sm">
 
      <form action="{{ route('schools.employee.update') }}" method="POST" enctype="multipart/form-data">
          @csrf
