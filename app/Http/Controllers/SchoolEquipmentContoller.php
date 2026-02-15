@@ -55,14 +55,13 @@ class SchoolEquipmentContoller extends Controller
                 "e_installer"      => "required|integer",      // Installer name
                 "e_incharge"       => "required|integer ",      // Person in-charge
 
-                "no_of_cctv"      => "nullable|integer ",       // Dome, Bullet, PTZ (nullable if not CCTV)
+                "no_of_units"      => "nullable|integer ",       // Dome, Bullet, PTZ (nullable if not CCTV)
                 "no_of_functional" => "required|integer|min:0",       // Number of functional units
             ]);
             $school_id =  Auth::guard("school")->user()->school->pk_school_id;
             $equipment_details = EquipmentDetails::create([
                 'equipment_type_id'           => $validated['selected_equipment'],
                 'equipment_brand_model_id'          => $validated['e_brand'],
-                // 'no_of_cctv'          => $validated['no_of_cctv'],
                 'equipment_power_source_id'   => $validated['e_power_source'],
                 'equipment_location_id'       => $validated['e_location'],
                 'date_installed'   => $validated['date_installed'],
@@ -72,12 +71,11 @@ class SchoolEquipmentContoller extends Controller
             ]);
             if ($equipment_details) {
                 if ($validated['selected_equipment'] == 1) {
-
                     $equipment_cctv = EquipmentCCTVDetails::create([
                         'school_id' => $school_id,
                         'equipment_details_id' => $equipment_details->pk_equipment_details_id,
                         'e_cctv_camera_type_id' => $validated['e_cctv_type'],
-                        'no_of_units' => $validated['no_of_cctv'],
+                        'no_of_units' => $validated['no_of_units'],
                         'no_of_functional' => $validated['no_of_functional'],
                     ]);
                 } elseif ($validated['selected_equipment'] == 2) {
@@ -85,7 +83,7 @@ class SchoolEquipmentContoller extends Controller
                         'school_id' => $school_id,
                         'equipment_details_id' => $equipment_details->pk_equipment_details_id,
                         'e_biometric_type_id' => $validated['e_biometric_type'],
-                        'no_of_units' => $validated['no_of_cctv'],
+                        'no_of_units' => $validated['no_of_units'],
                         'no_of_functional' => $validated['no_of_functional'],
                     ]);
                 }
@@ -112,63 +110,66 @@ class SchoolEquipmentContoller extends Controller
     }
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'edit_primary_key' => 'required|integer',
-            'target' => 'required|string',
-            'edit_e_brand' => 'required|integer',
-            'edit_no_of_unit' => 'required|integer',
-            'edit_e_cctv_type' => 'nullable|integer',
-            'edit_e_biometric_type' => 'nullable|integer',
-            'edit_e_power_source' => 'required|integer',
-            'edit_e_location' => 'required|integer',
-            'edit_total_amount' => 'required|integer',
-            'edit_e_installer' => 'required|integer',
-            'edit_no_of_functional' => 'required|integer',
-            'edit_e_incharge' => 'required|integer',
-            'edit_date_installed' => 'required|date',
-        ]);
-
         try {
-
-            $equipment_details = EquipmentDetails::findOrFail($validated['edit_primary_key']);
+                $validated = $request->validate([
+                    'id' => 'required|integer',
+                    'target' => 'required|string',
+                    'e_brand' => 'required|integer',
+                    'no_of_units' => 'required|integer',
+                    'e_cctv_type' => 'nullable|integer',
+                    'e_biometric_type' => 'nullable|integer',
+                    'e_power_source' => 'required|integer',
+                    'e_location' => 'required|integer',
+                    'total_amount' => 'required|integer',
+                    'e_installer' => 'required|integer',
+                    'no_of_functional' => 'required|integer',
+                    'e_incharge' => 'required|integer',
+                    'date_installed' => 'required|date',
+                ]);
+            $equipment_details = EquipmentDetails::findOrFail($validated['id']);
 
             $equipment_details->update([
-                'equipment_brand_model_id'          => $validated['edit_e_brand'],
-                'equipment_power_source_id'   => $validated['edit_e_power_source'],
-                'equipment_location_id'       => $validated['edit_e_location'],
-                'equipment_installer_id'      => $validated['edit_e_installer'],
-                'equipment_incharge_id'       => $validated['edit_e_incharge'],
-                'date_installed'   => $validated['edit_date_installed'],
-                'total_amount'     => $validated['edit_total_amount'],
+                'equipment_brand_model_id' => $validated['e_brand'],
+                'equipment_power_source_id' => $validated['e_power_source'],
+                'equipment_location_id' => $validated['e_location'],
+                'equipment_installer_id' => $validated['e_installer'],
+                'equipment_incharge_id' => $validated['e_incharge'],
+                'date_installed' => $validated['date_installed'],
+                'total_amount' => $validated['total_amount'],
             ]);
             if ($validated['target'] == 'cctv') {
-                try {
-
                     $equipment_details->cctv_details()->update([
-                        'no_of_units' => $validated['edit_no_of_unit'],
-                        'e_cctv_camera_type_id' => $validated['edit_e_cctv_type'],
-                        'no_of_functional' => $validated['edit_no_of_functional'],
+                        'no_of_units' => $validated['no_of_units'],
+                        'e_cctv_camera_type_id' => $validated['e_cctv_type'],
+                        'no_of_functional' => $validated['no_of_functional'],
                     ]);
-                } catch (Exception $e) {
-                    return redirect()->back()->with('error', 'Error on CCTV Details' . $e->getMessage());
-                }
+                
             } elseif ($validated['target'] == 'biometric') {
-                try {
-                    $equipment_details->biometric_details()->update([
-                        'no_of_units' => $validated['edit_no_of_unit'],
-                        'e_biometric_type_id' => $validated['edit_e_biometric_type'],
-                        'no_of_functional' => $validated['edit_no_of_functional'],
+                      $equipment_details->biometric_details()->update([
+                        'no_of_units' => $validated['no_of_units'],
+                        'e_biometric_type_id' => $validated['e_biometric_type'],
+                        'no_of_functional' => $validated['no_of_functional'],
                     ]);
-                } catch (Exception $e) {
-                    return redirect()->back()->with('error', 'Error on Biometric Details' . $e->getMessage()); //'.
-                }
             }
 
             if ($equipment_details->cctv_details || $equipment_details->biometric_details) {
-                return redirect()->back()->with('success', 'Equipment updated successfully.');
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Equipment Updated Successfully'
+                ],200);
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->getMessage(),
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ]);
         }
     }
     public function destroy(int $pk_id, String $type)

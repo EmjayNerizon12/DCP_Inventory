@@ -636,6 +636,13 @@
         </div>
 
         <script>
+            function renderLoadingOnTable(){
+                return `
+                    <div class="spinner-container my-10" id="spinner-container">
+                        <div class="spinner-md"></div>
+                    </div> 
+                `;
+            }
             function addOverflow() {
                 document.body.classList.remove('overflow-hidden');
             }
@@ -658,10 +665,6 @@
                     // Section is now visible → show area icon
                     toggleButton.innerHTML = `@include('SchoolSide.components.svg.cross-sm')`;
                 }
-
-                console.warn('Toggled');
-                console.warn(containerId);
-                console.warn(index);
 
             }
 

@@ -300,7 +300,9 @@ Route::middleware(['web', 'auth:school'])->prefix('School')->group(function () {
         $equipment_location = EquipmentLocation::all();
         $equipment_power_source = EquipmentPowerSource::all();
         $cctv_type = EquipmentCCTVType::all();
-        $cctv_info = EquipmentCCTVDetails::where('school_id', Auth::guard('school')->user()->school->pk_school_id)->get();
+        $cctv_info = EquipmentCCTVDetails::where('school_id', Auth::guard('school')->user()->school->pk_school_id)
+        ->with(['equipment_details.equipmentType', 'equipment_details.incharge'])
+        ->get();
         return view("SchoolSide.CCTV.index", compact('cctv_type', 'cctv_info', 'equipment_type', 'equipment_brand_model', 'equipment_installer', 'equipment_incharge', 'equipment_location', 'equipment_power_source'));
     })->name('schools.cctv.index');
     Route::get('/Biometrics/index', function () {
