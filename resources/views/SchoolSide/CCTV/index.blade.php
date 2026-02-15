@@ -4,14 +4,8 @@
 
  @section('content')
      <div class="p-6">
-
-         @include('SchoolSide.CCTV.partials._addCCTVModal')
-         @include('SchoolSide.CCTV.partials._editModal')
-         @include('SchoolSide.CCTV.partials.scripts')
-
-
+        <input type="hidden" id="school_id" value="{{Auth::guard('school')->user()->school->pk_school_id}}">
          <div class="flex justify-start mb-2 space-x-4">
-
              <div
                  class="h-16 w-16 hidden bg-white p-3 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
                  <div class="text-white bg-blue-600 p-2 rounded-full">
@@ -38,11 +32,10 @@
 
              </div>
          </div>
-
-
+         
          <div class="flex justify-between items-center gap-4 ">
 
-             <button title="Show Info Modal" type="button" onclick="openModal(1)" class="btn-submit px-4 py-1 rounded">
+             <button title="Show Info Modal" type="button" onclick="renderAddCCTVModal(1)" class="btn-submit px-4 py-1 rounded">
                  Add CCTV Record
              </button>
 
@@ -61,20 +54,18 @@
                          </g>
                      </svg>
                  </button>
-             </div>
-         </div>
-
-
-         <div id="printableArea">
+                </div>
+            </div>
+            
+        @include('SchoolSide.CCTV.partials._addCCTVModal')
+        @include('SchoolSide.CCTV.partials._editCCTVModal')
+        @include('SchoolSide.CCTV.partials.scripts')
+        @include('SchoolSide.components.print')
+         
+        <div id="printableArea">
              @include('SchoolSide.components.print-header')
              @include('SchoolSide.CCTV.partials._tableCCTV')
          </div>
-         @include('SchoolSide.components.print')
-
-
-
-
-
-
      </div>
+    
  @endsection
