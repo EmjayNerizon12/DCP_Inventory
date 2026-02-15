@@ -55,6 +55,11 @@
 						<div class="sm:text-base text-sm">
 							${formatDate(equipmentDetails?.date_installed)}
 						</div>
+						 <div class="sm:text-base text-xs flex items-center justify-center gap-2 my-1">
+							<span class="px-2 py-0.5 font-semibold rounded-full border border-green-700 bg-green-100 text-green-700">
+							Functional: ${ biometric?.no_of_functional ?? '' }/${ biometric?.no_of_units ?? '' }
+							</span>
+						</div>
 
 					</div>
 				</div>
