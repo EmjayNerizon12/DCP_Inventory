@@ -38,12 +38,9 @@
 
          </div>
          <div class="flex gap-2 mb-4">
-             <div
-                 class="action-button">
-
+             <div class="action-button">
                  <button id="btnDiv1" onclick="showDiv1()" class="btn-submit rounded-full flex p-1  ">
                      @include('SchoolSide.components.svg.dashboard-sm')
-                
                  </button>
              </div>
              <div

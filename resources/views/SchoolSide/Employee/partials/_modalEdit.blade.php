@@ -1,6 +1,6 @@
  <x-modal id="edit-employee-modal" size="super-large-modal" type="edit" icon="employee-sm">
 
-     <form action="{{ route('schools.employee.update') }}" method="POST" enctype="multipart/form-data">
+     <form action="{{ route('schools.employee.update') }}" id="updateEmployeeForm" method="POST" enctype="multipart/form-data">
          @csrf
          @method('PUT')
          <div class="flex flex-col items-center justify-center gap-2">
@@ -104,7 +104,7 @@
                  ['id' => 'V', 'name' => 'V'],
                  ['id' => 'VI', 'name' => 'VI'],
                  ['id' => 'VII', 'name' => 'VII'],
-             ])" :edit="true" valueField="id"
+             ])" :edit="true" :required="false" valueField="id"
                  textField="name" />
 
              <!-- Sex & Birthdate -->
@@ -119,9 +119,9 @@
              </div>
              <x-input-field type="text" name="employee_number" label="Employee Number" :required="true"
                  :edit="true" />
-             <x-select-field name="position_title_id" label="Employee Title" :options="App\Models\EmployeePosition::all()" :edit="true"
+             <x-select-field name="position_title_id" label="Employee Title" :options="App\Models\EmployeePosition::all()" :edit="true" :required="false"
                  valueField="pk_school_position_id" textField="name" />
-             <x-select-field name="position_id" label="Position" :options="App\Models\EmpPosition::all()" :edit="true" valueField="id"
+             <x-select-field name="position_id" label="Position" :options="App\Models\EmpPosition::all()" :edit="true" :required="false" valueField="id" 
                  textField="name" />
              <x-input-field type="date" name="date_hired" label="Date Hired" :required="false" :edit="true" />
              <x-input-field type="text" name="salary_grade" label="Salary Grade" :required="true"
@@ -167,9 +167,9 @@
                  <hr>
              </div>
              <!-- Foreign Keys -->
-             <x-select-field name="ro_office_id" label="RO Office" :options="App\Models\EmpROOffice::all()" :edit="true"
+             <x-select-field name="ro_office_id" label="RO Office" :options="App\Models\EmpROOffice::all()" :edit="true" :required="false"
                  valueField="id" textField="name" />
-             <x-select-field name="sdo_office_id" label="SDO Office" :options="App\Models\EmpSDOOffice::all()" :edit="true"
+             <x-select-field name="sdo_office_id" label="SDO Office" :options="App\Models\EmpSDOOffice::all()" :edit="true"  :required="false"
                  valueField="id" textField="name" />
              <x-select-field name="officer_in_charge" label="Is Officer in Charge?" :options="collect([['id' => '1', 'name' => 'Yes'], ['id' => '0', 'name' => 'No']])"
                  :edit="true" :required="true" valueField="id" textField="name" />
@@ -178,11 +178,11 @@
                  :required="true" valueField="id" textField="name" />
              <x-input-field type="date" name="date_of_separation" label="Date of Separation" :edit="true"
                  :required="false" />
-             <x-select-field name="cause_of_separation_id" label="Cause of Separation" :options="App\Models\EmpCauseOfSeparation::all()"
+             <x-select-field name="cause_of_separation_id" label="Cause of Separation" :options="App\Models\EmpCauseOfSeparation::all()" :required="false"
                  :edit="true" valueField="id" textField="name" />
              <x-select-field name="non_deped_fund" label="Is Non DepEd Fund?" :options="collect([['id' => '1', 'name' => 'Yes'], ['id' => '0', 'name' => 'No']])" :edit="true"
                  :required="true" valueField="id" textField="name" />
-             <x-select-field name="sources_of_fund_id" label="Source of Fund" :options="App\Models\EmpSourceOfFund::all()" :edit="true"
+             <x-select-field name="sources_of_fund_id" label="Source of Fund" :options="App\Models\EmpSourceOfFund::all()" :edit="true" :required="false"   
                  valueField="id" textField="name" />
              <x-input-field type="text" name="detailed_transfer_from" label="Detailed Transfer From:"
                  :edit="true" :required="false" />
@@ -191,11 +191,11 @@
          </div>
 
          <!-- Buttons -->
-         <div class="flex md:justify-end justify-center gap-2 mt-4">
-             <button type="button" onclick="closeEditModal()" class="btn-cancel md:w-auto w-full px-4 py-1 rounded">
+         <div class="modal-button-container">
+             <button type="button" onclick="closeEditModal()" class="btn-cancel sm:w-fit w-full px-4 py-1 rounded">
                  Cancel
              </button>
-             <button type="submit" class="md:w-auto w-full btn-green px-4 py-1 rounded">
+             <button type="submit" id="updateEmployeeButton" class="sm:w-fit w-full btn-green px-4 py-1 rounded">
                  Update Employee
              </button>
          </div>
@@ -203,3 +203,34 @@
      </form>
 
  </x-modal>
+
+ <script>
+    const updateEmployeeForm = document.getElementById('updateEmployeeForm');
+    const updateEmployeeButton = document.getElementById('updateEmployeeButton');
+    updateEmployeeForm.addEventListener('submit',async (e)=>{
+        e.preventDefault();
+        buttonLoading(updateEmployeeButton);
+        const formData = new FormData(updateEmployeeForm);
+        formData.append('_method' ,'PUT');
+        const response = await fetch(updateEmployeeForm.action,{
+            method: 'POST',
+            headers:{
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+            },
+            body: formData
+        });
+        const data = await response.json();
+        
+        if(!response.ok){
+            handleErrors(data.errors);
+            resetButton(updateEmployeeButton,'Update Employee');
+            return;
+        }
+        closeComponentModal('edit-employee-modal');
+        renderStatusModal(data);
+        resetButton(updateEmployeeButton,'Update Employee');
+        updateEmployeeForm.reset();
+        searchEmployee();
+    });
+</script>
