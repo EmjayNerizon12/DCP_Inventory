@@ -25,44 +25,33 @@
 			//Render the Content
 			cctvContainer.innerHTML += 
 			`
-			<div class=" border border-gray-400 p-6  my-4 ">
+			<div class=" border border-gray-400 p-5 my-4">
 				<div
 					class="cursor-pointer  flex flex-col justify-center text-center 
 					cursor-pointer text-center relative
 					"
 					onclick="toggleCollapse('cctv-container-${index + 1}',${index + 1})">
 
-					<div class="grid w-full  grid-cols-2 gap-0">
-						<div class="text-base text-left   font-medium tracking-wider  ">
-							${index + 1}.
-						</div>
-
-						<div class="flex  justify-end ">
-
-							<button class="btn-green w-auto px-2 rounded py-0 font-normal text-base hover:bg-green-600">
-								&#8369; ${formatNumber(equipmentDetails?.total_amount,2)}
-							</button>
-						</div>
-					</div>
-
 					<div class="scale-100 hover:scale-103 transition mb-2">
-
-						<div class="text-center  whitespace-nowrap">
-							Tap to Open/CLose
-						</div>
-
-						<div class="md:text-2xl text-md font-bold underline uppercase">
-							${cctvType?.name}
+						<div class="sm:text-2xl text-md font-bold uppercase">
+							${index + 1}. ${cctvType?.name}
 
 						</div>
-
-						<div class="md:text-base text-sm">
+						<div class="sm:text-xl text-sm font-medium">
+							${equipmentDetails?.brand_model?.name} (&#8369; ${formatNumber(equipmentDetails?.total_amount,2)})
+						</div>
+						<div class="sm:text-base text-sm">
 							${formatDate(equipmentDetails?.date_installed)}
+						</div>
+						 <div class="sm:text-base text-xs flex items-center justify-center gap-2 my-1">
+							<span class="px-2 py-0.5 font-semibold rounded-full border border-green-700 bg-green-100 text-green-700">
+							Functional: ${ cctv?.no_of_functional ?? '' }/${ cctv?.no_of_units ?? '' }
+							</span>
 						</div>
 					</div>
 				</div>
 
-				<div class="flex gap-1 items-center justify-center py-2 button-container">
+				<div class="flex gap-1 items-center justify-center button-container">
 
 					<div class="action-button">
 
@@ -96,7 +85,7 @@
 					</div>
 				</div>
 
-				<div class="hidden thin-scroll overflow-x-auto" id="cctv-container-${index+1}">
+				<div class="hidden thin-scroll overflow-x-auto mt-2" id="cctv-container-${index+1}">
 					<table class="w-full border-collapse  ">
 						<tbody>
 
