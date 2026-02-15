@@ -47,7 +47,7 @@
 
     }
     .btn-submit {
-        @apply bg-blue-600 text-white hover:bg-blue-700 font-medium tracking-wider;
+        @apply bg-blue-600 text-white hover:bg-blue-700 sm:text-base text-xs font-medium tracking-wider;
     }
     .btn-update{
         @apply  bg-amber-400 text-white hover:bg-amber-500 font-medium tracking-wider;
@@ -194,11 +194,11 @@
     }
     .page-title{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        @apply text-xl md:text-3xl font-bold text-gray-800   ;
+        @apply text-xl sm:text-3xl font-bold text-gray-800   ;
     }
     .page-subtitle{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        @apply text-base md:text-lg font-normal text-gray-600 mb-2 ;
+        @apply text-sm sm:text-lg font-normal text-gray-600;
     }
 
 }

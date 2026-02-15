@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use App\Models\SchoolEmployee;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class SchoolEmployeeController extends Controller
 {
@@ -46,7 +48,8 @@ class SchoolEmployeeController extends Controller
     }
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        try{
+            $validated = $request->validate([
             'fname' => 'required|string|max:255', //REQUIRED TO CHECK
             'mname' => 'nullable|string|max:255',
             'lname' => 'required|string|max:255', //REQUIRED TO CHECK
@@ -81,114 +84,143 @@ class SchoolEmployeeController extends Controller
             'non_deped_fund' => 'nullable|string|max:255',
             'detailed_transfer_from' => 'nullable|string|max:255',
             'detailed_transfer_to' => 'nullable|string|max:255',
-        ]);
-        if ($request->hasFile('image_path')) {
-            $image = $request->file('image_path');
-            $imageName = uniqid('employee_') . '.' . $image->getClientOriginalExtension();
-            $school = School::findOrFail($validated['school_id']);
-            $schoolName = Str::slug($school->SchoolName, '_');
-            $path = public_path('school-employee/' . $validated['school_id'] . '-' . $schoolName);
-            if (!file_exists($path)) {
-                mkdir($path, 0755, true); // recursive = true
+            ]);
+            $validated['school_id'] = Auth::guard('school')->user()->pk_school_id;
+
+            if ($request->hasFile('image_path')) {
+                $image = $request->file('image_path');
+                $imageName = uniqid('employee_') . '.' . $image->getClientOriginalExtension();
+                $school = School::findOrFail($validated['school_id']);
+                $schoolName = Str::slug($school->SchoolName, '_');
+                $path = base_path('school-employee/' . $validated['school_id'] . '-' . $schoolName);
+                if (!file_exists($path)) {
+                    mkdir($path, 0755, true); // recursive = true
+                }
+                $image->move($path, $imageName);
+                $validated['image_path'] = $imageName;
+            } else {
+                $validated['image_path'] = null;
             }
-            $image->move($path, $imageName);
-            $validated['image_path'] = $imageName;
-        } else {
-            $validated['image_path'] = null;
-        }
-        // Assign school_id from authenticated user
-        $validated['school_id'] = Auth::guard('school')->user()->pk_school_id;
+            // Assign school_id from authenticated user
 
-        $employee = SchoolEmployee::create($validated);
+            $employee = SchoolEmployee::create($validated);
+            return response()->json([
+                'success'=>true,
+                'message'=>'Employee added successfully.'
+            ],200);
 
-        if ($employee) {
-            return back()->with('success', 'Employee added successfully.');
-        } else {
-            return back()->with('error', 'Failed to add employee. Please try again.');
+        }catch(ValidationException $e){
+            return response()->json([
+                'success'=>false,
+                'message'=>'Validation failed',
+                'errors'=>$e->errors()
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'success'=>false,
+                'message'=>'An error occurred while adding the employee.',
+                'error'=>$e->getMessage()
+            ]);
         }
     }
 
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'primary_key' => 'required|integer',
-            'fname' => 'required|string|max:255',
-            'mname' => 'nullable|string|max:255',
-            'lname' => 'required|string|max:255',
-            'suffix_name' => 'nullable|string|max:50',
-            'birthdate' => 'required|date',
-            'employee_number' => 'required|string|max:50|unique:schools_employee,employee_number,' . $request->primary_key . ',pk_schools_employee_id',
-            'position_title_id' => 'required|integer',
-            'position_id' => 'nullable|integer',
-            'salary_grade' => 'required|integer',
-            'school_id' => 'nullable|integer',
-            'sex' => 'required|string',
-            'deped_email' => 'required|email|unique:schools_employee,deped_email,' . $request->primary_key . ',pk_schools_employee_id',
-            'deped_email_status' => 'required|string',
-            'm365_email_status' => 'required|string',
-            'canva_login_status' => 'required|string',
-            'lr_portal_status' => 'required|string',
-            'l4t_recipient' => 'required|string',
-            'smart_tv_recipient' => 'required|string',
-            'l4nt_recipient' => 'required|string',
-            'ro_office_id' => 'nullable|integer',
-            'sdo_office_id' => 'nullable|integer',
-            'sources_of_fund_id' => 'nullable|integer',
-            'officer_in_charge' => 'nullable|boolean',
-            'mobile_no_1' => 'nullable|string|max:20',
-            'mobile_no_2' => 'nullable|string|max:20',
-            'personal_email_address' => 'nullable|email',
-            'date_hired' => 'nullable|date',
-            'inactive' => 'nullable|boolean',
-            'date_of_separation' => 'nullable|date',
-            'cause_of_separation_id' => 'nullable|integer',
-            'non_deped_fund' => 'nullable|string|max:255',
-            'detailed_transfer_from' => 'nullable|string|max:255',
-            'detailed_transfer_to' => 'nullable|string|max:255',
-        ]);
+        try{
+            $validated = $request->validate([
+                'primary_key' => 'required|integer',
+                'fname' => 'required|string|max:255',
+                'mname' => 'nullable|string|max:255',
+                'lname' => 'required|string|max:255',
+                'suffix_name' => 'nullable|string|max:50',
+                'birthdate' => 'required|date',
+                'employee_number' => 'required|string|max:50|unique:schools_employee,employee_number,' . $request->primary_key . ',pk_schools_employee_id',
+                'position_title_id' => 'required|integer',
+                'position_id' => 'nullable|integer',
+                'salary_grade' => 'required|integer',
+                'school_id' => 'nullable|integer',
+                'sex' => 'required|string',
+                'deped_email' => 'required|email|unique:schools_employee,deped_email,' . $request->primary_key . ',pk_schools_employee_id',
+                'deped_email_status' => 'required|string',
+                'm365_email_status' => 'required|string',
+                'canva_login_status' => 'required|string',
+                'lr_portal_status' => 'required|string',
+                'l4t_recipient' => 'required|string',
+                'smart_tv_recipient' => 'required|string',
+                'l4nt_recipient' => 'required|string',
+                'ro_office_id' => 'nullable|integer',
+                'sdo_office_id' => 'nullable|integer',
+                'sources_of_fund_id' => 'nullable|integer',
+                'officer_in_charge' => 'nullable|boolean',
+                'mobile_no_1' => 'nullable|string|max:20',
+                'mobile_no_2' => 'nullable|string|max:20',
+                'personal_email_address' => 'nullable|email',
+                'date_hired' => 'nullable|date',
+                'inactive' => 'nullable|boolean',
+                'date_of_separation' => 'nullable|date',
+                'cause_of_separation_id' => 'nullable|integer',
+                'non_deped_fund' => 'nullable|string|max:255',
+                'detailed_transfer_from' => 'nullable|string|max:255',
+                'detailed_transfer_to' => 'nullable|string|max:255',
+            ]);
 
-        $employee = SchoolEmployee::findOrFail($validated['primary_key']);
-        $school_id = Auth::guard('school')->user()->school->pk_school_id;
-        $school = School::findOrFail($school_id);
-        $schoolName = Str::slug($school->SchoolName, '_');
+            $employee = SchoolEmployee::findOrFail($validated['primary_key']);
+            $school_id = Auth::guard('school')->user()->school->pk_school_id;
+            $school = School::findOrFail($school_id);
+            $schoolName = Str::slug($school->SchoolName, '_');
 
-        if ($request->hasFile('image_path')) {
+            if ($request->hasFile('image_path')) {
 
-            // 🔴 DELETE OLD IMAGE (if exists)
-            if ($employee->image_path) {
+                // 🔴 DELETE OLD IMAGE (if exists)
+                if ($employee->image_path) {
 
-                $oldPath = public_path(
-                    'school-employee/' . $school_id . '-' . $schoolName . '/' . $employee->image_path
+                    $oldPath = base_path(
+                        'school-employee/' . $school_id . '-' . $schoolName . '/' . $employee->image_path
+                    );
+
+                    if (File::exists($oldPath)) {
+                        File::delete($oldPath);
+                    }
+                }
+
+                // ✅ UPLOAD NEW IMAGE
+                $image = $request->file('image_path');
+                $imageName = uniqid('employee_') . '.' . $image->getClientOriginalExtension();
+
+                $path = base_path(
+                    'school-employee/' . $school_id . '-' . $schoolName
                 );
 
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
+                if (!file_exists($path)) {
+                    mkdir($path, 0755, true);
                 }
+
+                $image->move($path, $imageName);
+
+                $validated['image_path'] = $imageName;
             }
-
-            // ✅ UPLOAD NEW IMAGE
-            $image = $request->file('image_path');
-            $imageName = uniqid('employee_') . '.' . $image->getClientOriginalExtension();
-
-            $path = public_path(
-                'school-employee/' . $school_id . '-' . $schoolName
-            );
-
-            if (!file_exists($path)) {
-                mkdir($path, 0755, true);
-            }
-
-            $image->move($path, $imageName);
-
-            $validated['image_path'] = $imageName;
-        }
-        if ($employee) {
+        
             // Remove primary_key before updating
             unset($validated['primary_key']);
             $employee->update($validated);
-            return back()->with('success', 'Employee updated successfully.');
-        } else {
-            return back()->with('error', 'Failed to update employee. Please try again.');
+        
+            return response()->json([
+                'success'=>true,
+                'message'=>'Employee updated successfully.'
+            ],200);
+
+        }catch(ValidationException $e){
+            return response()->json([
+                'success'=>false,
+                'message'=>'Validation failed',
+                'errors'=>$e->errors()
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'success'=>false,
+                'message'=>'An error occurred while adding the employee.',
+                'error'=>$e->getMessage()
+            ]);
         }
     }
 

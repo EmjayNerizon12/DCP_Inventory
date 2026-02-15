@@ -1,5 +1,5 @@
- <x-modal id="add-employee-modal" size="extra-large-modal" type="add" icon="employee-sm">
-     <form action="{{ route('schools.employee.store') }}" method="POST" enctype="multipart/form-data">
+ <x-modal id="add-employee-modal" size="extra-large-modal" type="add" icon="employee-lg">
+     <form action="{{ route('schools.employee.store') }}" id="addEmployeeForm" method="POST" enctype="multipart/form-data">
          @csrf
          @method('POST')
          <div class="flex flex-col items-center justify-center gap-2">
@@ -103,7 +103,7 @@
                  ['id' => 'V', 'name' => 'V'],
                  ['id' => 'VI', 'name' => 'VI'],
                  ['id' => 'VII', 'name' => 'VII'],
-             ])" :edit="false" valueField="id"
+             ])" :edit="false" :required="false" valueField="id"
                  textField="name" />
 
              <!-- Sex & Birthdate -->
@@ -116,9 +116,9 @@
              </div>
              <x-input-field type="text" name="employee_number" label="Employee Number" :required="true"
                  :edit="false" />
-             <x-select-field name="position_title_id" label="Employee Title" :options="App\Models\EmployeePosition::all()" :edit="false"
+             <x-select-field name="position_title_id" label="Employee Title" :options="App\Models\EmployeePosition::all()" :edit="false" :required="false"
                  valueField="pk_school_position_id" textField="name" />
-             <x-select-field name="position_id" label="Position" :options="App\Models\EmpPosition::all()" :edit="false" valueField="id"
+             <x-select-field name="position_id" label="Position" :options="App\Models\EmpPosition::all()" :edit="false" :required="false" valueField="id" 
                  textField="name" />
              <x-input-field type="date" name="date_hired" label="Date Hired" :required="false" :edit="false" />
              <x-input-field type="text" name="salary_grade" label="Salary Grade" :required="true"
@@ -164,9 +164,9 @@
                  <hr>
              </div>
              <!-- Foreign Keys -->
-             <x-select-field name="ro_office_id" label="RO Office" :options="App\Models\EmpROOffice::all()" :edit="false"
+             <x-select-field name="ro_office_id" label="RO Office" :options="App\Models\EmpROOffice::all()" :edit="false" :required="false"
                  valueField="id" textField="name" />
-             <x-select-field name="sdo_office_id" label="SDO Office" :options="App\Models\EmpSDOOffice::all()" :edit="false"
+             <x-select-field name="sdo_office_id" label="SDO Office" :options="App\Models\EmpSDOOffice::all()" :edit="false" :required="false"
                  valueField="id" textField="name" />
              <x-select-field name="officer_in_charge" label="Is Officer in Charge?" :options="collect([['id' => '1', 'name' => 'Yes'], ['id' => '0', 'name' => 'No']])"
                  :edit="false" :required="true" valueField="id" textField="name" />
@@ -176,22 +176,51 @@
              <x-input-field type="date" name="date_of_separation" label="Date of Separation" :edit="false"
                  :required="false" />
              <x-select-field name="cause_of_separation_id" label="Cause of Separation" :options="App\Models\EmpCauseOfSeparation::all()"
-                 :edit="false" valueField="id" textField="name" />
+                 :edit="false" :required="false" valueField="id" textField="name" />
              <x-select-field name="non_deped_fund" label="Is Non DepEd Fund?" :options="collect([['id' => '1', 'name' => 'Yes'], ['id' => '0', 'name' => 'No']])" :edit="false"
                  :required="true" valueField="id" textField="name" />
              <x-select-field name="sources_of_fund_id" label="Source of Fund" :options="App\Models\EmpSourceOfFund::all()" :edit="false"
-                 valueField="id" textField="name" />
+                :required="false"  valueField="id" textField="name" />
              <x-input-field type="text" name="detailed_transfer_from" label="Detailed Transfer From:"
                  :edit="false" :required="false" />
              <x-input-field type="text" name="detailed_transfer_to" label="Detailed Transfer To:"
                  :edit="false" :required="false" />
          </div>
 
-         <div class="flex md:justify-end justify-center gap-2  ">
+         <div class="modal-button-container">
              <button type="button" onclick="closeComponentModal('add-employee-modal')"
-                 class="md:w-auto w-full rounded px-4 py-1 btn-cancel ">Cancel</button>
-             <button type="submit" class=" md:w-auto w-full py-1 px-4 rounded btn-submit">Save
+                 class="sm:w-fit w-full rounded px-4 py-1 btn-cancel ">Cancel</button>
+             <button type="submit" id="addEmployeeButton" class=" sm:w-fit w-full py-1 px-4 rounded btn-submit">Save
                  Employee</button>
          </div>
      </form>
  </x-modal>
+<script>
+    const addEmployeeForm = document.getElementById('addEmployeeForm');
+    const addEmployeeButton = document.getElementById('addEmployeeButton');
+    addEmployeeForm.addEventListener('submit',async (e)=>{
+        e.preventDefault();
+        buttonLoading(addEmployeeButton);
+        const formData = new FormData(addEmployeeForm);
+        const response = await fetch(addEmployeeForm.action,{
+            method: 'POST',
+            headers:{
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+            },
+            body: formData
+        });
+        const data = await response.json();
+
+        if(!response.ok){
+            handleErrors(data.errors);
+            resetButton(addEmployeeButton,'Save Employee');
+            return;
+        }
+        closeComponentModal('add-employee-modal');
+        renderStatusModal(data);
+        resetButton(addEmployeeButton,'Save Employee');
+        addEmployeeForm.reset();
+        searchEmployee();
+    });
+</script>

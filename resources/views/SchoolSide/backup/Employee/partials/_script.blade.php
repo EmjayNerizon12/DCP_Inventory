@@ -23,64 +23,177 @@
         container.innerHTML = '';
         const employeeCard = document.createElement('div');
 
+        const tableEmployee = document.createElement('table');
+        tableEmployee.classList.add('w-full', 'my-4');
+        const thead = document.createElement('thead');
+        thead.innerHTML = ` <tr>
+                            <td class="top-header  border border-gray-800" colspan="6">
+                              Employee Identity
+                            </td>
+                        </tr>
+                        <tr>
+                             
+                            <td class="sub-header text-center w-5">No.</td>
+                            <td class="sub-header text-center">Employee No.</td>
+                            <td class="sub-header">Employee Name</td>
+                            <td class="sub-header">Title</td>
+                            <td class="sub-header">Position</td>
+                            <td class="sub-header text-center">Details</td>
+                        </tr>`;
+        const tbody = document.createElement('tbody');
+        if (data.length == 0) {
+            tbody.innerHTML = `
+            <tr>
+                <td class="td-cell text-center" colspan="6">No Data Found</td>
+            </tr>
+            `
+        }
         data.forEach((item, index) => {
+            tbody.innerHTML += `
+                
+
+                        <!-- ===== HEADER ===== -->
+
+
+
+                       
+                        <tr>
+                           
+                            <td class="td-cell max-w-xs tracking-wider text-center">
+                               ${index + 1} 
+
+                            </td>
+                            <td class="td-cell font-bold text-center tracking-wider">
+                               ${item.employee_number ?? '' } 
+
+                            </td>
+
+
+                            <!-- Name -->
+                            <td class="td-cell">
+                                ${item.lname ?? '' }, 
+                                ${item.fname ?? '' }
+                                ${item.mname ?? '' }
+                                ${item.suffix_name ?? '' }
+
+                            </td>
+
+                            <!-- Position Title -->
+                            <td class="td-cell">
+                                ${item.position_title?.name ?? 'No Title Yet' }
+
+                            </td>
+
+                            <!-- Position -->
+                            <td class="td-cell">
+
+                                ${item.position?.name ?? 'No Position Yet' }
+
+                            </td>
+                          
+                            <td class="td-cell">
+                                <div class=" flex justify-center items-center w-full">
+
+
+
+                                    <div
+                                        class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                                        <button onclick='showInfoModal(${JSON.stringify(item)})' type="button" title="Show Info Modal"
+                                            class="btn-submit p-1 rounded-full">
+
+                                            <!-- SVG UNTOUCHED -->
+                                            <svg class="w-8 h-8" viewBox="-102.4 -102.4 1228.80 1228.80" xmlns="http://www.w3.org/2000/svg"
+                                                fill="currentColor">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                                </g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path fill="currentColor"
+                                                        d="M288 320a224 224 0 1 0 448 0 224 224 0 1 0-448 0zm544 608H160a32 32 0 0 1-32-32v-96a160 160 0 0 1 160-160h448a160 160 0 0 1 160 160v96a32 32 0 0 1-32 32z">
+                                                    </path>
+                                                </g>
+                                            </svg>
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    
+                `;
+
+
+
+
+
             let file_path = item.image_path ?
                 `/school-employee/${schoolId}-${schoolName}/${item.image_path}` :
                 '/icon/profile.png';
             employeeCard.innerHTML +=
+
                 `
-             <div class="border border-gray-400 sm:p-4 p-2 my-4">
+             <div class="border border-gray-400 p-6 my-4">
 
                <div class="cursor-pointer  flex flex-col justify-center text-center 
-                cursor-pointer text-center relative ">
+                                 cursor-pointer text-center relative
+                                  ">
 
                      <div class="grid w-full  grid-cols-2 gap-0">
                          <div class="text-base text-left   font-medium tracking-wider  ">
                             ${index + 1}.
-                         </div> 
+                         </div>
+
+                         <div class="flex  justify-end ">
+
+                             <button class="btn-submit w-auto px-2 rounded py-0 font-normal text-base hover:bg-blue-600">
+                                 ${item.employee_number ?? '' } 
+                             </button>
+                         </div>
                      </div>
 
-                     <div class="mb-2 flex sm:flex-row flex-col justify-start items-center gap-4">
 
-                        <div class="shadow-md md:w-42 md:h-42 h-22 w-22 p-1 border border-gray-300 rounded-full">
+
+                     <div class="mb-2 flex justify-start items-center gap-4 md:my-0 my-4">
+
+                         <div class="shadow-md md:w-42 md:h-42 h-22 w-22 p-1 border border-gray-300 rounded-full">
                              <img class="md:w-40 md:h-40 h-20 w-20 rounded-full object-cover"
                                  src="${file_path}"
                                  alt="Profile Photo">
+                         </div>
+                         <div>
+                         <div class="md:text-2xl text-sm font-bold  underline uppercase">
+                             ${item.lname ?? '' }, 
+                                ${item.fname ?? '' }
+                                ${item.mname ?? '' }
+                                ${item.suffix_name ?? '' }
+                         </div>
+                         <div class="md:text-base text-xs">
+                            ${item.position_title?.name ?? 'No Title Yet' }
                         </div>
+                        <div class="md:text-base text-xs">
+                            ${item.position?.name ?? 'No Position Yet' }
+                        </div>
+                          <div class=" flex justify-center items-center w-full">
 
-                        <div class="space-y-2">
-                            <div class="md:text-2xl text-sm font-bold uppercase">
-                                ${item.employee_number ?? '' } 
-                            </div>
-                            <div class="md:text-2xl text-sm font-bold uppercase">
-                                    ${item.lname ?? '' }, 
-                                    ${item.fname ?? '' }
-                                    
-                                    ${item.mname ?? '' }
-                                    ${item.suffix_name ?? '' }
-                            </div>
-                            <x-badge color="yellow">
-                                ${item.deped_email ?? 'No Email Found' }
-                            </x-badge>
-                            <div class="flex justify-center gap-2">
-                            <x-badge color="green">
-                                ${item.position_title?.name ?? 'No Position Yet' }
-                            </x-badge>
-                            <x-badge color="blue">
-                                    ${item.position?.name ?? 'No Position Yet' }
-                            </x-badge>
-                            </div>
-                            <div class=" flex justify-center items-center w-full">
+
+
+                            <div
+                                class="md:h-12 h-10 w-auto bg-white mt-2 p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
                                 <button onclick='showInfoModal(${JSON.stringify(item)})' type="button" title="Show Info Modal"
-                                class="btn-submit md:text-base text-xs px-4 py-1 rounded">
-                                    Full Details
+                                    class="btn-submit md:text-base text-xs px-4 py-1 rounded-full">
+
+                                    <!-- SVG UNTOUCHED -->
+                                 Full Details
+
                                 </button>
                             </div>
-                            </div>
                         </div>
-
-                </div>
-            </div>
+                        </div>
+                     </div>
+                 </div>
+                 </div>
            
                  `;
 
@@ -89,7 +202,9 @@
         if (data.length == 0) {
             employeeCard.innerHTML = `<div class="text-center text-gray-500 text-lg">No Data Found</div>`
         }
-    
+        tableEmployee.appendChild(thead);
+        tableEmployee.appendChild(tbody);
+
         container.appendChild(employeeCard);
     }
 
