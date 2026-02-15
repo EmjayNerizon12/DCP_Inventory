@@ -1,200 +1,209 @@
- <div class="overflow-x-auto ">
+<div id="renderBiometricData"></div>
 
-     @if ($biometric_info->isNotEmpty())
-         @foreach ($biometric_info as $index => $info)
-             <div class="border border-gray-400 p-6 my-4">
+<script>
+	//Render the Biometric INFORMATION
+	const biometricContainer = document.getElementById('renderBiometricData');
+	async function loadBiometricTable(schoolId){
+		const response = await fetch(`/api/School/biometricEquipment/${schoolId}`);
+		const res = await response.json();
+		if(!response.ok){
+			alert('Loading Failed');
+			return;
+		}
+		biometricContainer.innerHTML = renderLoadingOnTable();
+		const data = res.data;
+		await renderBiometricInfo(data);
+	}
+	function renderBiometricInfo(biometric_data){
+		//reset the container to remove the Loading
+		biometricContainer.innerHTML = '';
+		// console.table(biometricContainer);
+		biometric_data.forEach((biometric,index) => {
+			const biometricType = biometric_data[index]?.biometric_type;
+			const equipmentDetails = biometric_data[index]?.equipment_details;
+			//Render the Content
+			biometricContainer.innerHTML += 
+			`
+			<div class="border border-gray-400 p-5 my-4 ">
+				<div
+					class="cursor-pointer  flex flex-col justify-center text-center 
+					cursor-pointer text-center relative
+					"
+					onclick="toggleCollapse('biometric-container-${index + 1}',${index + 1})">
 
+					<div class="grid w-full hidden  grid-cols-2 gap-0">
+						<div class="text-base text-left   font-medium tracking-wider  ">
+							${index + 1}.
+						</div>
 
-                 <div class="cursor-pointer  flex flex-col justify-center text-center 
-                                 cursor-pointer text-center relative
-                                  "
-                     onclick="toggleCollapse('biometric-container-{{ $loop->iteration }}',{{ $loop->iteration }})">
+						<div class="flex  justify-end ">
 
-                     <div class="grid w-full  grid-cols-2 gap-0">
-                         <div class="text-base text-left   font-medium tracking-wider  ">
-                             {{ $loop->iteration }}.
-                         </div>
+							<button class="btn-green w-auto px-2 rounded py-0 font-normal text-base hover:bg-green-600">
+								&#8369; ${formatNumber(equipmentDetails?.total_amount,2)}
+							</button>
+						</div>
+					</div>
 
-                         <div class="flex  justify-end ">
+					<div class="scale-100 hover:scale-103 transition mb-2">
 
-                             <button class="btn-submit w-auto px-2 rounded py-0 font-normal text-base hover:bg-blue-600">
-                                 &#8369; {{ number_format($info?->equipment_details?->total_amount, 2) }}
-                             </button>
-                         </div>
-                     </div>
+						<div class="sm:text-2xl text-base font-bold uppercase">
+						${index + 1}. ${biometricType?.name} 
+						</div>
+						<div class="sm:text-xl text-sm font-medium">
+							${equipmentDetails?.brand_model?.name} (&#8369; ${formatNumber(equipmentDetails?.total_amount,2)})
+						</div>
+						<div class="sm:text-base text-sm">
+							${formatDate(equipmentDetails?.date_installed)}
+						</div>
 
+					</div>
+				</div>
 
+				<div class="flex gap-1 items-center justify-center button-container">
 
-                     <div class="scale-100 hover:scale-103 transition mb-2">
+					<div class="action-button">
 
-                         <div class="text-center  whitespace-nowrap">
-                             Tap to Open/CLose
-                         </div>
+						<button class="btn-update p-1 rounded-full"
+							onclick="renderEditBiometricModal(${ equipmentDetails?.pk_equipment_details_id },
+							${ equipmentDetails?.brand_model?.pk_equipment_brand_model_id },
+							${ biometric?.no_of_units },${biometricType?.pk_e_biometric_type_id },
+							${ equipmentDetails?.powersource?.pk_equipment_power_source_id },
+							${ equipmentDetails?.location?.pk_equipment_location_id },
+								${ equipmentDetails?.total_amount },
+								${ equipmentDetails?.installer?.pk_equipment_installer_id },
+								${ biometric?.no_of_functional }, ${ equipmentDetails?.incharge?.pk_equipment_incharge_id },
+								'${ equipmentDetails?.date_installed }')">
+							@include('SchoolSide.components.svg.edit-sm')
 
-                         <div class="md:text-2xl text-md font-bold underline uppercase">
-                             {{ $info->biometric_type->name ?? '' }}
+						</button>
+					</div>
+					<div class="action-button">
 
+						<button class="text-white bg-red-600 hover:bg-red-700 p-1 rounded-full"
+							onclick="deleteFunction(${ biometric?.pk_e_biometric_details_id }, 'biometric')">
+							@include('SchoolSide.components.svg.delete-sm')
 
-                         </div>
+						</button>
+					</div>
+					<div class="action-button">
+						<button id="toggle-button-${index+1}" class="btn-gray p-1 rounded-full"
+							onclick="toggleCollapse('biometric-container-${index+1}', ${index+1})">
+							@include('SchoolSide.components.svg.dashboard-sm')
+						</button>
+					</div>
+				</div>
 
-                         <div class="text-base">
-                             {{ \Carbon\Carbon::parse($info->$info?->equipment_details?->date_installed)->format('F d, Y') }}
-                         </div>
-                     </div>
-                 </div>
-                 <div class="flex gap-1 items-center justify-center py-2 button-container">
+				<div class="mt-2 hidden thin-scroll overflow-x-auto" id="biometric-container-${index+1}">
+					<table class="w-full border-collapse  ">
+						<tbody>
 
-                     <div
-                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+							<tr>
+								<td colspan="6" class="top-header">
 
-                         <button class="btn-update p-1 rounded-full"
-                             onclick="openEditModal(
-                                                            'biometrics',
-                                                            {{ $info->equipment_details->pk_equipment_details_id }},
-                                                            {{ $info->equipment_details->brand_model->pk_equipment_brand_model_id }},
-                                                            {{ $info->no_of_units }},
-                                                            {{ $info->biometric_type->pk_e_biometric_type_id }},
-                                                            {{ $info->equipment_details->powersource->pk_equipment_power_source_id }},
-                                                            {{ $info->equipment_details->location->pk_equipment_location_id }},
-                                                            {{ $info->equipment_details->total_amount }},
-                                                            {{ $info->equipment_details->installer->pk_equipment_installer_id }},
-                                                            {{ $info->no_of_functional }},
-                                                            {{ $info->equipment_details->incharge->pk_equipment_incharge_id }},
-                                                            '{{ $info->equipment_details->date_installed }}'
-                                                        )">
-                             <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                 <g id="SVGRepo_iconCarrier">
-                                     <g id="Edit / Edit_Pencil_Line_02">
-                                         <path id="Vector"
-                                             d="M4 20.0001H20M4 20.0001V16.0001L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L8 20.0001L4 20.0001Z"
-                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-                                         </path>
-                                     </g>
-                                 </g>
-                             </svg>
-                         </button>
-                     </div>
-                     <div
-                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+									<div class="flex justify-between">
+										<div>
+											biometric No. ${index + 1}
+										</div>
+										<div>
+											&#8369; ${formatNumber(equipmentDetails?.total_amount,2)}
+										</div>
+									</div>
+								</td>
 
-                         <button class="text-white bg-red-600 hover:bg-red-700 p-1 rounded-full"
-                             onclick="deleteFunction({{ $info->pk_e_biometric_details_id }}, 'biometrics')">
-                             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                 <g id="SVGRepo_iconCarrier">
-                                     <path
-                                         d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z">
-                                     </path>
-                                 </g>
-                             </svg>
-                         </button>
-                     </div>
-                     <div
-                         class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+							</tr>
+							<tr>
+								<td class="sub-header">
+									Brand / Model
+								</td>
+								<td class="td-cell">
+									${equipmentDetails?.brand_model?.name ?? '' }
+								</td>
 
-                         <button id="toggle-button-{{ $loop->iteration }}" class="btn-gray p-1 rounded-full"
-                             onclick="toggleCollapse('biometric-container-{{ $loop->iteration }}', {{ $loop->iteration }})">
+								<td class="sub-header">
+									Authentication Type
+								</td>
+								<td class="td-cell">
+									${biometricType?.name ?? '' }
+								</td>
 
-                             @include('SchoolSide.components.svg.dashboard-sm')
+								<td class="sub-header">
+									Date Installed
+								</td>
+								<td class="td-cell">
+									${formatDate(equipmentDetails?.date_installed)}
+								</td>
+							</tr>
 
-                         </button>
-                     </div>
-                 </div>
-                 <div class="hidden" id="biometric-container-{{ $loop->iteration }}">
-                     <table class="w-full border-collapse">
-                         <tbody>
+							<tr>
+								<td class="sub-header">
+									No. of Cameras
+								</td>
+								<td class="td-cell">
+									${ biometric?.no_of_units ?? '' }
+								</td>
 
-                             {{-- HEADER ROW --}}
-                             <tr>
-                                 <td colspan="6" class="top-header">
-                                     <div class="flex justify-between">
-                                         <div>
-                                             Biometrics No. {{ $index + 1 }}
-                                         </div>
-                                         <div>
-                                             &#8369; {{ number_format($info?->equipment_details?->total_amount, 2) }}
-                                         </div>
-                                     </div>
-                                 </td>
-                             </tr>
+								<td class="sub-header">
+									Functional Cameras
+								</td>
+								<td class="td-cell">
+									${ biometric?.no_of_functional ?? '' }/${ biometric?.no_of_units ?? '' }
+								</td>
 
-                             {{-- ROW 1 --}}
-                             <tr>
-                                 <td class="sub-header">Brand /
-                                     Model</td>
-                                 <td class="td-cell">
-                                     {{ $info->equipment_details->brand_model->name ?? '' }}
-                                 </td>
+								<td class="sub-header">
+									Power Source
+								</td>
+								<td class="td-cell">
+									${equipmentDetails?.powersource?.name ?? '' }
+								</td>
+							</tr>
 
-                                 <td class="sub-header">
-                                     Authentication Type</td>
-                                 <td class="td-cell">
-                                     {{ $info->biometric_type->name ?? '' }}
-                                 </td>
+							<tr>
+								<td class="sub-header">
+									Location
+								</td>
+								<td class="td-cell">
+									${equipmentDetails?.location?.name ?? '' }
+								</td>
 
-                                 <td class="sub-header">Date
-                                     Installed</td>
-                                 <td class="td-cell">
-                                     {{ \Carbon\Carbon::parse($info->$info?->equipment_details?->date_installed)->format('F d, Y') }}
-                                 </td>
-                             </tr>
+								<td class="sub-header">
+									Installer
+								</td>
+								<td class="td-cell">
+									${equipmentDetails?.installer?.name ?? '' }
+								</td>
 
-                             {{-- ROW 2 --}}
-                             <tr>
-                                 <td class="sub-header">No. of
-                                     Biometrics</td>
-                                 <td class="td-cell">
-                                     {{ $info->no_of_units ?? '' }}
-                                 </td>
+								<td class="sub-header">
+									Person In-Charge
+								</td>
+								<td class="td-cell">
+									${equipmentDetails?.incharge?.name ?? '' }
+								</td>
+							</tr>
 
-                                 <td class="sub-header">Functional
-                                     Biometrics</td>
-                                 <td class="td-cell">
-                                     {{ $info->no_of_functional ?? '' }}/{{ $info->no_of_units ?? '' }}
-                                 </td>
+						</tbody>
+					</table>
+				</div>
 
-                                 <td class="sub-header">Power
-                                     Source</td>
-                                 <td class="td-cell">
-                                     {{ $info->equipment_details->powersource->name ?? '' }}
-                                 </td>
-                             </tr>
-
-                             {{-- ROW 3 --}}
-                             <tr>
-                                 <td class="sub-header">Location
-                                 </td>
-                                 <td class="td-cell">
-                                     {{ $info->equipment_details->location->name ?? '' }}
-                                 </td>
-
-                                 <td class="sub-header">Installer
-                                 </td>
-                                 <td class="td-cell">
-                                     {{ $info->equipment_details->installer->name ?? '' }}
-                                 </td>
-
-                                 <td class="sub-header">Person
-                                     In-Charge</td>
-                                 <td class="td-cell">
-                                     {{ $info->equipment_details->incharge->name ?? '' }}
-                                 </td>
-                             </tr>
-
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         @endforeach
-     @else
-         <div class="text-center text-gray-600">
-             No Biometric Details Available.
-         </div>
-     @endif
-
- </div>
+			</div>
+			`;
+		});
+		//Make a reusable method that displays no record found
+		if(!biometric_data.length > 0){
+			biometricContainer.innerHTML = `
+				<div class=" flex items-center py-5 justify-center">
+					<div class="bg-gray-50/80 w-full backdrop-blur-md border border-gray-300 rounded-xl shadow-md px-8 py-6 text-center">
+						<h2 class="text-gray-700 font-semibold sm:text-lg text-base">
+							No Record Found
+						</h2>
+						<p class="text-gray-500 sm:text-sm text-xs mt-1">
+							There is currently nothing to display.
+						</p>
+					</div>
+				</div>
+			`;
+		}
+		 
+	}
+	//Default call the function
+	document.addEventListener('DOMContentLoaded',loadBiometricTable(school_id));
+</script>

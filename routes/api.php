@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\School\BiometricController;
 use App\Http\Controllers\Api\School\CCTVController;
 use App\Http\Controllers\Api\School\DashboardController;
 use App\Http\Controllers\Api\School\DCPBatchItemController;
@@ -33,5 +34,6 @@ Route::prefix('School')->group(function () {
     Route::get('dcpBatchItem/items/{dcpBatchId}', [DCPBatchItemController::class, 'show']);
     Route::get('dcpBatchItem/show-item/{dcpBatchItemId}', [DCPBatchItemController::class, 'showItems']);
     Route::get('CCTVEquipment/{schoolId}', [CCTVController::class, 'index']);
+    Route::get('biometricEquipment/{schoolId}', [BiometricController::class, 'index']);
 });
 Route::post('login', [AuthController::class, 'login']);

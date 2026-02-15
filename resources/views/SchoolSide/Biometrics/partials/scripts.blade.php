@@ -1,72 +1,32 @@
 <script>
-    function openEditModal(type, id, brand, total_object, object_type, powersource, location, total_amount, installer,
+	const school_id = document.getElementById('school_id').value;
+
+    function renderEditBiometricModal( id, brand, total_object, object_type, powersource, location, total_amount, installer,
         functional, incharge, date_installed) {
-        console.log(id, brand, total_object, object_type, powersource, location, total_amount, installer,
-            functional, incharge, "DATE", date_installed);
-        if (type == 'cctv') {
-            document.getElementById("edit-overall-modal").classList.remove('hidden');
-            document.getElementById('for-cctv').classList.remove('hidden');
-            document.getElementById('edit-modal-title').textContent = "Update CCTV Details";
-            document.getElementById('edit_primary_key').value = id;
-            document.getElementById('edit_e_brand').value = brand;
-            document.getElementById('edit_no_of_unit').value = total_object;
-            document.getElementById('edit_e_cctv_type').value = object_type;
-            document.getElementById('edit_e_power_source').value = powersource;
-            document.getElementById('edit_e_location').value = location;
-            document.getElementById('edit_total_amount').value = total_amount;
-            document.getElementById('edit_e_installer').value = installer;
-            document.getElementById('edit_no_of_functional').value = functional;
-            document.getElementById('edit_e_incharge').value = incharge;
-            document.getElementById('edit_date_installed').value = date_installed;
-            document.getElementById('target').value = 'cctv';
+       
+        document.getElementById("edit-biometric-modal").classList.remove('hidden');
+        document.getElementById('edit-modal-title').textContent = "Update Biometric Details";
+        
+        document.getElementById('id').value = id;
+		document.getElementById('target').value = 'biometric';
 
-        } else if (type == 'biometrics') {
-            document.getElementById("edit-overall-modal").classList.remove('hidden');
-
-            document.getElementById('for-biometric').classList.remove('hidden');
-            document.getElementById('edit-modal-title').textContent = "Update Biometric Details";
-            document.getElementById('edit_primary_key').value = id;
-            document.getElementById('edit_e_brand').value = brand;
-            document.getElementById('edit_no_of_unit').value = total_object;
-            document.getElementById('edit_e_biometric_type').value = object_type;
-            document.getElementById('edit_e_power_source').value = powersource;
-            document.getElementById('edit_e_location').value = location;
-            document.getElementById('edit_total_amount').value = total_amount;
-            document.getElementById('edit_e_installer').value = installer;
-            document.getElementById('edit_no_of_functional').value = functional;
-            document.getElementById('edit_e_incharge').value = incharge;
-            document.getElementById('edit_date_installed').value = date_installed;
-            document.getElementById('target').value = 'biometric';
-
-        }
-
+		document.getElementById('e_brand').value = brand;
+		document.getElementById('no_of_units').value = total_object;
+		document.getElementById('e_biometric_type').value = object_type;
+		document.getElementById('e_power_source').value = powersource;
+		document.getElementById('e_location').value = location;
+		document.getElementById('total_amount').value = total_amount;
+		document.getElementById('e_installer').value = installer;
+		document.getElementById('no_of_functional').value = functional;
+		document.getElementById('e_incharge').value = incharge;
+		document.getElementById('date_installed').value = date_installed;
         document.body.classList.add('overflow-hidden');
     }
 
-    function openModal(type) {
-        if (type == '1') {
-            document.getElementById('add-cctv-modal').classList.remove('hidden')
-
-            document.getElementById('selected_equipment_cctv').value = type;
-        } else if (type == '2') {
-            document.getElementById('selected_equipment_biometric').value = type;
-            document.getElementById('add-biometric-modal').classList.remove('hidden')
-
-        }
+    function renderAddBiometricModal(type) {
+        document.getElementById('selected_equipment').value = type;
+        document.getElementById('add-biometric-modal').classList.remove('hidden')
         document.body.classList.add('overflow-hidden');
-    }
-
-    function closeModal(type) {
-        if (type == '1') {
-
-            document.getElementById('add-cctv-modal').classList.add('hidden')
-        } else if (type == '2') {
-
-            document.getElementById('add-biometric-modal').classList.add('hidden')
-        } else if (type == '3') {
-            document.getElementById('edit-overall-modal').classList.add('hidden')
-        }
-        document.body.classList.remove('overflow-hidden');
     }
 
     function deleteFunction(id, type) {
@@ -89,4 +49,42 @@
         }
 
     }
+    	//This function prevents wrong input on total Functional equipment
+	//This function prevents wrong input on total Functional equipment
+	function createNumberInputValidation(totalUnitsInput, totalFunctionalInput) {
+    return function () {
+        totalFunctionalInput.max = totalUnitsInput.value;
+
+        if (totalFunctionalInput.value > totalUnitsInput.value) {
+            totalFunctionalInput.value = totalUnitsInput.value;
+        }
+    };
+}
+
+function initCCTVValidation(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+
+    const totalUnitsInput = form.querySelector('[name="no_of_units"]');
+    const totalFunctionalInput = form.querySelector('[name="no_of_functional"]');
+
+    if (!totalUnitsInput || !totalFunctionalInput) return;
+
+    function validate() {
+        const units = totalUnitsInput.value;
+
+        totalFunctionalInput.max = units;
+
+        if (totalFunctionalInput.value > units) {
+            totalFunctionalInput.value = units;
+        }
+    }
+
+    totalFunctionalInput.addEventListener('input', validate);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    initCCTVValidation('addBiometricForm');
+    initCCTVValidation('updateBiometricForm');
+});
 </script>

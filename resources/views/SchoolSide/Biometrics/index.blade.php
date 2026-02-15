@@ -4,11 +4,12 @@
 
  @section('content')
      <div class="p-6">
+         <input type="hidden" id="school_id" value="{{Auth::guard('school')->user()->school->pk_school_id}}">
+         @include('SchoolSide.Biometrics.partials.scripts')
 
          @include('SchoolSide.Biometrics.partials._addBiometricModal')
 
-         @include('SchoolSide.Biometrics.partials._editModal')
-         @include('SchoolSide.Biometrics.partials.scripts')
+         @include('SchoolSide.Biometrics.partials._editBiometricModal')
 
 
 
@@ -43,12 +44,12 @@
          </div>
          <div class="flex justify-between items-center gap-4  ">
 
-             <button title="Show Info Modal" type="button" onclick="openModal(2)" class="theme-button">
+             <button title="Show Info Modal" type="button" onclick="renderAddBiometricModal(2)" class="btn-submit px-4 py-1 rounded">
                  Add Biometrics Record
              </button>
 
              <div
-                 class="h-12 w-12 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
+                 class="h-12 w-12 bg-white hidden p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center">
 
                  <button class="btn-cancel p-1 rounded-full" onclick="window.print()">
                      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
