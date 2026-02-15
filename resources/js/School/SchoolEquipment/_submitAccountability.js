@@ -24,7 +24,7 @@ import { loadEquipment } from "./_loadEquipment";
     }
     renderStatusModal(data);
     resetButton(button, 'Submit');
-    formData.reset();
+    accountabilityForm.reset();
     loadEquipment(school_id);
     scrollTo(`equipment-container-${cardNumber}`);
     closeComponentModal('show-user-list');

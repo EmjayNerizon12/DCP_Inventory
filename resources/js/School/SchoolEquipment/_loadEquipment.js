@@ -20,39 +20,34 @@ export async function loadEquipment(school_id) {
         data.forEach((equipment, index) => {
             equipmentContainer.innerHTML += `
             
-        <div id="equipment-container-${index + 1}" class=" border border-gray-400 p-6 my-4  ">
+        <div id="equipment-container-${index + 1}" class=" border border-gray-400 p-5 my-4  ">
          <div class="cursor-pointer flex flex-col justify-center text-center relative "
              onclick="toggleCollapse('equipment-print-${ index + 1 }',${ index + 1 })">
-
-             <div class="flex w-full flex-row  justify-between  items-center  ">
-                 <div class="  text-base font-medium tracking-wider  ">
-                     ${index + 1}. ${ equipment?.serial_number }
-                 </div>
-                
-                 <button class="btn-green w-auto px-2 rounded py-0 font-normal text-base hover:bg-green-600">
-                   
-                     ₱ ${formatNumber(equipment?.acquisition_cost)}
-                 </button>
-             </div>
              <div class="scale-100 hover:scale-103 transition ">
-
-
-                   <div class="sm:text-lg text-xs   ">
-
-                     ${ equipment?.non_dcp == 1 ? 'Non - DCP Product' : 'DCP Product' }
-                 </div>
-                 <div class="sm:text-xl text-md font-bold uppercase">
-
-                     ${ equipment?.dcp_batch_item?.dcp_item_type?.name ?? equipment?.non_d_c_p_item?.item_description ?? 'No Item Assigned' }
+                <div class="sm:text-2xl text-base font-bold uppercase">
+                     ${index + 1}. ${ equipment?.dcp_batch_item?.dcp_item_type?.name ?? equipment?.non_d_c_p_item?.item_description ?? 'No Item Assigned' }
+                </div>
+                <div class="sm:text-xl text-sm font-medium">
+                     ${ equipment?.non_dcp == 1 ? 'Non - DCP Product' : 'DCP Product' } (₱ ${formatNumber(equipment?.acquisition_cost)})
                  </div>
 
-                 <div class="text-base">
-                     Property No. ${ equipment?.property_number }
-                 </div>
+                <div class="sm:text-base text-xs flex items-center justify-center gap-2 my-1">
+                    <span class="px-2 py-0.5 font-semibold rounded-full border border-blue-700 bg-blue-100 text-blue-700">
+                        Serial No.  ${equipment?.serial_number}
+                    </span>
+                
+                </div>
+
+                <div class="sm:text-base text-xs flex items-center justify-center gap-2 my-1">
+                    <span class="px-2 py-0.5 font-semibold rounded-full border border-green-700 bg-green-100 text-green-700">
+                        Property No.  ${equipment?.property_number}
+                    </span>
+                </div>
+
              </div>
          </div>
 
-         <div class="flex flex-row gap-1 justify-center items-start button-container my-2">
+         <div class="flex flex-row gap-1 justify-center items-start button-container">
              <div
                  class="action-button">
                  <button id="edit-equipment-button-${ index + 1 }" class="btn-update edit-icon p-1 rounded-full"
@@ -126,9 +121,9 @@ export async function loadEquipment(school_id) {
                  class="action-button">
 
          
-<button onclick='loadDocumentModal(${JSON.stringify(equipment?.equipment_document).replace(/'/g,"\\'")},${ equipment?.id })' class=" btn-submit p-1 rounded-full file-icon">
-                         ${loading}
-</button>
+                <button onclick='loadDocumentModal(${JSON.stringify(equipment?.equipment_document).replace(/'/g,"\\'")},${ equipment?.id })' class=" btn-submit p-1 rounded-full file-icon">
+                    ${loading}
+                </button>
 
  
              </div>
@@ -136,7 +131,7 @@ export async function loadEquipment(school_id) {
                  class="action-button">
 
                  <button class="theme-button p-1 rounded-full print-icon" onclick="printEquipment(${ index + 1 })">
-                                           ${loading}
+                        ${loading}
 
                  </button>
              </div>
@@ -145,13 +140,13 @@ export async function loadEquipment(school_id) {
 
                  <button id="toggle-button-${ index + 1 }" class="btn-gray blocks-icon p-1 rounded-full"
                      onclick="toggleCollapse('equipment-print-${ index + 1 }',${ index + 1 })">
-                                       ${loading}
+                        ${loading}
                                                                                                                                                                                                                                         
                      </button>
              </div>
          </div>
 
-         <div id="equipment-print-${ index + 1 }" class="hidden transition">
+         <div id="equipment-print-${ index + 1 }" class="hidden transition mt-2">
 
 
              <div style="display: none" id="print-header-individual">
@@ -244,7 +239,7 @@ export async function loadEquipment(school_id) {
                                  ${ equipment?.dcp_batch_id ?  equipment.dcp_batch?.batch_label : 'This equipment is Non-DCP Equipment' }
 
                              </td>
-                             <td class="sub-header ">Non-DCP</td>
+                             <td class="sub-header">Non-DCP</td>
                              <td class="td-cell  w-1/6">${ equipment?.non_dcp ? 'Yes' : 'No' }</td>
 
                          </tr>
@@ -253,11 +248,7 @@ export async function loadEquipment(school_id) {
                              <td colspan="3" class="td-cell  w-1/6">
 
                                  <div class="">
-
-
                                      ${ equipment?.dcp_batch?.dcp_package_type?.name ?? '' }
-
-
                                  </div>
                              </td>
                              <td class="sub-header">

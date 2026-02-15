@@ -123,7 +123,7 @@ editEquipmentForm.addEventListener('submit', async (e) => {
         return;
     }
     closeComponentModal('edit-equipment-modal');
-    formData.reset();
+    editEquipmentForm.reset();
     resetButton(button, 'Update');
     await loadEquipment(school_id);
     clearErrors();

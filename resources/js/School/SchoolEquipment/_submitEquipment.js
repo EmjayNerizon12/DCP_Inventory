@@ -26,7 +26,7 @@ addEquipmentForm.addEventListener('submit',async (e) => {
     renderIcons();
     resetButton(addEquipmentFormButton, 'Submit');
     renderStatusModal(data);
-    formData.reset();
+    addEquipmentForm.reset();
     scrollTo(`equipment-container-${totalEquipment}`);
     closeComponentModal('add-equipment-modal');
 });

@@ -24,6 +24,6 @@ editDocumentForm.addEventListener('submit', async (e) => {
     renderIcons();
     resetButton(editDocumentButton, 'Save Document');
     await loadEquipment(school_id);
-    formData.reset();
+    editDocumentForm.reset();
     clearErrors();
 })
