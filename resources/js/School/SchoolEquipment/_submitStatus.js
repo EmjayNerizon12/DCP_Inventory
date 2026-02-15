@@ -22,7 +22,7 @@ statusForm.addEventListener('submit', async function (e) {
     }
     renderStatusModal(data);
     resetButton(button, 'Submit');
-    formData.reset();
+    statusForm.reset();
     loadEquipment(school_id);
     closeComponentModal('show-status-list');
     clearErrors();
