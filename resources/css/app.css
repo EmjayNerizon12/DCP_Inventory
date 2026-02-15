@@ -178,19 +178,19 @@
     @apply flex justify-center items-center ;
      }
    .spinner-xs {
-        @apply w-4 h-4 border-3 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+        @apply w-4 h-4 border-3 border-transparent border-t-white border-r-white border-b-white rounded-full animate-spin;
     }
     .spinner-sm {
-        @apply w-8 h-8 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+        @apply w-8 h-8 border-4 border-transparent border-t-white border-r-white border-b-white rounded-full animate-spin;
     }
     .spinner-md {
-        @apply w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+        @apply w-10 h-10 border-4 border-transparent border-t-white border-r-white border-b-white rounded-full animate-spin;
     }
     .spinner-lg{
-        @apply w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+        @apply w-12 h-12 border-4 border-transparent border-t-white border-r-white border-b-white border-r-white border-l-white rounded-full animate-spin;
     }
     .spinner-xl{
-        @apply w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin;
+        @apply w-16 h-16 border-4 border-transparent border-t-white border-r-white border-b-white border-r-white border-l-white rounded-full animate-spin;
     }
     .page-title{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
