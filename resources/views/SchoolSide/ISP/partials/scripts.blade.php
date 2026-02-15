@@ -164,48 +164,34 @@
             data.forEach((internet, index) => {
 
                 const card = document.createElement('div');
-                card.className = 'border border-gray-400 p-6 my-4';
+                card.className = 'border border-gray-400 p-5 my-4';
                 card.innerHTML = `
                      <div class="cursor-pointer  flex flex-col justify-center text-center 
                                  cursor-pointer text-center relative
                                   "
                                  onclick="toggleCollapse('isp-container-${index +1}',${index + 1})">
 
-                                 <div class="grid w-full  grid-cols-2 gap-0">
-                                     <div class="text-base text-left   font-medium tracking-wider  ">
-                                        ${index + 1}  
-                                     </div>
-
-                                     <div class="flex  justify-end ">
-
-                                         <button
-                                             class="btn-submit w-auto px-2 rounded py-0 font-normal text-base hover:bg-blue-600">
-                                             &#8369;
-                                             ${formatNumber(internet?.isp_info[0]?.cost_per_month ?? 0,2)}
-                                           </button>
-                                     </div>
-                                 </div>
-
-
-
                                  <div class="scale-100 hover:scale-103 transition mb-2">
+                                    <div class="sm:text-2xl text-base font-bold uppercase">
+                                        ${index + 1 }. ${internet?.isp_list?.name ?? ''}
+                                    </div>
 
-                                     <div class="text-center  whitespace-nowrap">
-                                         Tap to Open/CLose
+                                    <div class="sm:text-xl text-sm font-medium">
+                                        ${internet?.isp_connection_type?.name ?? ''} (&#8369; ${formatNumber(internet?.isp_info[0]?.cost_per_month ?? 0,2)})
                                      </div>
-
-                                     <div class="md:text-2xl text-md font-bold underline uppercase">
-                                         
-                                ${internet?.isp_list?.name ?? ''}
+                                    <div class="sm:text-lg text-sm">
+                                        Account No. <span class="font-medium"> ${internet?.isp_info[0]?.account_number ?? 'N/A'} </span>
                                      </div>
-
-                                     <div class="text-base">
-                                        ${internet?.isp_connection_type?.name ?? ''}
-
-                                     </div>
+                                    <div class="sm:text-base text-xs flex items-center justify-center gap-2 my-1">
+                                        <span class="px-2 py-0.5 font-semibold rounded-full border border-green-700 bg-green-100 text-green-700">
+                                        Quality: ${internet?.isp_internet_quality?.name} 
+                                        </span>
+                                    </div>
+                                     
                                  </div>
+
                                  </div>
-                                 <div class="flex w-full flex-row my-2 gap-1 justify-center items-start  ">
+                                 <div class="flex w-full flex-row  gap-1 justify-center items-start  ">
     
                                     
                                      <div
@@ -268,78 +254,74 @@
                                          </button>
                                      </div>
                                  </div>
-                              <div id="isp-container-${index + 1}" class="hidden space-y-4">
-                                 <div class="overflow-x-auto">
-                                     <table class="table-auto w-full border ">
+                                <div id="isp-container-${index + 1}" class="hidden space-y-4 mt-2">
+                                    <div class="overflow-x-auto">
+                                        <table class="table-auto w-full border ">
 
-                                         <thead>
-                                             <tr>
-                                                 <td colspan="7" class="top-header">
-                                                     INTERNET SERVICE PROVIDER
-                                                 </td>
-                                             </tr>
-                                             <tr>
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="7" class="top-header">
+                                                        INTERNET SERVICE PROVIDER
+                                                    </td>
+                                                </tr>
+                                                <tr>
 
-                                                 <td class="sub-header   text-center tracking-wider">
+                                                    <td class="sub-header   text-center tracking-wider">
 
-                                                     Provider</th>
-                                                 <td class=" sub-header   text-center tracking-wider">
-                                                     Connection
-                                                 </td>
-                                                 <td class=" sub-header   text-center tracking-wider">
-                                                     Purpose</ttdh>
-                                                 <td class="sub-header   text-center tracking-wider">
-                                                     Speed Test
-                                                 </td>
-                                                 <td class=" sub-header    text-center tracking-wider">
-                                                     Quality
-                                                 </td>
-                                                 
-                                             </tr>
-                                         </thead>
-                                         <tbody class="tracking-wide">
+                                                        Provider</th>
+                                                    <td class=" sub-header   text-center tracking-wider">
+                                                        Connection
+                                                    </td>
+                                                    <td class=" sub-header   text-center tracking-wider">
+                                                        Purpose</ttdh>
+                                                    <td class="sub-header   text-center tracking-wider">
+                                                        Speed Test
+                                                    </td>
+                                                    <td class=" sub-header    text-center tracking-wider">
+                                                        Quality
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tracking-wide">
 
-                                             <tr>
+                                                <tr>
 
-                                                 <td class="td-cell">
-                                                    ${internet?.isp_list?.name ?? '' } 
-                                                 </td>
-                                                 <td class="td-cell">
-                                                    ${internet?.isp_connection_type?.name ?? ''}  </td>
-                                                 <td class="td-cell" style="width: 20%">
+                                                    <td class="td-cell text-center">
+                                                        ${internet?.isp_list?.name ?? '' } 
+                                                    </td>
+                                                    <td class="td-cell text-center">
+                                                        ${internet?.isp_connection_type?.name ?? ''}  </td>
+                                                    <td class="td-cell text-center" style="width: 20%">
 
-                                                     ${internet?.isp_purpose?.name ?? ''}  </td>
-                                                 <td class="td-cell">
+                                                        ${internet?.isp_purpose?.name ?? ''}  </td>
+                                                    <td class="td-cell">
 
-                                                     <div class="flex flex-col">
-                                                         <div class="font-normal">Upload:
-                                                             ${internet?.isp_speed_test[0]?.upload} 
-                                                             mbps
-                                                         </div>
-                                                         <div class="font-normal">Download:
-                                                    ${internet?.isp_speed_test[0]?.download} 
+                                                        <div class="flex flex-col">
+                                                            <div class="font-normal">Upload:
+                                                                ${internet?.isp_speed_test[0]?.upload} 
+                                                                mbps
+                                                            </div>
+                                                            <div class="font-normal">Download:
+                                                        ${internet?.isp_speed_test[0]?.download} 
 
-                                                             mbps
-                                                         </div>
-                                                         <div class="font-normal">Ping:
-                                                            ${internet?.isp_speed_test[0]?.ping} 
-                                                             mbps
-                                                         </div>
+                                                                mbps
+                                                            </div>
+                                                            <div class="font-normal">Ping:
+                                                                ${internet?.isp_speed_test[0]?.ping} 
+                                                                mbps
+                                                            </div>
 
-                                                     </div>
+                                                        </div>
 
-                                                 </td>
-                                                 <td class="td-cell">
-                                                     ${internet?.isp_internet_quality?.name} </td>
-
-
-                                                 
-
-                                             </tr>
-                                         </tbody>
-                                     </table>
-                                 </div>
-                             </div>
+                                                    </td>
+                                                    <td class="td-cell text-center">
+                                                        ${internet?.isp_internet_quality?.name} </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
                 `;
                 container.appendChild(card);

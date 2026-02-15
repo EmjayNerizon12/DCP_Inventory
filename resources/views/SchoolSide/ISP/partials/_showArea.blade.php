@@ -1,4 +1,4 @@
-<x-modal id="modal-area-info" size="medium-modal" type="add" icon="area-sm">
+<x-modal id="modal-area-info" size="medium-modal" type="add" icon="area-lg">
     <div class="flex flex-col items-center justify-center gap-0">
         <div class="text-center">
             <div class="page-title"> Internet Service Area Covered </div>
@@ -22,12 +22,12 @@
           <div class="flex justify-start gap-2 ">
               <button title="Show Info Modal" type="button"
                 onclick="closeComponentModal('modal-area-info')"
-                class="btn-cancel rounded-sm shadow px-4 py-1">
+                class="btn-cancel rounded shadow px-4 py-1">
                 Close
             </button>
             <button title="Show Info Modal" type="button"
                 onclick="showInsertArea(${pk_isp_details_id ?? ''}, ${index}) "
-                class="theme-button rounded-sm px-2 py-1">
+                class="btn-submit rounded px-4 py-1">
                 Add Area
             </button>
 
