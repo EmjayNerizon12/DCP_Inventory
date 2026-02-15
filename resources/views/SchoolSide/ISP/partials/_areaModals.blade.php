@@ -1,4 +1,4 @@
-  <x-modal id="insert_area_modal" size="small-modal" type="add" icon="area-sm">
+  <x-modal id="insert_area_modal" size="small-modal" type="add" icon="area-lg">
 
       <form id="addAreaForm" action="{{ route('schools.isp.add.area') }}" class="mt-2" method="POST">
           @csrf

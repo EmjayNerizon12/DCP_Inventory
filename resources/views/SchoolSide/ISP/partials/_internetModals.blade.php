@@ -1,4 +1,4 @@
- <x-modal id="add-details-modal" size="large-modal" type="add" icon="wifi-sm">
+ <x-modal id="add-details-modal" size="large-modal" type="add" icon="wifi-lg">
 
 
      <form id="add-details-form" action="{{ route('schools.isp.store') }}" class="space-y-4" method="POST">
@@ -68,7 +68,7 @@
 
 
  </x-modal>
- <x-modal id="edit-details-modal" size="large-modal" type="edit" icon="wifi-sm">
+ <x-modal id="edit-details-modal" size="large-modal" type="edit" icon="wifi-lg">
 
      <form id="updateDetailsForm" action="{{ route('schools.isp.update') }}" class="space-y-4" method="POST">
          @csrf

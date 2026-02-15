@@ -1,4 +1,4 @@
- <x-modal id="add-info-modal" size="super-large-modal" type="add" icon="wifi-sm">
+ <x-modal id="add-info-modal" size="super-large-modal" type="add" icon="wifi-lg">
      <form id="addInfoForm" action="{{ route('ISP-Info.store') }}" method="POST" class="mt-2">
          @csrf
          @method('POST')
@@ -86,7 +86,7 @@
          </div>
      </form>
  </x-modal>
- <x-modal id="edit-info-modal" size="super-large-modal" type="edit" icon="wifi-sm">
+ <x-modal id="edit-info-modal" size="super-large-modal" type="edit" icon="wifi-lg">
      <form id="infoUpdateForm" method="POST" class="mt-2">
          @csrf
          @method('PUT')
