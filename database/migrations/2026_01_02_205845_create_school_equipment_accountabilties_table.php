@@ -24,10 +24,9 @@ return new class extends Migration
             // $table->unsignedBigInteger('end_user_id')->nullable();
             // $table->date('date_assigned_to_end_user')->nullable();
 
-            //for actual equipment handover
+            // for actual equipment handover
             $table->unsignedBigInteger('receiver_type_id')->nullable();
             $table->date('date_received')->nullable();
-
 
             $table->timestamps();
         });

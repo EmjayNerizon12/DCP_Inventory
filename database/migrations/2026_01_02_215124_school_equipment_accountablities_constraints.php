@@ -31,7 +31,6 @@ return new class extends Migration
                 ->on('schools_employee')
                 ->nullOnDelete();
 
-
             // RECEIVED BY (EMPLOYEE)
             $table->foreign('receiver_type_id')
                 ->references('id')

@@ -27,13 +27,13 @@ return new class extends Migration
             $table->boolean('inactive_contract')->default(false);
             $table->boolean('active_isp_counter')->default(true);
 
-            $table->unsignedBigInteger('mode_of_acq_id')->nullable(); //FK
+            $table->unsignedBigInteger('mode_of_acq_id')->nullable(); // FK
             $table->foreign('mode_of_acq_id')
                 ->references('id')
                 ->on('i_s_p_mode_of_acqs')
                 ->onDelete('set null');
 
-            $table->unsignedBigInteger('source_of_acq_id')->nullable(); //FK
+            $table->unsignedBigInteger('source_of_acq_id')->nullable(); // FK
             $table->foreign('source_of_acq_id')
                 ->references('id')
                 ->on('i_s_p_source_of_acqs')
@@ -41,7 +41,7 @@ return new class extends Migration
 
             $table->text('donor')->nullable();
 
-            $table->unsignedBigInteger('source_of_fund_id')->nullable(); //FK
+            $table->unsignedBigInteger('source_of_fund_id')->nullable(); // FK
             $table->foreign('source_of_fund_id')
                 ->references('id')
                 ->on('i_s_p_source_of_funds')
@@ -53,7 +53,7 @@ return new class extends Migration
             $table->integer('total_admin_area_isps')->nullable();
             $table->boolean('active_counter2')->default(true);
 
-            $table->unsignedBigInteger('admin_area_rate_id')->nullable();  //FK
+            $table->unsignedBigInteger('admin_area_rate_id')->nullable();  // FK
             $table->foreign('admin_area_rate_id')
                 ->references('id')
                 ->on('i_s_p_ratings')
@@ -62,7 +62,7 @@ return new class extends Migration
             $table->integer('total_classroom_isps')->nullable();
             $table->boolean('active_counter3')->default(true);
 
-            $table->unsignedBigInteger('classroom_area_rate_id')->nullable();  //FK
+            $table->unsignedBigInteger('classroom_area_rate_id')->nullable();  // FK
             $table->foreign('classroom_area_rate_id')
                 ->references('id')
                 ->on('i_s_p_ratings')
