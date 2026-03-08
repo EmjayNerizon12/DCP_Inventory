@@ -17,7 +17,7 @@ class LoginMW
     public function handle(Request $request, Closure $next): Response
     {
         if (session()->has('admin_logged_in')) {
-            return redirect()->route('AdminSide-Dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         // Redirect school user
