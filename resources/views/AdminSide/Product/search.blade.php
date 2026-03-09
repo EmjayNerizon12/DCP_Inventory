@@ -2,13 +2,13 @@
 <title>@yield('title', 'DCP Inventory')</title>
 
 @section('content')
-    <div class="  md:my-5 mx-0 my-0">
+    <div class="p-2">
         <div class=" flex justify-start gap-2 items-center ">
 
             <div
-                class="h-16 w-16 bg-white p-3 mb-2 border border-gray-300 shadow-lg rounded-full flex items-center justify-center">
-                <div class="text-white bg-blue-600 p-2 rounded-full">
-                    <svg viewBox="0 0 24 24" class="h-10 w-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                class="h-10 w-10 bg-white p-3 mb-2 border border-gray-300 shadow-lg rounded-md flex items-center justify-center">
+                <div class="text-white bg-blue-600 p-1 rounded-md">
+                    <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                         <g id="SVGRepo_iconCarrier">
@@ -28,25 +28,28 @@
 
         <div style="letter-spacing: 0.05rem" class="mb-4 text-gray-600"
             style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-            <form id="searchForm">
+            <form id="searchForm" class="my-2  max-w-md flex gap-2 items-center">
 
                 <input type="text" name="searchInput" id="searchInput" placeholder="Product Code"
-                    class="px-4 py-2 text-md border border-gray-300 shadow-sm">
-                <button class="bg-blue-600 px-4 py-2 text-md shadow-sm rounded-sm text-white font-medium">Find
+                    class="form-input">
+                <button class="btn-submit px-4 py-1 rounded">Find
                     Product</button>
             </form>
             <div>
                 <table style="letter-spacing: 0.05rem;" class="w-full border-collapse border bg-white shadow-sm">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 border uppercase">Product Code</th>
-                            <th class="px-4 py-2 border uppercase">Name</th>
-                            <th class="px-4 py-2 border uppercase">View</th>
+                            <th class="top-header text-center" colspan="3">DCP Products</th>
+                        </tr>
+                        <tr>
+                            <th class="sub-header">Product Code</th>
+                            <th class="sub-header">Name</th>
+                            <th class="sub-header text-center">View</th>
                         </tr>
                     </thead>
                     <tbody id="results-table">
                         <tr>
-                            <td class="text-center py-2 text-md" colspan="3">No Product Found</td>
+                            <td class="text-center py-2 td-cell" colspan="3"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -66,7 +69,7 @@
             function fetchResults(page = 1) {
                 const searchInput = document.getElementById('searchInput').value;
 
-                fetch('/Admin/api-find-item', {
+                fetch('Api/search-product', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -79,26 +82,31 @@
                     })
                     .then(res => res.json())
                     .then(result => {
-                        // Clear previous table
                         tableBody.innerHTML = '';
-
-                        // Populate table
                         result.data.forEach(item => {
                             const row = document.createElement('tr');
                             row.innerHTML = `
-                                <td class="border px-4 py-2">${item.generated_code}</td>
-                                <td class="border px-4 py-2">
-                                        ${item.dcp_item_type.name}
-                                    </td>
-                                   <td class="border px-4 py-2">
-                                <button class="bg-blue-600 px-4 py-2 text-md shadow-sm rounded-sm text-white font-medium"
-                                    onclick="showItem('${item.generated_code}')">Show</button>
-
+                                <td class="td-cell px-4 py-2">${item.generated_code}</td>
+                                <td class="td-cell px-4 py-2">
+                                    ${item.dcp_item_type.name}
+                                </td>
+                                <td class="td-cell px-4 py-2">
+                                    <div class="flex justify-center items-center">
+                                        <button class="btn-submit px-4 py-1 rounded"
+                                            onclick="showItem('${item.generated_code}')">
+                                                View
+                                        </button>
+                                    </div>
                             </td>
                             `;
                             tableBody.appendChild(row);
                         });
-
+                        if(result.data.length === 0 ){
+                            tableBody.innerHTML= `
+                                <td class="text-center py-2 td-cell" colspan="3">No Product Found</td>
+                            `;
+                        }
+                        
                         // Build pagination buttons
                         buildPagination(result.current_page, result.last_page);
                     })
@@ -106,7 +114,7 @@
             }
 
             function showItem(code) {
-                window.location.href = `/Admin/Product/${code}`
+                window.location.href = `Show/${code}`
             }
 
             function buildPagination(current, last) {
@@ -116,7 +124,7 @@
                 const prev = document.createElement('button');
                 prev.textContent = 'Previous';
                 prev.disabled = current === 1;
-                prev.className = 'px-3 py-1 bg-gray-300 rounded disabled:opacity-50';
+                prev.className = 'px-3 py-1 btn-cancel shadow rounded disabled:opacity-50';
                 prev.addEventListener('click', () => {
                     currentPage--;
                     fetchResults(currentPage);
@@ -127,7 +135,7 @@
                 for (let i = 1; i <= last; i++) {
                     const btn = document.createElement('button');
                     btn.textContent = i;
-                    btn.className = `px-3 py-1 rounded ${i === current ? 'bg-blue-500 text-white' : 'bg-gray-200'}`;
+                    btn.className = `px-3 py-1 rounded ${i === current ? 'btn-submit' : 'btn-cancel'}`;
                     btn.addEventListener('click', () => {
                         currentPage = i;
                         fetchResults(currentPage);
@@ -139,7 +147,7 @@
                 const next = document.createElement('button');
                 next.textContent = 'Next';
                 next.disabled = current === last;
-                next.className = 'px-3 py-1 bg-gray-300 rounded disabled:opacity-50';
+                next.className = 'px-3 py-1 btn-cancel rounded disabled:opacity-50';
                 next.addEventListener('click', () => {
                     currentPage++;
                     fetchResults(currentPage);
@@ -147,12 +155,13 @@
                 paginationDiv.appendChild(next);
             }
 
-            // Initial fetch
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
                 currentPage = 1;
                 fetchResults(currentPage);
             });
+            fetchResults(1);
+
         </script>
     </div>
 @endsection
