@@ -10,7 +10,7 @@
         @apply bg-white p-1 rounded-full shadow-md border border-gray-300 flex items-center justify-center shadow;
     }
     .dashboard-container{
-        @apply flex xl:flex-row flex-col justify-center xl:items-start items-center w-full gap-4;
+        @apply flex flex-col justify-center items-center w-full gap-4;
     }
     .dashboard-card-label{
         @apply xl:text-xl text-center text-base font-normal text-gray-500;

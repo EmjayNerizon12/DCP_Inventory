@@ -1,11 +1,11 @@
-  <header class="fixed top-0 left-0 right-0 z-99 shadow-md" style="background-color: rgb(1, 55, 142);">
+  <header class="fixed top-0 left-0 right-0 z-99 shadow-md" style="background-color: #0B3C8A;">
       <div class="flex items-center justify-between space-x-4 px-4 py-3">
 
           <!-- Left: Hamburger + Logo + Title -->
           <div class="flex items-center space-x-2">
 
               <!-- Hamburger / Close button (Mobile only) -->
-              <button id="sidebarToggle" class="md:hidden text-white shadow-none focus:outline-none">
+              <button id="sidebarToggle" class="lg:hidden text-white shadow-none focus:outline-none">
                   <!-- Hamburger icon -->
                   <svg id="hamburgerIcon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

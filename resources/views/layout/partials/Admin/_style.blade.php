@@ -114,7 +114,7 @@
         transition: left 0.5s eas e;
         /* ONLY LEFT! */
         z-index: 50;
-        background-color: #192563;
+        background-color: #1E2A5A;
         color: white;
         overflow-y: scroll;
         /* keeps scroll functionality */
@@ -136,7 +136,7 @@
     }
 
     .main-content {
-        padding: 90px 40px 40px;
+        padding: 100px 40px 40px;
         width: 100% !important;
         margin-left: 250px;
         transition: margin-left 0.55s ease;
@@ -149,15 +149,15 @@
     }
 
     .sidebar-title {
-        background: rgba(20, 135, 217, 0.25);
+        background: rgba(47, 111, 228, 0.22);
         color: #0f172a;
 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
 
-        border: 1px solid rgba(20, 135, 217, 0.35);
+        border: 1px solid rgba(47, 111, 228, 0.35);
         color: white;
-        box-shadow: 0 0 20px rgba(20, 135, 217, 0.35),
+        box-shadow: 0 0 20px rgba(47, 111, 228, 0.35),
             inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 
         letter-spacing: 0.05rem;
@@ -171,13 +171,13 @@
         align-items: center;
         justify-content: center;
 
-        background: rgba(20, 135, 217, 0.6);
+        background: rgba(47, 111, 228, 0.62);
         color: #ffffff;
 
         border-radius: 8px;
 
         box-shadow:
-            0 0 10px rgba(20, 135, 217, 0.6);
+            0 0 10px rgba(47, 111, 228, 0.6);
 
         flex-shrink: 0;
     }
@@ -209,18 +209,18 @@
     }
 
     .category-label {
-        background: rgba(20, 135, 217, 0.15);
+        background: rgba(47, 111, 228, 0.16);
         color: #0f172a;
 
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
 
-        border: 1px solid rgba(20, 135, 217, 0.25);
+        border: 1px solid rgba(47, 111, 228, 0.25);
         letter-spacing: 0.06rem;
         color: #ffffff;
 
         box-shadow:
-            0 0 18px rgba(20, 135, 217, 0.25),
+            0 0 18px rgba(47, 111, 228, 0.25),
             inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 
         transform: translateX(4px);
@@ -234,20 +234,20 @@
         align-items: center;
         justify-content: center;
 
-        background: rgba(20, 135, 217, 0.6);
+        background: rgba(47, 111, 228, 0.62);
         color: #ffffff;
 
         border-radius: 6px;
 
         box-shadow:
-            0 0 8px rgba(20, 135, 217, 0.5);
+            0 0 8px rgba(47, 111, 228, 0.5);
 
         flex-shrink: 0;
     }
 
 
     .nav-link.active {
-        background: rgba(20, 135, 217, 0.55);
+        background: #2F6FE4;
         /* translucent blue */
         color: #ffffff;
 
@@ -263,7 +263,7 @@
         border-radius: 10px;
 
         box-shadow:
-            0 8px 24px rgba(20, 135, 217, 0.35),
+            0 8px 24px rgba(47, 111, 228, 0.35),
             inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 
         transform: translateX(4px);

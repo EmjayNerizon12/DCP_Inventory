@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "./admin.css";
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
 /* Example custom classes */
 .btn-primary {
     @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600;
@@ -47,27 +49,27 @@
 
     }
     .btn-submit {
-        @apply bg-blue-600 text-white hover:bg-blue-700 sm:text-base text-xs font-medium tracking-wider;
+        @apply bg-blue-600 text-white hover:bg-blue-700 sm:text-base text-sm font-medium tracking-wider;
     }
     .btn-update{
-        @apply  bg-amber-400 text-white hover:bg-amber-500 font-medium tracking-wider;
+        @apply  bg-amber-400 text-white hover:bg-amber-500 sm:text-base text-sm font-medium tracking-wider;
     }
     .btn-delete{
        
     transition: all .15s ease;
-        @apply bg-red-600 text-white hover:bg-red-700 font-medium tracking-wider;
+        @apply bg-red-600 text-white hover:bg-red-700 sm:text-base text-sm font-medium tracking-wider;
     }
     .action-button {
        @apply sm:h-12 sm:w-12 w-10 h-10 bg-white p-1 border border-gray-300 shadow-md rounded-full flex items-center justify-center
     }
     .btn-green{
-        @apply bg-green-600 text-white hover:bg-green-700 font-medium tracking-wider;
+        @apply bg-green-600 text-white hover:bg-green-700 sm:text-base text-sm font-medium tracking-wider;
     }
     .btn-gray{
-        @apply bg-gray-400 text-white hover:bg-gray-500  font-medium tracking-wider;
+        @apply bg-gray-400 text-white hover:bg-gray-500  sm:text-base text-sm  font-medium tracking-wider;
     }
     .btn-cancel{
-        @apply bg-white shadow border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400  font-medium tracking-wider;
+        @apply bg-white shadow border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 sm:text-base text-sm font-medium tracking-wider;
     }
     .btn-purple{
         @apply bg-purple-600 text-white hover:bg-purple-700 font-medium tracking-wider;
@@ -123,7 +125,6 @@
     }
     .secondary-header{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-       
         @apply bg-amber-200 text-black tracking-wide text-left border border-gray-800 font-medium md:text-base text-xs  px-4 py-1  ;
     }
     .theme-button{
@@ -138,7 +139,7 @@
                 inset 0 -2px 3px rgba(0,0,0,0.25),      /* curved bottom */
             0 4px 6px rgba(0,0,0,0.22);           /* soft spread */
 
-        @apply text-white px-4 py-1 rounded    font-medium tracking-wider;
+        @apply text-white px-4 py-1 rounded  sm:text-base text-sm  font-medium tracking-wider;
     }
     .theme-button:hover{
         background-color: #012F6C; 
@@ -177,6 +178,11 @@
    .spinner-container {
     @apply flex justify-center items-center ;
      }
+    .dashboard-loading-component {
+        @apply w-12 h-12 border-[5px] border-transparent 
+           border-t-blue-500 border-r-blue-500 border-b-blue-500 
+           rounded-full animate-spin;
+    }
    .spinner-xs {
         @apply w-4 h-4 border-3 border-transparent border-t-white border-r-white border-b-white rounded-full animate-spin;
     }
@@ -200,5 +206,21 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         @apply text-sm sm:text-lg font-normal text-gray-600;
     }
+        .admin-button {
+             box-shadow:
+    /* top highlight */
+    inset 0 2px 2px rgba(255,255,255,0.25),
 
+    /* bottom shadow */
+    inset 0 -3px 4px rgba(0,0,0,0.15),
+
+    /* left highlight */
+    inset 2px 0 3px rgba(255,255,255,0.25),
+
+    /* right shadow */
+    inset -3px 0 4px rgba(0,0,0,0.15),
+
+    /* outer depth */
+    0 4px 4px rgba(0,0,0,0.1);
+        }
 }
